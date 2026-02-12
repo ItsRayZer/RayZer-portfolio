@@ -365,3 +365,35 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* =================================
+   RESPONSIVE PROFESSIONAL SECTIONS
+   ================================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .professional-hero, .about-section,
+    .competencies-section, .services-section {
+        padding: 5rem 2rem;
+    }
+    .hero-headline { font-size: clamp(2.2rem, 5vw, 4rem); }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .professional-hero, .about-section, .contact-section-graffico {
+        padding: 4rem 1.5rem;
+    }
+    .hero-headline { font-size: clamp(2rem, 6vw, 3.5rem); }
+    .hero-cta { flex-direction: column; gap: 1rem; }
+    .btn-primary, .btn-secondary { width: 100%; max-width: 300px; }
+    .form-input { padding: 1.2rem 1.5rem; font-size: 0.95rem; }
+}
+
+@media (max-width: 480px) {
+    .professional-hero, .contact-section-graffico {
+        padding: 3rem 1rem;
+    }
+    .contact-headline { font-size: clamp(1.6rem, 7vw, 2.8rem); }
+    .form-input, .form-textarea { font-size: 16px; }
+}

@@ -1380,3 +1380,28 @@ h2.section-title {
         font-size: 0.9rem;
     }
 }
+
+
+
+
+/* Responsive Updates */
+@media (max-width: 768px) {
+    .giant-title {
+        font-size: 3rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .arsenal-grid,
+    .ships-grid,
+    .protocols-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .banner-text {
+        font-size: 0.9rem;
+    }
+}

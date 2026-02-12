@@ -154,16 +154,29 @@ const initAnimations = () => {
     tlScroll.to('.rest-of-word', { maxWidth: "2500px", opacity: 1, duration: 1.5, ease: "power2.out" });
     tlScroll.to(letters, { x: 0, opacity: 1, duration: 1.5, stagger: 0.1, ease: "power2.out" }, "<");
 
-    // 2. Move to Header
+    // 2. Zoom In & Fade Out (No Move to Header)
+    console.log("✨ Updated animation: Zoom & Fade");
+
+    // Reset any transforms or opacity just in case
+    gsap.set(logoContainer, { pointerEvents: "auto", opacity: 1 });
+
     tlScroll.to(logoContainer, {
-        scale: 0.15,
-        x: () => 120 - (window.innerWidth * 0.5),
-        y: () => 40 - (window.innerHeight * 0.5),
-        duration: 3, ease: "power2.inOut"
+        scale: 20,          // Restored massive zoom for dramatic effect
+        opacity: 0,         // Fade out
+        pointerEvents: "none", // Prevent clicking when hidden
+        duration: 3,
+        ease: "power2.inOut",
+        onStart: () => {
+            // Ensure it's visible when starting animation
+            gsap.set(logoContainer, { pointerEvents: "auto", opacity: 1 });
+        },
+        onReverseComplete: () => {
+            gsap.set(logoContainer, { pointerEvents: "auto", opacity: 1, scale: 1 }); // Hard reset on reverse
+        }
     }, ">");
 
-    // 3. Reveal UI
-    tlScroll.to(nav, { opacity: 1, duration: 0.5 }, "-=0.5");
+    // 3. Reveal UI (Navigation Bar)
+    tlScroll.to(nav, { opacity: 1, duration: 0.5 }, "-=1.0"); // Start fading in nav earlier
 
     // Reveal hero label
     if (heroLabel) {
@@ -386,6 +399,64 @@ const initFormHandler = () => {
     }
 };
 
+/**
+ * Initialize Authentication
+ */
+function initAuth() {
+    // Wait for auth-ui.js module to load and expose global callback
+    const attemptInit = () => {
+        if (window.initAuthUICallback) {
+            // Call the global callback exposed by auth-ui.js
+            window.initAuthUICallback();
+
+            // Listen for auth state changes to auto-fill contact form
+            document.addEventListener('authStateChanged', (event) => {
+                const user = event.detail;
+                handleContactFormAutoFill(user);
+            });
+
+            console.log('🔐 Authentication initialized');
+        } else {
+            // Module not loaded yet, wait and retry
+            setTimeout(attemptInit, 50);
+        }
+    };
+
+    attemptInit();
+}
+
+/**
+ * Auto-fill contact form when user is authenticated
+ * @param {Object|null} user - Authenticated user object or null
+ */
+function handleContactFormAutoFill(user) {
+    const nameInput = document.querySelector('input[name="entry.731845534"]');
+    const emailInput = document.querySelector('input[name="entry.536258546"]');
+
+    if (!nameInput || !emailInput) return;
+
+    if (user) {
+        // User signed in - auto-fill
+        nameInput.value = user.displayName || '';
+        emailInput.value = user.email || '';
+
+        // Add visual indicator that form is pre-filled
+        nameInput.style.borderColor = 'rgba(212, 175, 55, 0.5)';
+        emailInput.style.borderColor = 'rgba(212, 175, 55, 0.5)';
+
+        console.log('✅ Contact form auto-filled for:', user.email);
+    } else {
+        // User signed out - clear form
+        nameInput.value = '';
+        emailInput.value = '';
+        nameInput.style.borderColor = '';
+        emailInput.style.borderColor = '';
+
+        console.log('🔄 Contact form cleared');
+    }
+}
+
+// Main initialization on page load
 document.addEventListener("DOMContentLoaded", function () {
     // Generate Floating Dots Grid
     const dotsContainer = document.getElementById('dotsBackground');
@@ -419,5 +490,9 @@ document.addEventListener("DOMContentLoaded", function () {
     initContentAnimations();
     initNewSectionAnimations();
     initFormHandler();
+
+    // === Initialize Authentication ===
+    initAuth();
+
     console.log("RayZer Portfolio: Full System Loaded");
 });

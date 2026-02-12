@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | RayZer</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth-styles.css">
+    <style>
+        .admin-panel {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .admin-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 3rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+        }
+
+        .admin-subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .admin-welcome {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .welcome-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-email {
+            color: #d4af37;
+            font-weight: 600;
+        }
+
+        .admin-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .admin-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .admin-card:hover {
+            border-color: #d4af37;
+            transform: translateY(-5px);
+        }
+
+        .card-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.2rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .card-description {
+            font-family: 'Space Grotesk', sans-serif;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+        }
+
+        .coming-soon {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 4px;
+            color: #d4af37;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            border-radius: 4px;
+            color: #d4af37;
+            font-family: 'Space Grotesk', sans-serif;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-panel">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1 class="admin-title">ADMIN PANEL</h1>
+                <p class="admin-subtitle">RayZer Portfolio Management</p>
+            </div>
+
+            <div class="admin-welcome" id="welcomeSection">
+                <p class="welcome-text">Loading...</p>
+            </div>
+
+            <div class="admin-sections">
+                <div class="admin-card">
+                    <h2 class="card-title">CONTENT CMS</h2>
+                    <p class="card-description">Edit portfolio content, projects, skills, and experience in real-time.
+                    </p>
+                    <span class="coming-soon">Coming in Phase 3</span>
+                </div>
+
+                <div class="admin-card">
+                    <h2 class="card-title">ANALYTICS</h2>
+                    <p class="card-description">Track visitor engagement, popular projects, and user interactions.</p>
+                    <span class="coming-soon">Coming in Phase 3</span>
+                </div>
+
+                <div class="admin-card">
+                    <h2 class="card-title">COMMENTS</h2>
+                    <p class="card-description">Moderate user comments on projects and manage community feedback.</p>
+                    <span class="coming-soon">Coming in Phase 2</span>
+                </div>
+
+                <div class="admin-card">
+                    <h2 class="card-title">USERS</h2>
+                    <p class="card-description">View registered users, their favorites, and engagement metrics.</p>
+                    <span class="coming-soon">Coming in Phase 2</span>
+                </div>
+            </div>
+
+            <a href="index.html" class="back-link">← Back to Portfolio</a>
+        </div>
+    </div>
+
+    <script type="module" src="js/admin.js"></script>
+</body>
+
+</html>

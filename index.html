@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/nav-graffico.css">
     <link rel="stylesheet" href="css/floating-dots.css">
     <link rel="stylesheet" href="css/professional-sections.css">
+    <link rel="stylesheet" href="css/auth-styles.css">
 
     <!-- GSAP & Three.js (Standard Global Scripts - Works on file://) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -37,6 +38,12 @@
     <!-- Navigation (Graffico Style) -->
     <nav class="fixed-nav">
         <div class="nav-logo">RAYZER</div>
+        <button class="mobile-menu-toggle" aria-label="Toggle menu"
+            onclick="document.querySelector('.nav-menu').classList.toggle('active'); this.classList.toggle('active');">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <div class="nav-menu">
             <a href="#home" class="nav-item active">Home</a>
             <a href="#arsenal" class="nav-item">Skills</a>
@@ -44,6 +51,8 @@
             <a href="#work" class="nav-item">Projects</a>
             <a href="#protocols" class="nav-item">Services</a>
             <a href="#contact" class="nav-item">Contact</a>
+            <!-- Auth UI will be inserted here -->
+            <div id="authContainer" class="auth-container-menu"></div>
         </div>
     </nav>
     <!-- Fixed Logo (Global) -->
@@ -257,13 +266,10 @@
                     <strong>resources</strong>
                 </p>
 
-                <form 
-                    class="contact-form-graffico" 
-                    id="contactForm"
+                <form class="contact-form-graffico" id="contactForm"
                     action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScQggEfG_Q68r0CGNi01ngs0z7mJCJHZhjuR9x4078dpYAysg/formResponse"
-                    method="POST"
-                    target="hidden_iframe">
-                    
+                    method="POST" target="hidden_iframe">
+
                     <div class="form-row">
                         <input type="text" name="entry.731845534" placeholder="Name" class="form-input" required>
                         <input type="email" name="entry.536258546" placeholder="Email" class="form-input" required>
@@ -282,7 +288,8 @@
                 </form>
 
                 <!-- Hidden iframe for form submission -->
-                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) { document.getElementById('formSuccessMessage').style.display='block'; document.getElementById('contactForm').reset(); }"></iframe>
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"
+                    onload="if(submitted) { document.getElementById('formSuccessMessage').style.display='block'; document.getElementById('contactForm').reset(); }"></iframe>
 
                 <div class="social-links-graffico">
                     <a href="https://linkedin.com/in/abensojan" target="_blank" aria-label="LinkedIn">
@@ -307,6 +314,12 @@
             </div>
         </section>
     </main>
+
+    <!-- Form submission variable -->
+    <script>var submitted = false;</script>
+
+    <!-- Authentication Modules -->
+    <script type="module" src="js/auth-ui.js"></script>
 
     <!-- Main Logic -->
     <script src="js/main.js"></script>
