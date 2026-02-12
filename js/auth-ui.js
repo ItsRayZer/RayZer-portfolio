@@ -56,6 +56,7 @@ function updateAuthUI(user) {
     container.innerHTML = `
       ${user.isAdmin ? '<a href="admin.html" class="nav-item admin-panel-nav">⚙️ Admin</a>' : ''}
       <div class="nav-item user-profile-nav">
+        <a href="dashboard.html" class="dashboard-link-nav" title="My Dashboard">❤️</a>
         <img src="${user.photoURL}" alt="${user.displayName}" class="user-avatar-nav">
         <span class="user-name-nav">${user.displayName}</span>
         ${user.isAdmin ? '<span class="admin-badge-small">ADMIN</span>' : ''}

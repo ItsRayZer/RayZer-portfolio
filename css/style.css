@@ -52,6 +52,7 @@ body {
     color: var(--text-color);
     font-family: var(--font-primary);
     overflow-x: hidden;
+    width: 100%;
 }
 
 /* Custom Scrollbar */

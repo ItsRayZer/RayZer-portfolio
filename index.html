@@ -252,6 +252,79 @@
             </div>
         </section>
 
+        <!-- Projects Section (The missing piece!) -->
+        <section id="work" class="projects-section content-section">
+            <div class="container">
+                <h2 class="section-title glitch-text" data-text="SELECTED WORKS">SELECTED WORKS</h2>
+
+                <div class="timeline-container">
+                    <table class="timeline-table">
+                        <thead>
+                            <tr>
+                                <th>PROJECT</th>
+                                <th>ROLE</th>
+                                <th>TECH</th>
+                                <th>YEAR</th>
+                                <th></th> <!-- Fav Column -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Project 1 -->
+                            <tr class="project-row" data-id="ecom-platform">
+                                <td class="project-name">Algorithmic E-Com Platform</td>
+                                <td>Lead Developer</td>
+                                <td>Next.js, Python</td>
+                                <td>2024</td>
+                                <td class="fav-cell">
+                                    <button class="fav-btn"
+                                        onclick="window.handleFavoriteClick(event, 'ecom-platform', 'Algorithmic E-Com Platform', 'Lead Developer', 'Next.js, Python', '2024')">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                            <path
+                                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- Project 2 -->
+                            <tr class="project-row" data-id="portfolio-v1">
+                                <td class="project-name">RayZer Portfolio V1</td>
+                                <td>Designer & Dev</td>
+                                <td>Three.js, GSAP</td>
+                                <td>2024</td>
+                                <td class="fav-cell">
+                                    <button class="fav-btn"
+                                        onclick="window.handleFavoriteClick(event, 'portfolio-v1', 'RayZer Portfolio V1', 'Designer & Dev', 'Three.js, GSAP', '2024')">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                            <path
+                                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- Project 3 -->
+                            <tr class="project-row" data-id="content-auto">
+                                <td class="project-name">Content Automation Bot</td>
+                                <td>Scripting</td>
+                                <td>Selenium, Bash</td>
+                                <td>2023</td>
+                                <td class="fav-cell">
+                                    <button class="fav-btn"
+                                        onclick="window.handleFavoriteClick(event, 'content-auto', 'Content Automation Bot', 'Scripting', 'Selenium, Bash', '2023')">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                            <path
+                                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
         <!-- Contact Section (Graffico Style) -->
         <section id="contact" class="contact-section-graffico">
             <div class="container">
@@ -266,16 +339,13 @@
                     <strong>resources</strong>
                 </p>
 
-                <form class="contact-form-graffico" id="contactForm"
-                    action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScQggEfG_Q68r0CGNi01ngs0z7mJCJHZhjuR9x4078dpYAysg/formResponse"
-                    method="POST" target="hidden_iframe">
-
+                <form class="contact-form-graffico" id="contactForm">
                     <div class="form-row">
-                        <input type="text" name="entry.731845534" placeholder="Name" class="form-input" required>
-                        <input type="email" name="entry.536258546" placeholder="Email" class="form-input" required>
+                        <input type="text" id="contactName" placeholder="Name" class="form-input" required>
+                        <input type="email" id="contactEmail" placeholder="Email" class="form-input" required>
                     </div>
 
-                    <textarea name="entry.1836713341" placeholder="Hi, I'd like to request a free consultation!"
+                    <textarea id="contactMessage" placeholder="Hi, I'd like to request a free consultation!"
                         class="form-textarea" rows="6" required></textarea>
 
                     <button type="submit" class="btn-submit-graffico">
@@ -285,11 +355,11 @@
                     <div class="form-success-message" id="formSuccessMessage" style="display: none;">
                         ✅ Thank you! Your message has been sent successfully.
                     </div>
+                    <div class="form-error-message" id="formErrorMessage"
+                        style="display: none; color: #ff4b4b; margin-top: 1rem; font-family: 'Space Grotesk', sans-serif;">
+                        ❌ Failed to send message. Please try again or email directly.
+                    </div>
                 </form>
-
-                <!-- Hidden iframe for form submission -->
-                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"
-                    onload="if(submitted) { document.getElementById('formSuccessMessage').style.display='block'; document.getElementById('contactForm').reset(); }"></iframe>
 
                 <div class="social-links-graffico">
                     <a href="https://linkedin.com/in/abensojan" target="_blank" aria-label="LinkedIn">
@@ -322,6 +392,9 @@
     <script type="module" src="js/auth-ui.js"></script>
 
     <!-- Main Logic -->
+    <script type="module" src="js/db-service.js"></script>
+    <script type="module" src="js/comments-ui.js"></script>
+    <script type="module" src="js/favorites-ui.js"></script>
     <script src="js/main.js"></script>
 </body>
 

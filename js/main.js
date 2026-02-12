@@ -378,26 +378,88 @@ const initNewSectionAnimations = () => {
 };
 
 // --- 6. FORM HANDLER ---
-const initFormHandler = () => {
+function initFormHandler() {
     const form = document.getElementById('contactForm');
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
+    const successMsg = document.getElementById('formSuccessMessage');
+    const errorMsg = document.getElementById('formErrorMessage');
 
-            // Get form data
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData);
+    if (!form) return;
 
-            console.log('Form submitted:', data);
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Prevent default form submission
 
-            // Show success message (you can customize this)
-            alert('TRANSMISSION RECEIVED! I will respond to your comms channel shortly.');
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Sending...';
 
-            // Reset form
-            form.reset();
-        });
-    }
-};
+        // Clear previous messages
+        if (successMsg) successMsg.style.display = 'none';
+        if (errorMsg) errorMsg.style.display = 'none';
+
+        try {
+            const nameEl = document.getElementById('contactName');
+            const emailEl = document.getElementById('contactEmail');
+            const msgEl = document.getElementById('contactMessage');
+
+            if (!nameEl || !emailEl || !msgEl) {
+                throw new Error("One or more form fields are missing from the page.");
+            }
+
+            const name = nameEl.value;
+            const email = emailEl.value;
+            const message = msgEl.value;
+
+            if (window.dbService && window.dbService.submitContactMessage) {
+                await window.dbService.submitContactMessage({ name, email, message });
+
+                if (successMsg) {
+                    successMsg.style.display = 'block';
+                    successMsg.textContent = 'Message sent successfully! I will be in touch soon.';
+                }
+                form.reset();
+                console.log('Form submitted to Firestore');
+            } else {
+                throw new Error("Database service unavailable");
+            }
+
+        } catch (error) {
+            console.error('Form submission error:', error);
+            if (errorMsg) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = 'Failed to send message. Please try again or email directly.';
+            }
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = originalText;
+        }
+    });
+}
+
+
+/**
+ * Initialize Comments UI
+ */
+function initComments() {
+    // Wait for comments-ui.js module
+    const attemptInit = () => {
+        if (window.initCommentsUICallback) {
+            window.initCommentsUICallback();
+        } else {
+            setTimeout(attemptInit, 50);
+        }
+    };
+    attemptInit();
+}
+
+/**
+ * Initialize Favorites UI
+ */
+function initFavorites() {
+    import('./favorites-ui.js').then(module => {
+        module.initFavoritesUI();
+    }).catch(err => console.error("Failed to load favorites UI", err));
+}
 
 /**
  * Initialize Authentication
@@ -413,6 +475,11 @@ function initAuth() {
             document.addEventListener('authStateChanged', (event) => {
                 const user = event.detail;
                 handleContactFormAutoFill(user);
+
+                // Create/Update User Profile in Firestore
+                if (user && window.dbService) {
+                    window.dbService.createUserProfile(user);
+                }
             });
 
             console.log('🔐 Authentication initialized');
@@ -490,6 +557,8 @@ document.addEventListener("DOMContentLoaded", function () {
     initContentAnimations();
     initNewSectionAnimations();
     initFormHandler();
+    initComments(); // Initialize Comments System
+    initFavorites(); // Initialize Favorites System
 
     // === Initialize Authentication ===
     initAuth();

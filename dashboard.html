@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | RayZer</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth-styles.css">
+    <style>
+        .dashboard-page {
+            min-height: 100vh;
+            padding: 6rem 2rem 4rem;
+            background: #0a0a0a;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 20%);
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 1rem;
+        }
+
+        .dashboard-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 2.5rem;
+            color: #d4af37;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+
+        .dashboard-subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.5rem;
+        }
+
+        .user-welcome {
+            text-align: right;
+        }
+
+        .welcome-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .favorite-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .favorite-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #d4af37;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .favorite-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.3);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .favorite-card:hover::before {
+            opacity: 1;
+        }
+
+        .fav-project-name {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .fav-meta {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .fav-tech {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            color: #d4af37;
+            margin-top: 1rem;
+        }
+
+        .remove-fav-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: rgba(255, 75, 75, 0.6);
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0.5rem;
+        }
+
+        .remove-fav-btn:hover {
+            color: #ff4b4b;
+            transform: scale(1.1);
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.2);
+            margin-bottom: 1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 3rem;
+            color: #d4af37;
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-page">
+        <div class="dashboard-container">
+            <header class="dashboard-header">
+                <div>
+                    <h1 class="dashboard-title">DASHBOARD</h1>
+                    <p class="dashboard-subtitle">Your curated collection</p>
+                </div>
+                <div class="user-welcome" id="userWelcome">
+                    <!-- User info will be injected here -->
+                </div>
+            </header>
+
+            <div id="favoritesList" class="favorites-grid">
+                <div class="empty-state">
+                    <div class="empty-icon">📂</div>
+                    <p style="color: rgba(255,255,255,0.5); font-family: 'Space Grotesk', sans-serif;">Loading your
+                        favorites...</p>
+                </div>
+            </div>
+
+            <a href="index.html" class="back-link">← Back to Portfolio</a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/auth-service.js"></script>
+    <script type="module" src="js/db-service.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User Profiles: Users can read/write their own profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // Favorites submodule
+      match /favorites/{favoriteId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Comments: Auth users can read, create. Only owner/admin can delete.
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow delete: if request.auth != null && (request.auth.uid == resource.data.userId || request.auth.token.admin == true);
+    }
+    
+    // Messages (Contact Form): Public can CREATE. Only Admin can READ/UPDATE.
+    match /messages/{messageId} {
+      allow create: if true; // Public access for contact form
+      allow read, update, delete: if request.auth != null && request.auth.token.email == "abensojan@gmail.com"; // Adjust email as needed
+    }
+  }
+}
