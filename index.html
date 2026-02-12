@@ -339,14 +339,20 @@
                     <strong>resources</strong>
                 </p>
 
-                <form class="contact-form-graffico" id="contactForm">
+                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+                <form class="contact-form-graffico" id="contactForm"
+                    action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScQggEfG_Q68r0CGNi01ngs0z7mJCJHZhjuR9x4078dpYAysg/formResponse"
+                    method="POST" target="hidden_iframe">
                     <div class="form-row">
-                        <input type="text" id="contactName" placeholder="Name" class="form-input" required>
-                        <input type="email" id="contactEmail" placeholder="Email" class="form-input" required>
+                        <input type="text" id="contactName" name="entry.731845534" placeholder="Name" class="form-input"
+                            required>
+                        <input type="email" id="contactEmail" name="entry.536258546" placeholder="Email"
+                            class="form-input" required>
                     </div>
 
-                    <textarea id="contactMessage" placeholder="Hi, I'd like to request a free consultation!"
-                        class="form-textarea" rows="6" required></textarea>
+                    <textarea id="contactMessage" name="entry.1836713341"
+                        placeholder="Hi, I'd like to request a free consultation!" class="form-textarea" rows="6"
+                        required></textarea>
 
                     <button type="submit" class="btn-submit-graffico">
                         REQUEST A FREE CONSULTATION
@@ -354,10 +360,6 @@
 
                     <div class="form-success-message" id="formSuccessMessage" style="display: none;">
                         ✅ Thank you! Your message has been sent successfully.
-                    </div>
-                    <div class="form-error-message" id="formErrorMessage"
-                        style="display: none; color: #ff4b4b; margin-top: 1rem; font-family: 'Space Grotesk', sans-serif;">
-                        ❌ Failed to send message. Please try again or email directly.
                     </div>
                 </form>
 

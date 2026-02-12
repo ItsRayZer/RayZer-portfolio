@@ -377,62 +377,55 @@ const initNewSectionAnimations = () => {
     });
 };
 
-// --- 6. FORM HANDLER ---
+// --- 6. FORM HANDLER (Google Forms Integration) ---
 function initFormHandler() {
     const form = document.getElementById('contactForm');
     const successMsg = document.getElementById('formSuccessMessage');
-    const errorMsg = document.getElementById('formErrorMessage');
+    const iframe = document.getElementById('hidden_iframe');
 
-    if (!form) return;
+    if (!form || !iframe) return;
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault(); // Prevent default form submission
+    let isSubmitting = false;
+
+    form.addEventListener('submit', (e) => {
+        if (isSubmitting) {
+            e.preventDefault();
+            return;
+        }
 
         const submitButton = form.querySelector('button[type="submit"]');
-        submitButton.disabled = true;
         const originalText = submitButton.textContent;
+        isSubmitting = true;
+
+        submitButton.disabled = true;
         submitButton.textContent = 'Sending...';
 
         // Clear previous messages
         if (successMsg) successMsg.style.display = 'none';
-        if (errorMsg) errorMsg.style.display = 'none';
 
-        try {
-            const nameEl = document.getElementById('contactName');
-            const emailEl = document.getElementById('contactEmail');
-            const msgEl = document.getElementById('contactMessage');
-
-            if (!nameEl || !emailEl || !msgEl) {
-                throw new Error("One or more form fields are missing from the page.");
+        // Listen for iframe load (response received)
+        const loadHandler = () => {
+            // Google Forms doesn't allow cross-origin access to the iframe content,
+            // so we assume success if the iframe loads after submission.
+            if (successMsg) {
+                successMsg.style.display = 'block';
+                successMsg.textContent = 'Message sent successfully! I will be in touch soon.';
             }
 
-            const name = nameEl.value;
-            const email = emailEl.value;
-            const message = msgEl.value;
+            form.reset();
 
-            if (window.dbService && window.dbService.submitContactMessage) {
-                await window.dbService.submitContactMessage({ name, email, message });
-
-                if (successMsg) {
-                    successMsg.style.display = 'block';
-                    successMsg.textContent = 'Message sent successfully! I will be in touch soon.';
-                }
-                form.reset();
-                console.log('Form submitted to Firestore');
-            } else {
-                throw new Error("Database service unavailable");
-            }
-
-        } catch (error) {
-            console.error('Form submission error:', error);
-            if (errorMsg) {
-                errorMsg.style.display = 'block';
-                errorMsg.textContent = 'Failed to send message. Please try again or email directly.';
-            }
-        } finally {
+            // Reset button
             submitButton.disabled = false;
             submitButton.textContent = originalText;
-        }
+            isSubmitting = false;
+
+            console.log('✅ Form submitted to Google Forms');
+
+            // Remove listener to prevent future triggers
+            iframe.removeEventListener('load', loadHandler);
+        };
+
+        iframe.addEventListener('load', loadHandler);
     });
 }
 
