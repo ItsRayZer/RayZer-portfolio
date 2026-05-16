@@ -516,6 +516,34 @@ function handleContactFormAutoFill(user) {
     }
 }
 
+
+const initNavigation = () => {
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    if (!menuToggle || !navMenu) return;
+
+    const setMenuState = (isOpen) => {
+        navMenu.classList.toggle('active', isOpen);
+        menuToggle.classList.toggle('active', isOpen);
+        menuToggle.setAttribute('aria-expanded', String(isOpen));
+    };
+
+    menuToggle.addEventListener('click', () => {
+        const isOpen = !navMenu.classList.contains('active');
+        setMenuState(isOpen);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            setMenuState(false);
+        }
+    });
+
+    navMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setMenuState(false));
+    });
+};
+
 // Main initialization on page load
 document.addEventListener("DOMContentLoaded", function () {
     // Generate Floating Dots Grid
@@ -545,6 +573,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // === GSAP & Three.js Animations ===
+    initNavigation();
     initBackground();
     initAnimations();
     initContentAnimations();
