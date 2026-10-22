@@ -14,6 +14,16 @@ const initBackground = () => {
     const container = document.getElementById('canvas-container');
     if (!container) return;
 
+    // v2 perf guards: the starfield is pure decoration. Skip it entirely
+    // where it costs the most — reduced motion, touch devices, small
+    // screens — and if the THREE global failed to load, so a CDN hiccup
+    // can never take the rest of the page init down with it. On those
+    // devices the static CSS gradient mesh + dots remain as the backdrop.
+    if (typeof THREE === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    if (window.innerWidth < 820) return;
+
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x000000, 0.001);
 
@@ -21,7 +31,7 @@ const initBackground = () => {
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     container.appendChild(renderer.domElement);
 
     // --- 1. REALISTIC STARS ---
@@ -45,16 +55,16 @@ const initBackground = () => {
         return new THREE.Points(geometry, material);
     };
 
-    // Layer 1: Distant Background Stars (White/Mixed)
-    const starsDistant = createStarField(2000, 0.05, 100, 0xffffff);
+    // Layer 1: Distant Background Stars (White/Mixed) — v2: 2000 -> 900 points
+    const starsDistant = createStarField(900, 0.05, 100, 0xffffff);
     scene.add(starsDistant);
 
-    // Layer 2: Mid-Range Stars (Blue/Cyan - Tech Feel)
-    const starsMid = createStarField(800, 0.08, 60, 0x44accf);
+    // Layer 2: Mid-Range Stars (Blue/Cyan - Tech Feel) — v2: 800 -> 350 points
+    const starsMid = createStarField(350, 0.08, 60, 0x44accf);
     scene.add(starsMid);
 
-    // Layer 3: Close Bright Stars (Gold/Warm - Premium Feel)
-    const starsClose = createStarField(100, 0.15, 30, 0xffffee);
+    // Layer 3: Close Bright Stars (Gold/Warm - Premium Feel) — v2: 100 -> 60 points
+    const starsClose = createStarField(60, 0.15, 30, 0xffffee);
     scene.add(starsClose);
 
 
@@ -65,17 +75,20 @@ const initBackground = () => {
     // --- ANIMATION LOOP ---
     const bgState = { zoom: 5, rotate: 0 };
 
-    // WARP EFFECT: Fly past the stars
-    gsap.to(bgState, {
-        zoom: -50, // Move camera negative Z to fly 'forward' past stars (assuming stars are distributed around 0)
-        scrollTrigger: {
-            trigger: ".hero-spacer",
-            start: "top top",
-            end: "bottom top",
-            scrub: 1
-        },
-        ease: "none" // Linear movement for consistent speed
-    });
+    // WARP EFFECT: Fly past the stars (guarded: a missing GSAP global
+    // must not break the render loop or anything initialised after it)
+    if (typeof gsap !== 'undefined') {
+        gsap.to(bgState, {
+            zoom: -50, // Move camera negative Z to fly 'forward' past stars (assuming stars are distributed around 0)
+            scrollTrigger: {
+                trigger: ".hero-spacer",
+                start: "top top",
+                end: "bottom top",
+                scrub: 1
+            },
+            ease: "none" // Linear movement for consistent speed
+        });
+    }
 
     let mouseX = 0, mouseY = 0;
     document.addEventListener('mousemove', (e) => {
@@ -83,8 +96,16 @@ const initBackground = () => {
         mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
     });
 
+    // v2: pause rendering when the tab is hidden or once the reader has
+    // scrolled well past the hero zone — the last frame simply stays put.
+    let tabVisible = !document.hidden;
+    document.addEventListener('visibilitychange', () => { tabVisible = !document.hidden; });
+
     const animate = () => {
         requestAnimationFrame(animate);
+
+        if (!tabVisible) return;
+        if (window.scrollY > window.innerHeight * 1.25) return;
 
         // Rotate star layers at different speeds for depth
         starsDistant.rotation.y += 0.0001;
