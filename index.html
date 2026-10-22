@@ -4,40 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RayZer | Creative Developer</title>
+    <title>Aben Sojan | Developer &amp; Founder, Axofy</title>
+    <meta name="description"
+        content="Aben Sojan — BCA student at Mar Augusthinose College, Ramapuram, Founder & Developer of Axofy and builder of MacHub. Premium websites and web applications with strong backends.">
+    <link rel="canonical" href="https://abensojan.vercel.app/">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Aben Sojan">
+    <meta property="og:title" content="Aben Sojan | Developer &amp; Founder, Axofy">
+    <meta property="og:description"
+        content="BCA student building premium web applications — Axofy, MacHub and more. Freelance websites from under ₹5,000.">
+    <meta property="og:url" content="https://abensojan.vercel.app/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Aben Sojan | Developer &amp; Founder, Axofy">
+    <meta name="twitter:description"
+        content="BCA student building premium web applications — Axofy, MacHub and more. Freelance websites from under ₹5,000.">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&family=Syncopate:wght@400;700&family=Outfit:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
+    <!-- Styles: single consolidated stylesheet, system fonts only (no webfont downloads) -->
+    <link rel="stylesheet" href="css/site.css?v=3">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/hero-elements.css">
-    <link rel="stylesheet" href="css/nav-graffico.css">
-    <link rel="stylesheet" href="css/floating-dots.css">
-    <link rel="stylesheet" href="css/professional-sections.css">
-    <link rel="stylesheet" href="css/auth-styles.css">
-
-    <!-- GSAP & Three.js (Standard Global Scripts - Works on file://) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- GSAP & Three.js: deferred so they no longer block first paint.
+         Deferred classic scripts still execute in document order, before DOMContentLoaded,
+         so js/main.js finds the THREE / gsap / ScrollTrigger globals exactly as before. -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 
 <body>
 
-    <!-- Floating Dots Background -->
+    <!-- Floating Dots Background (dots are created by js/main.js — element must exist) -->
     <div class="dots-background" id="dotsBackground"></div>
 
     <!-- WebGL Background Container -->
     <div id="canvas-container"></div>
 
-    <!-- Navigation (Graffico Style) -->
+    <!-- Navigation -->
     <nav class="fixed-nav">
-        <div class="nav-logo">RAYZER</div>
+        <div class="nav-logo">ABEN SOJAN</div>
         <button class="mobile-menu-toggle" aria-label="Toggle menu"
             onclick="document.querySelector('.nav-menu').classList.toggle('active'); this.classList.toggle('active');">
             <span></span>
@@ -55,25 +59,30 @@
             <div id="authContainer" class="auth-container-menu"></div>
         </div>
     </nav>
-    <!-- Fixed Logo (Global) -->
+    <!-- Fixed Logo (Global) — giant intro wordmark animated by js/main.js.
+         First letter in .letter-r, the rest in .rest-of-word .letter spans (same hook structure as before). -->
     <div class="rayzer-logo">
-        <span class="letter-r">R</span>
+        <span class="letter-r">A</span>
         <span class="rest-of-word">
-            <span class="letter">A</span>
-            <span class="letter">Y</span>
-            <span class="letter">Z</span>
+            <span class="letter">B</span>
             <span class="letter">E</span>
-            <span class="letter">R</span>
+            <span class="letter">N</span>
+            <span class="letter">&nbsp;</span>
+            <span class="letter">S</span>
+            <span class="letter">O</span>
+            <span class="letter">J</span>
+            <span class="letter">A</span>
+            <span class="letter">N</span>
         </span>
     </div>
 
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section class="hero-spacer">
+        <section class="hero-spacer" id="home">
             <div class="hero-content-wrapper">
                 <!-- Label like "WEB STUDIO" in Graffico -->
-                <div class="hero-tagline">DIGITAL STUDIO</div>
+                <div class="hero-tagline">DEVELOPER &amp; FOUNDER</div>
 
                 <!-- Subtitle below logo (bottom left like Graffico) -->
                 <div class="hero-subtitle">Tech without<br>the weight</div>
@@ -94,12 +103,12 @@
                 <!-- Stats (Bottom Right) -->
                 <div class="hero-stats">
                     <div class="hero-stat">
-                        <div class="stat-value">50+</div>
-                        <div class="stat-label">PROJECTS</div>
+                        <div class="stat-value">4</div>
+                        <div class="stat-label">CORE PROJECTS</div>
                     </div>
                     <div class="hero-stat">
-                        <div class="stat-value">5</div>
-                        <div class="stat-label">YEARS</div>
+                        <div class="stat-value">2029</div>
+                        <div class="stat-label">BCA CLASS OF</div>
                     </div>
                 </div>
             </div>
@@ -109,8 +118,9 @@
         <section class="professional-hero">
             <div class="container">
                 <h1 class="hero-headline">Building Structured Digital Systems That Perform.</h1>
-                <p class="hero-subtext">A results-driven digital operations specialist experienced in managing accounts,
-                    optimizing workflows, and delivering technical solutions with precision.</p>
+                <p class="hero-subtext">I'm Aben Sojan — a BCA student at Mar Augusthinose College, Ramapuram, and
+                    the Founder &amp; Developer of Axofy. I build premium, fast web applications with strong
+                    backends, including MacHub, the student portal for my college.</p>
                 <div class="hero-cta">
                     <a href="#work" class="btn-primary">View Work</a>
                     <a href="#contact" class="btn-secondary">Contact</a>
@@ -121,10 +131,9 @@
         <!-- Scrolling Banner -->
         <div class="scrolling-banner">
             <div class="banner-content">
-                <span class="banner-text">CREATIVE TECHNOLOGIST • ACCOUNT ARCHITECT • SYSTEM ARCHITECTURE • VISUAL
-                    STRATEGIST • RECOVERY SPECIALIST • FREELANCE COMMAND • CONTENT OPS • CREATIVE TECHNOLOGIST • ACCOUNT
-                    ARCHITECT • SYSTEM ARCHITECTURE • VISUAL STRATEGIST • RECOVERY SPECIALIST • FREELANCE COMMAND •
-                    CONTENT OPS</span>
+                <span class="banner-text">WEB DEVELOPMENT • BACKEND SYSTEMS • PREMIUM UI • CYBERSECURITY •
+                    FIREBASE • JAVASCRIPT • PYTHON • WEB DEVELOPMENT • BACKEND SYSTEMS • PREMIUM UI •
+                    CYBERSECURITY • FIREBASE • JAVASCRIPT • PYTHON • </span>
             </div>
         </div>
 
@@ -133,13 +142,16 @@
             <div class="container">
                 <h2 class="section-title">About</h2>
                 <div class="about-content">
-                    <p>Aben Sojan is a structured and execution-focused digital operations specialist with over five
-                        years of hands-on experience in account management, technical troubleshooting, and workflow
-                        optimization.</p>
-                    <p>He focuses on systems, efficiency, and scalable execution rather than surface-level tasks. His
-                        approach is analytical, strategic, and built around long-term growth.</p>
-                    <p>With leadership experience and operational responsibility, he consistently ensures digital
-                        environments function smoothly and efficiently.</p>
+                    <p>Aben Sojan is a BCA (Honours) student at Mar Augusthinose College, Ramapuram, affiliated with
+                        Mahatma Gandhi University, Kottayam — currently pursuing his degree, 2025 to 2029. He builds
+                        real, live products while studying.</p>
+                    <p>He is the Founder &amp; Developer of Axofy, a serverless SMM platform running live on Vercel,
+                        and the builder of MacHub, a student portal for his college. What he loves building most is
+                        premium looking web applications — Apple inspired, modern in style — with strong backend
+                        work behind them.</p>
+                    <p>At college he is Technical Lead of NEXUS, the BCA department association, and Magazine Editor
+                        of the College Student Council for 2026. He is open to internships and to freelance website
+                        projects for clients.</p>
                 </div>
             </div>
         </section>
@@ -157,17 +169,31 @@
                         <div class="arsenal-divider"></div>
                         <ul class="arsenal-list">
                             <li>React, HTML5/CSS3, JavaScript</li>
-                            <li>C-Suite Logic, Python</li>
+                            <li>Python</li>
                             <li>System Architecture</li>
                             <li>Git Version Control</li>
                             <li>Database Management (SQL/NoSQL)</li>
                         </ul>
                     </div>
 
-                    <!-- Visual Warfare & Editing -->
+                    <!-- Backend & Cloud -->
                     <div class="arsenal-card">
                         <div class="arsenal-number">02</div>
-                        <h3>VISUAL WARFARE & EDITING</h3>
+                        <h3>BACKEND &amp; CLOUD</h3>
+                        <div class="arsenal-divider"></div>
+                        <ul class="arsenal-list">
+                            <li>Firebase &amp; Firestore</li>
+                            <li>REST API Development</li>
+                            <li>Serverless Functions (Vercel)</li>
+                            <li>Cloudflare Workers</li>
+                            <li>Authentication &amp; Payments (UPI)</li>
+                        </ul>
+                    </div>
+
+                    <!-- Visual Warfare & Editing -->
+                    <div class="arsenal-card">
+                        <div class="arsenal-number">03</div>
+                        <h3>VISUAL WARFARE &amp; EDITING</h3>
                         <div class="arsenal-divider"></div>
                         <ul class="arsenal-list">
                             <li>Cinematic Editing</li>
@@ -178,27 +204,13 @@
                         </ul>
                     </div>
 
-                    <!-- Engagement Ops & Management -->
-                    <div class="arsenal-card">
-                        <div class="arsenal-number">03</div>
-                        <h3>ENGAGEMENT OPS & MANAGEMENT</h3>
-                        <div class="arsenal-divider"></div>
-                        <ul class="arsenal-list">
-                            <li>Account Management</li>
-                            <li>Daily Content Cycles</li>
-                            <li>Audience Growth Strategy</li>
-                            <li>Automated Post-Sequences</li>
-                            <li>Community Moderation</li>
-                        </ul>
-                    </div>
-
                     <!-- Security & Recovery -->
                     <div class="arsenal-card">
                         <div class="arsenal-number">04</div>
-                        <h3>SECURITY & RECOVERY</h3>
+                        <h3>SECURITY &amp; RECOVERY</h3>
                         <div class="arsenal-divider"></div>
                         <ul class="arsenal-list">
-                            <li>High-stakes Account Recovery</li>
+                            <li>Cybersecurity &amp; Ethical Hacking</li>
                             <li>Security Audits</li>
                             <li>Protocol-based Verification</li>
                             <li>Digital Identity Protection</li>
@@ -215,44 +227,44 @@
                 <h2 class="section-title text-center glitch-text" data-text="DEPLOYED SHIPS">DEPLOYED SHIPS</h2>
 
                 <div class="ships-grid">
-                    <!-- Ship 1: Ongoing -->
+                    <!-- Ship 1: Axofy -->
                     <div class="ship-card">
                         <div class="ship-badge ongoing">ONGOING</div>
-                        <h3>Freelance Brand Architect</h3>
-                        <p class="ship-company">Remote Ops</p>
+                        <h3>Founder &amp; Developer</h3>
+                        <p class="ship-company">Axofy</p>
                         <p class="ship-description">
-                            Managing full-stack digital presences. Handling everything from daily content posting to
-                            backend system maintenance. Delivering 30% average increase in organic reach through
-                            consistent, high-velocity content cycles.
+                            Built and run Axofy, a serverless SMM panel platform live on Vercel — UPI payment
+                            workflows, live order tracking, a reseller API and an admin dashboard, all shipped and
+                            in production.
                         </p>
                     </div>
 
-                    <!-- Ship 2: Original -->
-                    <div class="ship-card">
-                        <div class="ship-badge original">ORIGINAL</div>
-                        <h3>Creative Technologist</h3>
-                        <p class="ship-company">Creator & Director</p>
-                        <p class="ship-description">
-                            Leading RayZer's visual department. Managing cinematic post-production pipelines for brands
-                            and creators. Transforming raw footage into high-retention cinematic assets.
-                        </p>
-                    </div>
-
-                    <!-- Ship 3: Leadership -->
+                    <!-- Ship 2: Leadership -->
                     <div class="ship-card">
                         <div class="ship-badge leadership">LEADERSHIP</div>
-                        <h3>Strategic Representative</h3>
-                        <p class="ship-company">Batch A Command</p>
+                        <h3>Technical Lead, NEXUS</h3>
+                        <p class="ship-company">Mar Augusthinose College</p>
                         <p class="ship-description">
-                            Overseeing team logistics, account security protocols, and system-level coordination for
-                            collaborative groups.
+                            Technical Lead of NEXUS, the Association of Computer Applications (BCA department),
+                            for 2026 — and Magazine Editor of the College Student Council the same year.
+                        </p>
+                    </div>
+
+                    <!-- Ship 3: Student Builder -->
+                    <div class="ship-card">
+                        <div class="ship-badge original">STUDENT</div>
+                        <h3>BCA Student &amp; Builder</h3>
+                        <p class="ship-company">Mar Augusthinose College</p>
+                        <p class="ship-description">
+                            Pursuing BCA (Honours), 2025 to 2029. Built MacHub, the student portal for the college,
+                            while representing BCA Batch 1 as class representative.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section (The missing piece!) -->
+        <!-- Projects Section -->
         <section id="work" class="projects-section content-section">
             <div class="container">
                 <h2 class="section-title glitch-text" data-text="SELECTED WORKS">SELECTED WORKS</h2>
@@ -269,15 +281,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Project 1 -->
-                            <tr class="project-row" data-id="ecom-platform">
-                                <td class="project-name">Algorithmic E-Com Platform</td>
-                                <td>Lead Developer</td>
-                                <td>Next.js, Python</td>
-                                <td>2024</td>
+                            <!-- Project 1: MacHub -->
+                            <tr class="project-row" data-id="machub">
+                                <td class="project-name">MacHub</td>
+                                <td>Developer</td>
+                                <td>JavaScript, Firestore, Cloudflare Workers</td>
+                                <td>2026</td>
                                 <td class="fav-cell">
-                                    <button class="fav-btn"
-                                        onclick="window.handleFavoriteClick(event, 'ecom-platform', 'Algorithmic E-Com Platform', 'Lead Developer', 'Next.js, Python', '2024')">
+                                    <button class="fav-btn" aria-label="Save MacHub to favorites"
+                                        onclick="window.handleFavoriteClick(event, 'machub', 'MacHub', 'Developer', 'JavaScript, Firestore, Cloudflare Workers', '2026')">
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                             <path
                                                 d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
@@ -286,15 +298,15 @@
                                 </td>
                             </tr>
 
-                            <!-- Project 2 -->
-                            <tr class="project-row" data-id="portfolio-v1">
-                                <td class="project-name">RayZer Portfolio V1</td>
-                                <td>Designer & Dev</td>
-                                <td>Three.js, GSAP</td>
-                                <td>2024</td>
+                            <!-- Project 2: Axofy -->
+                            <tr class="project-row" data-id="axofy">
+                                <td class="project-name">Axofy</td>
+                                <td>Founder &amp; Developer</td>
+                                <td>JavaScript, Vercel, REST APIs</td>
+                                <td>2026</td>
                                 <td class="fav-cell">
-                                    <button class="fav-btn"
-                                        onclick="window.handleFavoriteClick(event, 'portfolio-v1', 'RayZer Portfolio V1', 'Designer & Dev', 'Three.js, GSAP', '2024')">
+                                    <button class="fav-btn" aria-label="Save Axofy to favorites"
+                                        onclick="window.handleFavoriteClick(event, 'axofy', 'Axofy', 'Founder & Developer', 'JavaScript, Vercel, REST APIs', '2026')">
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                             <path
                                                 d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
@@ -303,15 +315,32 @@
                                 </td>
                             </tr>
 
-                            <!-- Project 3 -->
-                            <tr class="project-row" data-id="content-auto">
-                                <td class="project-name">Content Automation Bot</td>
-                                <td>Scripting</td>
-                                <td>Selenium, Bash</td>
-                                <td>2023</td>
+                            <!-- Project 3: MAC Exam Hub -->
+                            <tr class="project-row" data-id="mac-exam-hub">
+                                <td class="project-name">MAC Exam Hub</td>
+                                <td>Developer</td>
+                                <td>JavaScript</td>
+                                <td>2026</td>
                                 <td class="fav-cell">
-                                    <button class="fav-btn"
-                                        onclick="window.handleFavoriteClick(event, 'content-auto', 'Content Automation Bot', 'Scripting', 'Selenium, Bash', '2023')">
+                                    <button class="fav-btn" aria-label="Save MAC Exam Hub to favorites"
+                                        onclick="window.handleFavoriteClick(event, 'mac-exam-hub', 'MAC Exam Hub', 'Developer', 'JavaScript', '2026')">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                            <path
+                                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- Project 4: mac-data-sync -->
+                            <tr class="project-row" data-id="mac-data-sync">
+                                <td class="project-name">mac-data-sync</td>
+                                <td>Developer</td>
+                                <td>JavaScript</td>
+                                <td>2026</td>
+                                <td class="fav-cell">
+                                    <button class="fav-btn" aria-label="Save mac-data-sync to favorites"
+                                        onclick="window.handleFavoriteClick(event, 'mac-data-sync', 'mac-data-sync', 'Developer', 'JavaScript', '2026')">
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                             <path
                                                 d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
@@ -321,6 +350,41 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <p class="projects-note">Tap a project row to open its discussion. Source code on
+                    <a href="https://github.com/ItsRayZer" target="_blank" rel="noopener">GitHub</a> — Axofy is live
+                    at <a href="https://axofy.vercel.app/" target="_blank" rel="noopener">axofy.vercel.app</a>.
+                </p>
+            </div>
+        </section>
+
+        <!-- Services Section (id kept as #protocols — the nav and js/main.js already target it) -->
+        <section id="protocols" class="protocols-section content-section">
+            <div class="container">
+                <h2 class="section-title glitch-text" data-text="SERVICES">SERVICES</h2>
+
+                <div class="protocols-grid">
+                    <div class="protocol-card">
+                        <h3>Portfolio &amp; Landing Sites</h3>
+                        <p class="protocol-desc">Premium, fast, mobile first websites with an Apple inspired look —
+                            for creators, students and small businesses.</p>
+                        <div class="protocol-price">Under ₹5,000</div>
+                    </div>
+
+                    <div class="protocol-card featured">
+                        <div class="featured-badge">FULL BUILD</div>
+                        <h3>Web Applications</h3>
+                        <p class="protocol-desc">Full web apps with premium UI and a strong backend — auth, databases,
+                            dashboards and payments included.</p>
+                        <div class="protocol-price">Priced by scope</div>
+                    </div>
+
+                    <div class="protocol-card">
+                        <h3>Backend &amp; APIs</h3>
+                        <p class="protocol-desc">Firebase and Firestore setups, serverless APIs, Cloudflare Workers
+                            and third party integrations.</p>
+                        <div class="protocol-price">Priced by scope</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -336,7 +400,8 @@
                 <p class="contact-subtext">
                     Discover how to <strong>modernize</strong> your <strong>digital presence</strong>
                     and <strong>automate</strong> key processes to free up <strong>time</strong> and
-                    <strong>resources</strong>
+                    <strong>resources</strong> — or write to me directly at
+                    <a href="mailto:mrabensojan@gmail.com">mrabensojan@gmail.com</a>
                 </p>
 
                 <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
@@ -364,13 +429,20 @@
                 </form>
 
                 <div class="social-links-graffico">
-                    <a href="https://linkedin.com/in/abensojan" target="_blank" aria-label="LinkedIn">
+                    <a href="https://www.linkedin.com/in/aben-sojan-rayzer/" target="_blank" rel="noopener"
+                        aria-label="LinkedIn">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
                         </svg>
                     </a>
-                    <a href="https://instagram.com/rayzer.co" target="_blank" aria-label="Instagram">
+                    <a href="https://github.com/ItsRayZer" target="_blank" rel="noopener" aria-label="GitHub">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.16.59.67.5A10 10 0 0 0 22 12 10 10 0 0 0 12 2z" />
+                        </svg>
+                    </a>
+                    <a href="https://instagram.com/rayzer.co" target="_blank" rel="noopener" aria-label="Instagram">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
