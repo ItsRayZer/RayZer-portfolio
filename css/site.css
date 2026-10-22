@@ -1,0 +1,1557 @@
+/* ============================================================
+   Aben Sojan — Portfolio (single consolidated stylesheet)
+   Replaces: style.css, hero-elements.css, nav-graffico.css,
+   floating-dots.css, professional-sections.css, auth-styles.css
+   (auth styles are folded in below — admin.html / dashboard.html
+   still load the original files from the repo, untouched.)
+   Performance rules applied throughout:
+   - No backdrop-filter, no webfonts, no infinite CSS animations
+     except the banner marquee and the tiny scroll wheel.
+   - Animations use transform / opacity only.
+   - Gold (#d4af37) is kept ONLY for the auth / favourite /
+     comment micro-UI states that js modules were built around.
+   ============================================================ */
+
+:root {
+    --bg-color: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-card: #151515;
+    --text-color: #e8dcc8;
+    --text-muted: #9a9a9a;
+    --text-subtle: #6f6f6f;
+    --border-color: rgba(232, 220, 200, 0.12);
+    --accent-border: #2a2a2a;
+    --gold: #d4af37;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-display: Georgia, "Times New Roman", Times, serif;
+    --nav-height: 64px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    overflow-x: clip;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    width: 100%;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+}
+
+/* Custom Scrollbar (cheap, static) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2a2a2a;
+    border-radius: 4px;
+}
+
+/* --- Background layers --- */
+#canvas-container {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+#canvas-container canvas {
+    display: block;
+}
+
+/* Floating dots: js/main.js creates 100 .dot elements here.
+   They are now STATIC (the old 20s float animation on 100 nodes
+   was a permanent compositor cost). Same look, zero motion. */
+.dots-background {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.dot {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(232, 220, 200, 0.15);
+    border-radius: 50%;
+}
+
+.dot.large {
+    width: 3px;
+    height: 3px;
+    background: rgba(232, 220, 200, 0.2);
+}
+
+.dot.small {
+    width: 1px;
+    height: 1px;
+    background: rgba(232, 220, 200, 0.1);
+}
+
+/* --- Navigation (solid pill, no backdrop blur) --- */
+nav.fixed-nav {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 999;
+    background: rgba(18, 18, 18, 0.97);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    max-width: 94%;
+    width: auto;
+    opacity: 0;
+    /* faded in by the GSAP scroll intro in js/main.js, as before */
+}
+
+.nav-logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text-color);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    padding-left: 0.75rem;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.nav-item {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.6rem 1.1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-color);
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-item:hover {
+    background: rgba(232, 220, 200, 0.08);
+}
+
+.nav-item.active {
+    background: var(--text-color);
+    color: #1a1a1a;
+}
+
+/* Mobile Hamburger */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background: var(--text-color);
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* --- Giant intro wordmark (animated by js/main.js) --- */
+.rayzer-logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.4rem, 9.5vw, 9rem);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+    pointer-events: none;
+    transform-origin: center center;
+    color: var(--text-color);
+    /* old 40px text-shadow glow removed: it made the GSAP scale(20)
+       zoom repaint a huge blurred area every frame */
+}
+
+.letter-r {
+    z-index: 2;
+}
+
+.rest-of-word {
+    display: none;
+    overflow: hidden;
+    max-width: 0;
+    opacity: 0;
+    white-space: nowrap;
+    vertical-align: bottom;
+}
+
+.letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateX(-20px);
+    font-family: inherit;
+}
+
+/* --- Hero --- */
+.hero-spacer {
+    height: 100vh;
+    height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.hero-content-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-tagline {
+    position: absolute;
+    bottom: 22%;
+    left: 4rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: #ff6b6b;
+    font-weight: 600;
+    opacity: 0;
+    animation: fadeInLeft 0.7s ease-out 0.25s forwards;
+}
+
+.hero-subtitle {
+    position: absolute;
+    bottom: 13%;
+    left: 4rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 4vw, 3.6rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.02em;
+    color: var(--text-color);
+    line-height: 1.2;
+    max-width: 600px;
+    opacity: 0;
+    animation: fadeInLeft 0.7s ease-out 0.4s forwards;
+}
+
+.hero-description {
+    position: absolute;
+    bottom: 7%;
+    left: 4rem;
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+    color: var(--text-muted);
+    max-width: 500px;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeInLeft 0.7s ease-out 0.55s forwards;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeInUp 0.7s ease-out 0.7s forwards;
+}
+
+.scroll-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.scroll-icon {
+    width: 24px;
+    height: 40px;
+    border: 2px solid var(--text-muted);
+    border-radius: 12px;
+    position: relative;
+}
+
+.scroll-wheel {
+    width: 4px;
+    height: 8px;
+    background: var(--text-color);
+    border-radius: 2px;
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scrollWheel 2s ease-in-out infinite;
+}
+
+@keyframes scrollWheel {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(15px);
+    }
+}
+
+.hero-stats {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 3rem;
+    display: flex;
+    gap: 2rem;
+    opacity: 0;
+    animation: fadeInUpPlain 0.7s ease-out 0.85s forwards;
+}
+
+.hero-stat {
+    text-align: right;
+}
+
+.stat-value {
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes fadeInUpPlain {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Layout & typography --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.content-section {
+    padding: 5rem 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h2.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.02em;
+    position: relative;
+    display: inline-block;
+    color: var(--text-color);
+    font-style: italic;
+    font-weight: 700;
+}
+
+/* Glitch effect removed: it ran two infinite 0.3s animations on
+   hover with layered copies. The class and data-text attribute
+   stay in the markup (js does not depend on the effect). */
+.glitch-text {
+    position: relative;
+}
+
+.highlight-gold {
+    color: var(--gold);
+}
+
+/* --- Professional hero --- */
+.professional-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 1.25rem 4.5rem;
+    background: var(--bg-color);
+    position: relative;
+}
+
+.hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 6vw, 4.2rem);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--text-color);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-subtext {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: var(--text-muted);
+    line-height: 1.75;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 2.5rem;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0.9rem 2.2rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-primary {
+    background: var(--text-color);
+    color: #0a0a0a;
+}
+
+.btn-primary:hover {
+    background: #f5ebe0;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-color);
+    border: 2px solid var(--text-color);
+}
+
+.btn-secondary:hover {
+    background: rgba(232, 220, 200, 0.1);
+    transform: translateY(-2px);
+}
+
+/* --- Scrolling banner (transform-only marquee) --- */
+.scrolling-banner {
+    background: var(--bg-secondary);
+    color: var(--text-color);
+    padding: 1.1rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    border-top: 1px solid var(--accent-border);
+    border-bottom: 1px solid var(--accent-border);
+}
+
+.banner-content {
+    display: inline-block;
+    animation: scroll-left 28s linear infinite;
+    will-change: transform;
+}
+
+.banner-text {
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 2px;
+}
+
+@keyframes scroll-left {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* --- About --- */
+.about-section {
+    background: var(--bg-color);
+}
+
+.about-content {
+    max-width: 800px;
+}
+
+.about-content p {
+    font-size: clamp(1rem, 1.2vw, 1.12rem);
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 1.4rem;
+}
+
+.about-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* --- Arsenal (skills) --- */
+.arsenal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+}
+
+.arsenal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--accent-border);
+    padding: 2.2rem 1.6rem;
+    position: relative;
+    transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.arsenal-card:hover {
+    transform: translateY(-4px);
+    border-color: #4a4a4a;
+    background: var(--bg-secondary);
+}
+
+.arsenal-number {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 0.9rem;
+    letter-spacing: 2px;
+}
+
+.arsenal-card h3 {
+    font-size: 1.45rem;
+    margin-bottom: 1.1rem;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+}
+
+.arsenal-divider {
+    width: 56px;
+    height: 2px;
+    background: #4a4a4a;
+    margin-bottom: 1.6rem;
+}
+
+.arsenal-list {
+    list-style: none;
+}
+
+.arsenal-list li {
+    font-size: 0.98rem;
+    color: #b5b5b5;
+    margin-bottom: 0.85rem;
+    padding-left: 1.4rem;
+    position: relative;
+}
+
+.arsenal-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+}
+
+/* --- Ships (experience) --- */
+.deployed-ships-section {
+    background: var(--bg-secondary);
+}
+
+.ships-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+}
+
+.ship-card {
+    background: var(--bg-card);
+    border: 1px solid var(--accent-border);
+    padding: 2.2rem 1.6rem;
+    position: relative;
+    transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.ship-card:hover {
+    border-color: #4a4a4a;
+    transform: translateY(-4px);
+    background: #181818;
+}
+
+.ship-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 0.45rem 0.8rem;
+    letter-spacing: 1px;
+    color: #000;
+    background: #a3a3a3;
+}
+
+.ship-badge.leadership {
+    background: #666666;
+    color: #ffffff;
+}
+
+.ship-badge.original {
+    background: #888888;
+}
+
+/* Section marker classes (backgrounds come from .content-section) */
+.arsenal-section,
+.projects-section {
+    background: var(--bg-color);
+}
+
+.ship-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+    color: #ffffff;
+    padding-right: 5.5rem;
+}
+
+.ship-company {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ship-description {
+    font-size: 0.98rem;
+    line-height: 1.65;
+    color: #b5b5b5;
+}
+
+/* --- Projects table + favourites + comments --- */
+.timeline-container {
+    margin-top: 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.timeline-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.timeline-table th {
+    text-align: left;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--text-subtle);
+    font-weight: 600;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--accent-border);
+}
+
+.timeline-table td {
+    padding: 1.1rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: #c9c9c9;
+    font-size: 0.98rem;
+    vertical-align: middle;
+}
+
+.project-row {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.project-row:hover {
+    background: rgba(232, 220, 200, 0.04);
+}
+
+.project-name {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.fav-cell {
+    text-align: right;
+    width: 60px;
+}
+
+.projects-note {
+    margin-top: 1.4rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.projects-note a {
+    color: var(--text-color);
+}
+
+/* Comments (rows injected by js/comments-ui.js — previously unstyled) */
+.comments-row td {
+    background: #0e0e0e;
+    padding: 0;
+}
+
+.comments-cell {
+    padding: 0;
+}
+
+.comment-form-container {
+    margin-top: 0.4rem;
+}
+
+.comments-container {
+    padding: 1.4rem 1.2rem 1.6rem;
+}
+
+.comments-title {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 1.1rem;
+    font-weight: 600;
+}
+
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+}
+
+.comment-item {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+}
+
+.comment-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.comment-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.comment-author {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.92rem;
+}
+
+.comment-date {
+    color: var(--text-subtle);
+    font-size: 0.8rem;
+}
+
+.comment-text {
+    color: #c9c9c9;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin-top: 0.2rem;
+    overflow-wrap: anywhere;
+}
+
+.delete-comment-btn {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-subtle);
+    font-size: 1.15rem;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.delete-comment-btn:hover {
+    color: #ff6b6b;
+}
+
+.no-comments,
+.loading-comments {
+    color: var(--text-subtle);
+    font-size: 0.92rem;
+}
+
+.comment-form {
+    display: flex;
+    gap: 0.7rem;
+}
+
+.comment-input {
+    flex: 1;
+    min-height: 44px;
+    min-width: 0;
+    padding: 0.7rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--accent-border);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: rgba(212, 175, 55, 0.55);
+}
+
+.comment-submit {
+    min-height: 44px;
+    padding: 0 1.3rem;
+    background: var(--text-color);
+    color: #0a0a0a;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+}
+
+/* --- Services / protocols --- */
+.protocols-section {
+    background: var(--bg-color);
+}
+
+.protocols-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+}
+
+.protocol-card {
+    background: var(--bg-card);
+    border: 1px solid var(--accent-border);
+    padding: 2.4rem 1.7rem;
+    text-align: center;
+    position: relative;
+    transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.protocol-card:hover {
+    border-color: #4a4a4a;
+    transform: translateY(-4px);
+    background: var(--bg-secondary);
+}
+
+.protocol-card.featured {
+    border-color: #4a4a4a;
+    background: #181818;
+}
+
+.featured-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text-color);
+    color: #000;
+    font-size: 0.62rem;
+    font-weight: 700;
+    padding: 0.4rem 1.1rem;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.protocol-card h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.9rem;
+    color: #ffffff;
+}
+
+.protocol-desc {
+    font-size: 0.97rem;
+    color: #b5b5b5;
+    margin-bottom: 1.8rem;
+    line-height: 1.65;
+}
+
+.protocol-price {
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+/* --- Contact (Graffico) --- */
+.contact-section-graffico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5.5rem 5%;
+    background: var(--bg-color);
+    width: 100%;
+}
+
+.contact-section-graffico .container {
+    max-width: 1100px;
+}
+
+.contact-headline {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--text-color);
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 1.4rem;
+}
+
+.contact-subtext {
+    text-align: center;
+    font-size: clamp(0.95rem, 1.2vw, 1.08rem);
+    color: var(--text-muted);
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+}
+
+.contact-subtext strong {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.contact-subtext a {
+    color: var(--gold);
+}
+
+.contact-form-graffico {
+    max-width: 1100px;
+    margin: 0 auto 2.5rem;
+    width: 100%;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 1.1rem 1.3rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(232, 220, 200, 0.2);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 16px;
+    font-family: inherit;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: var(--text-subtle);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: rgba(212, 175, 55, 0.55);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 160px;
+}
+
+.btn-submit-graffico {
+    width: 100%;
+    min-height: 52px;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 2px solid var(--gold);
+    border-radius: 50px;
+    color: var(--gold);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    margin-top: 0.6rem;
+    font-family: inherit;
+}
+
+.btn-submit-graffico:hover {
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateY(-2px);
+}
+
+.btn-submit-graffico:disabled {
+    opacity: 0.6;
+    cursor: wait;
+    transform: none;
+}
+
+.form-success-message {
+    text-align: center;
+    padding: 1.3rem;
+    margin-top: 1.6rem;
+    background: rgba(85, 255, 85, 0.08);
+    border: 1px solid rgba(85, 255, 85, 0.3);
+    border-radius: 8px;
+    color: #7dff7d;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.social-links-graffico {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 2.5rem 0 1.8rem;
+}
+
+.social-links-graffico a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.social-links-graffico a:hover {
+    color: var(--text-color);
+}
+
+.footer-links {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-subtle);
+}
+
+.footer-links a {
+    color: var(--text-subtle);
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: var(--text-muted);
+}
+
+.footer-links span {
+    margin: 0 0.8rem;
+}
+
+/* --- Auth UI (folded from auth-styles.css; injected by js/auth-ui.js) --- */
+.auth-container-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-signin-nav {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    color: var(--gold);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-signin-nav:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: #ffffff;
+}
+
+.btn-signin-nav svg {
+    width: 16px;
+    height: 16px;
+}
+
+.btn-signout-nav {
+    min-height: 44px;
+    background: transparent;
+    border: 1px solid rgba(255, 75, 75, 0.5);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-signout-nav:hover {
+    background: rgba(255, 75, 75, 0.1);
+    color: #ffffff;
+}
+
+.user-profile-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(212, 175, 55, 0.08);
+    padding: 0.45rem 0.9rem;
+    border-radius: 50px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.user-avatar-nav {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    object-fit: cover;
+}
+
+.user-name-nav {
+    color: #ffffff;
+    font-size: 0.88rem;
+    font-weight: 500;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-badge-small {
+    padding: 0.15rem 0.4rem;
+    background: var(--gold);
+    color: #000;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 3px;
+}
+
+.admin-panel-nav {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.dashboard-link-nav {
+    color: var(--gold);
+    font-size: 1.05rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
+}
+
+/* Favourite heart (used by js/favorites-ui.js) */
+.fav-btn {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.25);
+    transition: color 0.2s ease, transform 0.2s ease;
+    padding: 0;
+}
+
+.fav-btn:hover {
+    color: rgba(212, 175, 55, 0.6);
+    transform: scale(1.08);
+}
+
+.fav-btn.active {
+    color: var(--gold);
+    animation: heart-pop 0.3s ease;
+}
+
+@keyframes heart-pop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.25);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* --- Responsive: tablet --- */
+@media (max-width: 1024px) {
+    .nav-item {
+        padding: 0.6rem 0.85rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* --- Responsive: mobile --- */
+@media (max-width: 820px) {
+    nav.fixed-nav {
+        top: 0.75rem;
+        padding: 0.4rem 0.6rem;
+        gap: 0.25rem;
+        max-width: 96%;
+        width: auto;
+        justify-content: space-between;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    /* Dropdown panel under the pill (was a full-height off-canvas
+       drawer with backdrop blur — heavier and fragile inside the
+       transformed nav). Same .active hook the toggle button uses. */
+    .nav-menu {
+        position: absolute;
+        top: calc(100% + 0.6rem);
+        right: 0;
+        width: min(300px, 88vw);
+        max-height: calc(100svh - 110px);
+        overflow-y: auto;
+        background: #141414;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 18px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 0.6rem;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+    }
+
+    .nav-menu.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .nav-item {
+        padding: 0.8rem 1rem;
+        font-size: 1rem;
+        border-radius: 12px;
+        text-align: left;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .nav-item.active {
+        background: rgba(232, 220, 200, 0.14);
+        color: var(--text-color);
+    }
+
+    .auth-container-menu {
+        flex-wrap: wrap;
+        padding: 0.4rem 0.2rem 0.2rem;
+    }
+
+    .content-section {
+        padding: 3.5rem 1.1rem;
+    }
+
+    .hero-tagline,
+    .hero-subtitle,
+    .hero-description {
+        left: 1.4rem;
+        right: 1.4rem;
+    }
+
+    .hero-tagline {
+        bottom: 30%;
+    }
+
+    .hero-subtitle {
+        bottom: 19%;
+    }
+
+    .hero-description {
+        bottom: 12%;
+        max-width: none;
+    }
+
+    .hero-stats {
+        bottom: 1.4rem;
+        right: 1.4rem;
+        gap: 1.2rem;
+    }
+
+    .scroll-indicator {
+        display: none;
+    }
+
+    .professional-hero {
+        padding: 4.5rem 1.1rem 3.5rem;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        max-width: 340px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-section-graffico {
+        padding: 4rem 1.1rem;
+    }
+
+    /* Projects become stacked cards — no sideways scrolling */
+    .timeline-container {
+        overflow-x: visible;
+    }
+
+    .timeline-table {
+        min-width: 0;
+    }
+
+    .timeline-table thead {
+        display: none;
+    }
+
+    .timeline-table,
+    .timeline-table tbody {
+        display: block;
+    }
+
+    .project-row {
+        display: block;
+        position: relative;
+        padding: 0.4rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .project-row td {
+        display: block;
+        border-bottom: none;
+        padding: 0.25rem 3.4rem 0.25rem 0.4rem;
+    }
+
+    .project-row .project-name {
+        font-size: 1.15rem;
+        padding-top: 0.9rem;
+    }
+
+    .project-row .fav-cell {
+        position: absolute;
+        top: 0.5rem;
+        right: 0;
+        width: auto;
+        padding: 0;
+    }
+
+    .comments-row {
+        display: block;
+    }
+
+    .comments-row td {
+        display: block;
+        padding: 0;
+    }
+
+    .comment-form {
+        flex-direction: column;
+    }
+
+    .comment-submit {
+        width: 100%;
+    }
+}
+
+/* --- Small phones --- */
+@media (max-width: 480px) {
+    .nav-logo {
+        font-size: 0.92rem;
+    }
+
+    .banner-text {
+        font-size: 0.9rem;
+    }
+
+    h2.section-title {
+        font-size: 1.8rem;
+    }
+
+    .ship-card h3 {
+        padding-right: 4.6rem;
+        font-size: 1.15rem;
+    }
+}
+
+/* --- Reduced motion: stop every loop and smooth-scroll --- */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .banner-content,
+    .scroll-wheel {
+        animation: none;
+    }
+
+    .hero-tagline,
+    .hero-subtitle,
+    .hero-description,
+    .scroll-indicator,
+    .hero-stats {
+        animation-duration: 0.01s;
+        animation-delay: 0s;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+    }
+}
