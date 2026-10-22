@@ -6,22 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aben Sojan | Developer &amp; Founder, Axofy</title>
     <meta name="description"
-        content="Aben Sojan — BCA student at Mar Augusthinose College, Ramapuram, Founder & Developer of Axofy and builder of MacHub. Premium websites and web applications with strong backends.">
+        content="I'm Aben Sojan — a BCA student at Mar Augusthinose College, Ramapuram, founder of Axofy and builder of MacHub. I build premium websites and web applications with strong backends.">
     <link rel="canonical" href="https://abensojan.vercel.app/">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="#050507">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Aben Sojan">
     <meta property="og:title" content="Aben Sojan | Developer &amp; Founder, Axofy">
     <meta property="og:description"
-        content="BCA student building premium web applications — Axofy, MacHub and more. Freelance websites from under ₹5,000.">
+        content="I build premium web applications — Axofy, MacHub and more. Freelance websites from under ₹5,000.">
     <meta property="og:url" content="https://abensojan.vercel.app/">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Aben Sojan | Developer &amp; Founder, Axofy">
     <meta name="twitter:description"
-        content="BCA student building premium web applications — Axofy, MacHub and more. Freelance websites from under ₹5,000.">
+        content="I build premium web applications — Axofy, MacHub and more. Freelance websites from under ₹5,000.">
 
     <!-- Styles: single consolidated stylesheet, system fonts only (no webfont downloads) -->
-    <link rel="stylesheet" href="css/site.css?v=3">
+    <link rel="stylesheet" href="css/site.css?v=4">
 
     <!-- GSAP & Three.js: deferred so they no longer block first paint.
          Deferred classic scripts still execute in document order, before DOMContentLoaded,
@@ -33,15 +33,18 @@
 
 <body>
 
+    <!-- Scroll progress (transform scaleX only, driven by js/visual.js) -->
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
     <!-- Floating Dots Background (dots are created by js/main.js — element must exist) -->
     <div class="dots-background" id="dotsBackground"></div>
 
-    <!-- WebGL Background Container -->
+    <!-- WebGL Background Container (starfield runs on desktop only — see js/main.js) -->
     <div id="canvas-container"></div>
 
-    <!-- Navigation -->
+    <!-- Navigation — floating Liquid Glass pill (real backdrop blur lives here, small surface) -->
     <nav class="fixed-nav">
-        <div class="nav-logo">ABEN SOJAN</div>
+        <div class="nav-logo">Aben Sojan</div>
         <button class="mobile-menu-toggle" aria-label="Toggle menu"
             onclick="document.querySelector('.nav-menu').classList.toggle('active'); this.classList.toggle('active');">
             <span></span>
@@ -59,8 +62,9 @@
             <div id="authContainer" class="auth-container-menu"></div>
         </div>
     </nav>
+
     <!-- Fixed Logo (Global) — giant intro wordmark animated by js/main.js.
-         First letter in .letter-r, the rest in .rest-of-word .letter spans (same hook structure as before). -->
+         First letter in .letter-r, the rest in .rest-of-word .letter spans (hook structure unchanged). -->
     <div class="rayzer-logo">
         <span class="letter-r">A</span>
         <span class="rest-of-word">
@@ -78,19 +82,16 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Hero Section -->
+        <!-- Hero Section (pinned intro stage for js/main.js) -->
         <section class="hero-spacer" id="home">
+            <div class="orb orb-hero" data-depth="14" aria-hidden="true"></div>
             <div class="hero-content-wrapper">
-                <!-- Label like "WEB STUDIO" in Graffico -->
-                <div class="hero-tagline">DEVELOPER &amp; FOUNDER</div>
+                <!-- Availability chip -->
+                <div class="hero-tagline glass-chip"><span class="chip-dot"></span>Available for internships &amp;
+                    freelance work</div>
 
-                <!-- Subtitle below logo (bottom left like Graffico) -->
-                <div class="hero-subtitle">Tech without<br>the weight</div>
-
-                <!-- Short description -->
-                <div class="hero-description">
-                    We kill the friction so your vision stays elevated.
-                </div>
+                <!-- Bottom left statement -->
+                <div class="hero-subtitle">I build premium<br>web apps.</div>
 
                 <!-- Scroll Indicator (Center Bottom) -->
                 <div class="scroll-indicator">
@@ -114,52 +115,83 @@
             </div>
         </section>
 
-        <!-- Professional Hero Section (Second Page) -->
+        <!-- Statement Hero -->
         <section class="professional-hero">
-            <div class="container">
-                <h1 class="hero-headline">Building Structured Digital Systems That Perform.</h1>
-                <p class="hero-subtext">I'm Aben Sojan — a BCA student at Mar Augusthinose College, Ramapuram, and
-                    the Founder &amp; Developer of Axofy. I build premium, fast web applications with strong
-                    backends, including MacHub, the student portal for my college.</p>
+            <div class="container reveal">
+                <div class="eyebrow">Hello, I'm Aben</div>
+                <h1 class="hero-headline">I build <span class="grad-text">premium</span> web apps with serious
+                    backends.</h1>
+                <p class="role-line">Right now I <span id="roleWord" class="role-word">run Axofy, my own live
+                        product</span><span class="role-caret" aria-hidden="true"></span></p>
+                <p class="hero-subtext">I'm a third-semester BCA (Honours) student at Mar Augusthinose College,
+                    Ramapuram. I founded Axofy, a serverless platform running live in production, and I built
+                    MacHub, the student portal my college runs on. I care about interfaces that feel like Apple
+                    made them — and backends that never blink.</p>
                 <div class="hero-cta">
-                    <a href="#work" class="btn-primary">View Work</a>
-                    <a href="#contact" class="btn-secondary">Contact</a>
+                    <a href="#work" class="btn-primary">See my work</a>
+                    <a href="#contact" class="btn-secondary">Get in touch</a>
                 </div>
             </div>
         </section>
 
-        <!-- Scrolling Banner -->
+        <!-- Scrolling Banner (content is doubled by js/main.js — keep one copy here) -->
         <div class="scrolling-banner">
             <div class="banner-content">
-                <span class="banner-text">WEB DEVELOPMENT • BACKEND SYSTEMS • PREMIUM UI • CYBERSECURITY •
-                    FIREBASE • JAVASCRIPT • PYTHON • WEB DEVELOPMENT • BACKEND SYSTEMS • PREMIUM UI •
-                    CYBERSECURITY • FIREBASE • JAVASCRIPT • PYTHON • </span>
+                <span class="banner-text">WEB DEVELOPMENT ✦ BACKEND SYSTEMS ✦ PREMIUM UI ✦ CYBERSECURITY ✦
+                    FIREBASE ✦ JAVASCRIPT ✦ PYTHON ✦ WEB DEVELOPMENT ✦ BACKEND SYSTEMS ✦ PREMIUM UI ✦
+                    CYBERSECURITY ✦ FIREBASE ✦ JAVASCRIPT ✦ PYTHON ✦ </span>
             </div>
         </div>
 
         <!-- About Section -->
         <section id="about" class="about-section content-section">
             <div class="container">
-                <h2 class="section-title">About</h2>
-                <div class="about-content">
-                    <p>Aben Sojan is a BCA (Honours) student at Mar Augusthinose College, Ramapuram, affiliated with
-                        Mahatma Gandhi University, Kottayam — currently pursuing his degree, 2025 to 2029. He builds
-                        real, live products while studying.</p>
-                    <p>He is the Founder &amp; Developer of Axofy, a serverless SMM platform running live on Vercel,
-                        and the builder of MacHub, a student portal for his college. What he loves building most is
-                        premium looking web applications — Apple inspired, modern in style — with strong backend
-                        work behind them.</p>
-                    <p>At college he is Technical Lead of NEXUS, the BCA department association, and Magazine Editor
-                        of the College Student Council for 2026. He is open to internships and to freelance website
-                        projects for clients.</p>
+                <div class="section-head reveal">
+                    <div class="eyebrow">About</div>
+                    <h2 class="section-title">A student who ships.</h2>
+                </div>
+                <div class="bento-grid">
+                    <div class="bento-card bento-wide reveal">
+                        <h3>I'm Aben Sojan</h3>
+                        <p>I'm a BCA (Honours) student at Mar Augusthinose College, Ramapuram, affiliated with
+                            Mahatma Gandhi University, Kottayam. I don't wait for permission or perfect timing —
+                            I build real products while I study, and I put them live where everyone can use them.</p>
+                        <p>My biggest builds so far are Axofy, a serverless SMM platform running in production on
+                            Vercel, and MacHub, the student portal I built for my college. What I love most is
+                            making web apps that look premium — Apple inspired, modern, glassy — with strong
+                            backend work doing the heavy lifting underneath.</p>
+                    </div>
+                    <div class="bento-card reveal">
+                        <div class="bento-label">Where I study</div>
+                        <p>BCA (Honours), 2025 to 2029 — currently in my 3rd semester. I also represent BCA Batch 1
+                            as class representative.</p>
+                    </div>
+                    <div class="bento-card reveal">
+                        <div class="bento-label">What I lead</div>
+                        <p>I'm Technical Lead of NEXUS, my BCA department association, and Magazine Editor of the
+                            College Student Council for 2026.</p>
+                    </div>
+                    <div class="bento-card reveal">
+                        <div class="bento-label">What I'm into</div>
+                        <p>Cybersecurity and ethical hacking, premium interface design, backend systems — and
+                            turning all three into products people actually use.</p>
+                    </div>
+                    <div class="bento-card reveal">
+                        <div class="bento-label">What I want next</div>
+                        <p>I'm open to internships where I can ship real work, and to freelance website projects
+                            for clients who want the premium look.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- The Arsenal Section -->
+        <!-- Skills Section (cards animated by js/main.js — classes kept) -->
         <section id="arsenal" class="arsenal-section content-section">
             <div class="container">
-                <h2 class="section-title glitch-text" data-text="COMBAT MODULES">COMBAT MODULES</h2>
+                <div class="section-head reveal">
+                    <div class="eyebrow">Skills</div>
+                    <h2 class="section-title">My arsenal.</h2>
+                </div>
 
                 <div class="arsenal-grid">
                     <!-- Core Tech -->
@@ -190,10 +222,10 @@
                         </ul>
                     </div>
 
-                    <!-- Visual Warfare & Editing -->
+                    <!-- Visual & Editing -->
                     <div class="arsenal-card">
                         <div class="arsenal-number">03</div>
-                        <h3>VISUAL WARFARE &amp; EDITING</h3>
+                        <h3>VISUAL &amp; EDITING</h3>
                         <div class="arsenal-divider"></div>
                         <ul class="arsenal-list">
                             <li>Cinematic Editing</li>
@@ -204,10 +236,10 @@
                         </ul>
                     </div>
 
-                    <!-- Security & Recovery -->
+                    <!-- Security -->
                     <div class="arsenal-card">
                         <div class="arsenal-number">04</div>
-                        <h3>SECURITY &amp; RECOVERY</h3>
+                        <h3>SECURITY</h3>
                         <div class="arsenal-divider"></div>
                         <ul class="arsenal-list">
                             <li>Cybersecurity &amp; Ethical Hacking</li>
@@ -218,13 +250,27 @@
                         </ul>
                     </div>
                 </div>
+
+                <!-- Skills marquee (pure CSS transform animation) -->
+                <div class="skills-marquee" aria-hidden="true">
+                    <div class="marquee-track">
+                        <span>JavaScript</span><span>Python</span><span>Firebase</span><span>Firestore</span>
+                        <span>Vercel</span><span>Cloudflare Workers</span><span>REST APIs</span><span>HTML/CSS</span>
+                        <span>React</span><span>Git</span><span>JavaScript</span><span>Python</span>
+                        <span>Firebase</span><span>Firestore</span><span>Vercel</span><span>Cloudflare Workers</span>
+                        <span>REST APIs</span><span>HTML/CSS</span><span>React</span><span>Git</span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Deployed Ships Section -->
+        <!-- Experience Section (cards animated by js/main.js — classes kept) -->
         <section id="ships" class="deployed-ships-section content-section">
             <div class="container">
-                <h2 class="section-title text-center glitch-text" data-text="DEPLOYED SHIPS">DEPLOYED SHIPS</h2>
+                <div class="section-head reveal">
+                    <div class="eyebrow">Experience</div>
+                    <h2 class="section-title">What I'm doing right now.</h2>
+                </div>
 
                 <div class="ships-grid">
                     <!-- Ship 1: Axofy -->
@@ -233,9 +279,9 @@
                         <h3>Founder &amp; Developer</h3>
                         <p class="ship-company">Axofy</p>
                         <p class="ship-description">
-                            Built and run Axofy, a serverless SMM panel platform live on Vercel — UPI payment
-                            workflows, live order tracking, a reseller API and an admin dashboard, all shipped and
-                            in production.
+                            I founded Axofy and I run it myself. I built the serverless SMM panel on Vercel — UPI
+                            payment workflows, live order tracking, a reseller API and an admin dashboard — and
+                            it's live in production right now.
                         </p>
                     </div>
 
@@ -245,8 +291,8 @@
                         <h3>Technical Lead, NEXUS</h3>
                         <p class="ship-company">Mar Augusthinose College</p>
                         <p class="ship-description">
-                            Technical Lead of NEXUS, the Association of Computer Applications (BCA department),
-                            for 2026 — and Magazine Editor of the College Student Council the same year.
+                            I lead the tech side of NEXUS, the Association of Computer Applications for the BCA
+                            department, for 2026 — and I edit the College Student Council magazine the same year.
                         </p>
                     </div>
 
@@ -256,8 +302,8 @@
                         <h3>BCA Student &amp; Builder</h3>
                         <p class="ship-company">Mar Augusthinose College</p>
                         <p class="ship-description">
-                            Pursuing BCA (Honours), 2025 to 2029. Built MacHub, the student portal for the college,
-                            while representing BCA Batch 1 as class representative.
+                            I'm pursuing BCA (Honours), 2025 to 2029. Between classes I built MacHub, the student
+                            portal for my college, and I represent BCA Batch 1 as class representative.
                         </p>
                     </div>
                 </div>
@@ -267,9 +313,34 @@
         <!-- Projects Section -->
         <section id="work" class="projects-section content-section">
             <div class="container">
-                <h2 class="section-title glitch-text" data-text="SELECTED WORKS">SELECTED WORKS</h2>
+                <div class="section-head reveal">
+                    <div class="eyebrow">Projects</div>
+                    <h2 class="section-title">Things I've built.</h2>
+                </div>
 
-                <div class="timeline-container">
+                <!-- Featured bento (display only — interactive index with comments/favourites is the table below) -->
+                <div class="feature-grid">
+                    <article class="feature-card tilt reveal">
+                        <div class="feature-tag">FEATURED · STUDENT PORTAL</div>
+                        <h3>MacHub</h3>
+                        <p>I built MacHub because my college needed one place for everything student. I wired it
+                            with Firestore sync and Cloudflare Workers, mobile first, in a dark glass style —
+                            attendance, academics and services without the chaos.</p>
+                        <a class="feature-link" href="https://github.com/ItsRayZer/MacHub" target="_blank"
+                            rel="noopener">See the code →</a>
+                    </article>
+                    <article class="feature-card tilt reveal">
+                        <div class="feature-tag">FEATURED · LIVE PRODUCT</div>
+                        <h3>Axofy</h3>
+                        <p>I built Axofy as a serverless SMM platform and I run it in production — UPI payments,
+                            live order tracking and a reseller API, all on Vercel edge functions.</p>
+                        <a class="feature-link" href="https://axofy.vercel.app/" target="_blank" rel="noopener">Visit
+                            the live site →</a>
+                    </article>
+                </div>
+
+                <!-- Interactive project index: rows open comments, hearts save favourites (js hooks unchanged) -->
+                <div class="timeline-container reveal">
                     <table class="timeline-table">
                         <thead>
                             <tr>
@@ -351,9 +422,9 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="projects-note">Tap a project row to open its discussion. Source code on
-                    <a href="https://github.com/ItsRayZer" target="_blank" rel="noopener">GitHub</a> — Axofy is live
-                    at <a href="https://axofy.vercel.app/" target="_blank" rel="noopener">axofy.vercel.app</a>.
+                <p class="projects-note">Tap a project row to open its discussion. All my code lives on
+                    <a href="https://github.com/ItsRayZer" target="_blank" rel="noopener">GitHub</a> — and Axofy is
+                    live at <a href="https://axofy.vercel.app/" target="_blank" rel="noopener">axofy.vercel.app</a>.
                 </p>
             </div>
         </section>
@@ -361,47 +432,50 @@
         <!-- Services Section (id kept as #protocols — the nav and js/main.js already target it) -->
         <section id="protocols" class="protocols-section content-section">
             <div class="container">
-                <h2 class="section-title glitch-text" data-text="SERVICES">SERVICES</h2>
+                <div class="section-head reveal">
+                    <div class="eyebrow">Services</div>
+                    <h2 class="section-title">Work with me.</h2>
+                </div>
 
                 <div class="protocols-grid">
                     <div class="protocol-card">
                         <h3>Portfolio &amp; Landing Sites</h3>
-                        <p class="protocol-desc">Premium, fast, mobile first websites with an Apple inspired look —
-                            for creators, students and small businesses.</p>
+                        <p class="protocol-desc">I design and build premium, fast, mobile first websites with an
+                            Apple inspired liquid glass look — for creators, students and small businesses.</p>
                         <div class="protocol-price">Under ₹5,000</div>
                     </div>
 
                     <div class="protocol-card featured">
                         <div class="featured-badge">FULL BUILD</div>
                         <h3>Web Applications</h3>
-                        <p class="protocol-desc">Full web apps with premium UI and a strong backend — auth, databases,
-                            dashboards and payments included.</p>
+                        <p class="protocol-desc">I build full web apps with premium UI and a strong backend — auth,
+                            databases, dashboards and payments included, like the ones I run myself.</p>
                         <div class="protocol-price">Priced by scope</div>
                     </div>
 
                     <div class="protocol-card">
                         <h3>Backend &amp; APIs</h3>
-                        <p class="protocol-desc">Firebase and Firestore setups, serverless APIs, Cloudflare Workers
-                            and third party integrations.</p>
+                        <p class="protocol-desc">I set up Firebase and Firestore backends, serverless APIs,
+                            Cloudflare Workers and third party integrations that stay fast under load.</p>
                         <div class="protocol-price">Priced by scope</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Section (Graffico Style) -->
+        <!-- Contact Section -->
         <section id="contact" class="contact-section-graffico">
-            <div class="container">
+            <div class="container reveal">
+                <div class="eyebrow">Contact</div>
                 <h2 class="contact-headline">
-                    Ready to reclaim <span class="highlight-gold">time</span><br>
-                    and scale your <span class="highlight-gold">business</span>?
+                    Tell me what <span class="highlight-gold">you're</span><br>
+                    building <span class="highlight-gold">next</span>.
                 </h2>
 
                 <p class="contact-subtext">
-                    Discover how to <strong>modernize</strong> your <strong>digital presence</strong>
-                    and <strong>automate</strong> key processes to free up <strong>time</strong> and
-                    <strong>resources</strong> — or write to me directly at
-                    <a href="mailto:mrabensojan@gmail.com">mrabensojan@gmail.com</a>
+                    I reply fast, I quote honestly, and I build like it's my own product — because my name goes
+                    on it. Write to me directly at
+                    <a href="mailto:mrabensojan@gmail.com">mrabensojan@gmail.com</a> or use the form:
                 </p>
 
                 <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
@@ -416,11 +490,11 @@
                     </div>
 
                     <textarea id="contactMessage" name="entry.1836713341"
-                        placeholder="Hi, I'd like to request a free consultation!" class="form-textarea" rows="6"
+                        placeholder="Hi Aben, I'd like to talk about a project..." class="form-textarea" rows="6"
                         required></textarea>
 
                     <button type="submit" class="btn-submit-graffico">
-                        REQUEST A FREE CONSULTATION
+                        SEND MESSAGE
                     </button>
 
                     <div class="form-success-message" id="formSuccessMessage" style="display: none;">
@@ -450,11 +524,10 @@
                     </a>
                 </div>
 
-                <div class="footer-links">
-                    <a href="#">Privacy Policy</a>
-                    <span>|</span>
-                    <a href="#">Cookie Policy</a>
-                </div>
+                <footer class="site-footer">
+                    <p>© 2026 Aben Sojan — I designed and built this site myself.</p>
+                    <a href="#home" class="to-top">Back to top ↑</a>
+                </footer>
             </div>
         </section>
     </main>
@@ -469,7 +542,10 @@
     <script type="module" src="js/db-service.js?v=2"></script>
     <script type="module" src="js/comments-ui.js?v=2"></script>
     <script type="module" src="js/favorites-ui.js?v=2"></script>
-    <script src="js/main.js?v=2"></script>
+    <script src="js/main.js?v=3"></script>
+
+    <!-- v2 visual layer (reveals, rotator, parallax, tilt, progress) -->
+    <script src="js/visual.js?v=1"></script>
 </body>
 
 </html>
