@@ -1,551 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aben Sojan | Developer &amp; Founder, Axofy</title>
-    <meta name="description"
-        content="I'm Aben Sojan — a BCA student at Mar Augusthinose College, Ramapuram, founder of Axofy and builder of MacHub. I build premium websites and web applications with strong backends.">
-    <link rel="canonical" href="https://abensojan.vercel.app/">
-    <meta name="theme-color" content="#050507">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Aben Sojan">
-    <meta property="og:title" content="Aben Sojan | Developer &amp; Founder, Axofy">
-    <meta property="og:description"
-        content="I build premium web applications — Axofy, MacHub and more. Freelance websites from under ₹5,000.">
-    <meta property="og:url" content="https://abensojan.vercel.app/">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Aben Sojan | Developer &amp; Founder, Axofy">
-    <meta name="twitter:description"
-        content="I build premium web applications — Axofy, MacHub and more. Freelance websites from under ₹5,000.">
-
-    <!-- Styles: single consolidated stylesheet, system fonts only (no webfont downloads) -->
-    <link rel="stylesheet" href="css/site.css?v=4">
-
-    <!-- GSAP & Three.js: deferred so they no longer block first paint.
-         Deferred classic scripts still execute in document order, before DOMContentLoaded,
-         so js/main.js finds the THREE / gsap / ScrollTrigger globals exactly as before. -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aben Sojan — Web Developer</title>
+<meta name="description" content="Aben Sojan (RayZer), freelance web developer and founder of Axofy. Premium, mobile-first websites and web apps.">
+<meta name="theme-color" content="#050505">
+<meta property="og:title" content="Aben Sojan — Web Developer"><meta property="og:description" content="Premium, mobile-first websites and web apps. Founder of Axofy."><meta property="og:type" content="website"><meta property="og:url" content="https://abensojan.vercel.app">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Aben Sojan","alternateName":"RayZer","jobTitle":"Web Developer, Founder of Axofy","url":"https://abensojan.vercel.app","sameAs":["https://github.com/ItsRayZer","https://www.linkedin.com/in/aben-sojan-rayzer/","https://axofy.vercel.app"],"address":{"@type":"PostalAddress","addressRegion":"Kerala","addressCountry":"IN"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050505;--ink:#ece8e1;--mute:rgba(236,232,225,.5);--line:rgba(236,232,225,.12);--acc:#ff5a2c;--mono:'JetBrains Mono',ui-monospace,monospace;--sans:'Inter',-apple-system,'SF Pro Display',sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none}
+@media(hover:none){body{cursor:auto}.cur,.curd{display:none}}
+a{color:inherit;text-decoration:none;cursor:none}
+::selection{background:var(--acc);color:#000}
+#gl{position:fixed;inset:0;z-index:0;width:100%;height:100%;pointer-events:none}
+main,header,footer{position:relative;z-index:2}
+.wrap{max-width:1200px;margin:0 auto;padding:0 22px}
+.mono{font:500 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+/* loader */
+.load{position:fixed;inset:0;z-index:500;background:#000;display:flex;align-items:flex-end;justify-content:space-between;padding:28px;transition:transform 1.1s cubic-bezier(.76,0,.24,1)}
+.load b{font:800 clamp(70px,20vw,220px)/.8 var(--sans);letter-spacing:-.06em}
+.load.out{transform:translateY(-101%)}
+/* cursor */
+.cur,.curd{position:fixed;top:0;left:0;pointer-events:none;z-index:400;border-radius:50%;mix-blend-mode:difference;background:#fff}
+.cur{width:44px;height:44px;margin:-22px 0 0 -22px;transition:width .35s,height .35s,margin .35s}
+.curd{width:6px;height:6px;margin:-3px 0 0 -3px}
+.cur.big{width:90px;height:90px;margin:-45px 0 0 -45px}
+/* nav */
+nav{position:fixed;top:calc(18px + env(safe-area-inset-top,0px));left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 22px;mix-blend-mode:difference}
+nav b{font-weight:800;letter-spacing:-.03em}
+nav div{display:flex;gap:26px}
+nav a{font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;position:relative}
+nav a::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.76,0,.24,1)}
+nav a:hover::after{transform:scaleX(1);transform-origin:left}
+/* hero */
+.hero{height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:60px;perspective:1200px}
+.h1{font-weight:800;font-size:clamp(54px,14.5vw,230px);line-height:.84;letter-spacing:-.065em;transform-style:preserve-3d;will-change:transform}
+.h1 .l{display:block;overflow:hidden;padding-bottom:.06em}
+.h1 .c{display:inline-block;transform:translateY(110%) rotateX(-70deg);transition:transform 1.2s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i)*40ms + 1.3s)}
+.go .h1 .c{transform:none}
+.h1 .o{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.hero-meta{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-top:34px;opacity:0;transform:translateY(20px);transition:all 1.2s 2.1s cubic-bezier(.16,1,.3,1)}
+.go .hero-meta{opacity:1;transform:none}
+.hero-meta p{max-width:430px;color:var(--mute);font-size:clamp(15px,2vw,18px);line-height:1.5}
+.hero-meta p b{color:var(--ink);font-weight:500}
+.scrl{width:1px;height:70px;background:var(--line);position:relative;overflow:hidden}
+.scrl::after{content:"";position:absolute;left:0;top:-100%;width:100%;height:100%;background:var(--acc);animation:sc 2s cubic-bezier(.76,0,.24,1) infinite}
+@keyframes sc{to{top:100%}}
+/* marquee */
+.mq{overflow:hidden;padding:34px 0;border-block:1px solid var(--line);background:rgba(5,5,5,.6);backdrop-filter:blur(10px)}
+.mq div{display:flex;gap:50px;width:max-content;will-change:transform}
+.mq span{font:800 clamp(36px,7vw,90px)/1 var(--sans);letter-spacing:-.05em;white-space:nowrap}
+.mq span:nth-child(even){color:transparent;-webkit-text-stroke:1px var(--ink)}
+/* about */
+section{padding:130px 0}
+.scrub{font-weight:600;font-size:clamp(26px,5vw,60px);line-height:1.12;letter-spacing:-.035em;max-width:1000px}
+.scrub span{opacity:.14;transition:opacity .2s}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:70px}
+.facts div{background:rgba(5,5,5,.78);padding:26px;backdrop-filter:blur(10px)}
+.facts b{display:block;font-size:34px;letter-spacing:-.04em;font-weight:600;margin-bottom:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:40px}
+.chips span{font:400 12px var(--mono);padding:9px 15px;border:1px solid var(--line);border-radius:99px;background:rgba(5,5,5,.6);transition:.4s}
+.chips span:hover{background:var(--ink);color:#000;transform:translateY(-4px)}
+/* work ring */
+.work{height:520vh;position:relative}
+.stick{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:center;justify-content:center;perspective:1700px}
+.wh{position:absolute;top:calc(88px + env(safe-area-inset-top,0px));left:22px;z-index:3}
+.big-n{position:absolute;font:800 clamp(200px,45vw,640px)/.8 var(--sans);letter-spacing:-.08em;color:transparent;-webkit-text-stroke:1px rgba(236,232,225,.07);bottom:-4vw;right:-2vw;pointer-events:none}
+.scene{position:relative;transform-style:preserve-3d;width:var(--w);height:var(--h);will-change:transform}
+.ring{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
+.pc{position:absolute;inset:0;transform:rotateY(calc(var(--i)*72deg)) translateZ(var(--R));background:linear-gradient(160deg,rgba(26,26,26,.92),rgba(8,8,8,.95));border:1px solid var(--line);border-radius:22px;padding:26px;display:flex;flex-direction:column;gap:14px;backface-visibility:hidden;box-shadow:0 40px 80px -30px #000,inset 0 1px 0 rgba(255,255,255,.1);overflow:hidden}
+.pc::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,90,44,.35),transparent 70%);top:-90px;right:-90px}
+.pc h3{font-size:clamp(30px,4.5vw,44px);letter-spacing:-.045em;line-height:1;margin-top:auto}
+.pc p{color:var(--mute);font-size:14px;line-height:1.5}
+.pc .t{display:flex;flex-wrap:wrap;gap:6px}
+.pc .t i{font:400 10px var(--mono);font-style:normal;padding:5px 9px;border:1px solid var(--line);border-radius:99px}
+.pc a{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;display:inline-flex;justify-content:space-between;padding:13px 16px;border:1px solid var(--line);border-radius:12px;transition:.4s}
+.pc a:hover{background:var(--acc);border-color:var(--acc);color:#000}
+.bar{position:absolute;bottom:calc(28px + env(safe-area-inset-bottom,0px));left:22px;right:22px;height:1px;background:var(--line);z-index:3}
+.bar i{display:block;height:1px;background:var(--acc);width:0}
+/* services */
+.row{display:grid;grid-template-columns:1fr auto;gap:10px 30px;align-items:center;padding:30px 0;border-top:1px solid var(--line);position:relative;overflow:hidden;isolation:isolate;transition:padding .6s cubic-bezier(.16,1,.3,1)}
+.row:last-child{border-bottom:1px solid var(--line)}
+.row::before{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleY(0);transform-origin:bottom;transition:transform .6s cubic-bezier(.76,0,.24,1);z-index:-1}
+.row h4{font-size:clamp(24px,4.2vw,52px);letter-spacing:-.045em;font-weight:600;transition:transform .6s cubic-bezier(.16,1,.3,1),color .4s}
+.row .pr{font:500 clamp(12px,1.6vw,16px) var(--mono);transition:color .4s,transform .6s cubic-bezier(.16,1,.3,1)}
+.row p{grid-column:1/-1;color:var(--mute);font-size:14px;max-height:0;opacity:0;transition:all .6s cubic-bezier(.16,1,.3,1)}
+@media(hover:hover){.row:hover{padding:38px 22px}.row:hover::before{transform:scaleY(1)}.row:hover h4,.row:hover .pr,.row:hover p{color:#000}.row:hover p{max-height:60px;opacity:1}.row:hover h4{transform:translateX(10px)}}
+@media(hover:none){.row p{max-height:60px;opacity:1}}
+.note{margin-top:22px}
+/* contact */
+.ct{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:26px}
+.ct h2{font-weight:800;font-size:clamp(46px,12vw,180px);line-height:.88;letter-spacing:-.065em}
+.ct h2 em{font-style:normal;color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.mail{font-size:clamp(18px,3.6vw,38px);font-weight:500;letter-spacing:-.03em;padding:18px 34px;border:1px solid var(--ink);border-radius:99px;display:inline-block;transition:background .5s,color .5s;will-change:transform}
+.mail:hover{background:var(--ink);color:#000}
+.soc{display:flex;gap:22px;flex-wrap:wrap;justify-content:center}
+.soc a{font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:4px;transition:.4s}
+.soc a:hover{color:var(--acc);border-color:var(--acc)}
+footer{padding:26px 22px 40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.rv{opacity:0;transform:translateY(50px);transition:opacity 1.1s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+.tl{position:relative;margin-top:60px;padding-left:36px}
+.tl::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;background:var(--line)}
+.tl .f{position:absolute;left:0;top:6px;width:1px;height:calc((100% - 12px)*var(--p,0));background:var(--acc);box-shadow:0 0 14px var(--acc)}
+.ti{position:relative;padding:0 0 56px}
+.ti::before{content:"";position:absolute;left:-41px;top:7px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:1px solid var(--ink);transition:all .8s .2s}
+.ti.in::before{background:var(--acc);border-color:var(--acc);box-shadow:0 0 20px var(--acc)}
+.ti h4{font-size:clamp(26px,4.4vw,48px);letter-spacing:-.045em;font-weight:600;margin:10px 0 8px}
+.ti p{color:var(--mute);max-width:560px}
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px}
+.ps{padding-top:24px;position:relative}
+.ps::before,.ps::after{content:"";position:absolute;top:0;left:0;height:1px;width:100%}
+.ps::before{background:var(--line)}
+.ps::after{background:var(--acc);transform:scaleX(0);transform-origin:left;transition:transform 1.8s cubic-bezier(.16,1,.3,1) .3s}
+.ps.in::after{transform:scaleX(1)}
+.ps b{font:800 84px/1 var(--sans);letter-spacing:-.07em;color:transparent;-webkit-text-stroke:1px var(--ink);display:block;margin-bottom:16px}
+.ps h4{font-size:22px;letter-spacing:-.03em;margin-bottom:8px;font-weight:600}
+.ps p{color:var(--mute);font-size:14px;line-height:1.55}
+.fq{border-top:1px solid var(--line)}
+.fq .it{border-bottom:1px solid var(--line)}
+.fq button{all:unset;box-sizing:border-box;width:100%;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:28px 0;font-size:clamp(18px,2.8vw,30px);letter-spacing:-.035em;font-weight:500;cursor:none}
+.pl{width:14px;height:14px;position:relative;flex:none}
+.pl::before,.pl::after{content:"";position:absolute;background:var(--ink);left:0;top:6px;width:14px;height:1px;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.pl::after{transform:rotate(90deg)}
+.it.open .pl::after{transform:rotate(0)}
+.a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .7s cubic-bezier(.16,1,.3,1)}
+.it.open .a{grid-template-rows:1fr}
+.a>div{overflow:hidden}.a p{color:var(--mute);padding-bottom:28px;max-width:640px;line-height:1.6}
+.roll{height:1.3em;overflow:hidden;color:var(--ink)}
+.roll div{animation:rl 10s cubic-bezier(.76,0,.24,1) infinite}
+.roll span{display:block;height:1.3em;line-height:1.3em}
+@keyframes rl{0%,18%{transform:translateY(0)}25%,43%{transform:translateY(-1.3em)}50%,68%{transform:translateY(-2.6em)}75%,93%{transform:translateY(-3.9em)}100%{transform:translateY(-5.2em)}}
+#sp{position:fixed;top:0;left:0;height:2px;width:0;background:var(--acc);z-index:300;box-shadow:0 0 12px var(--acc)}
+.top{display:inline-block;margin-top:8px;border-bottom:1px solid var(--line)}
+@media(hover:none){.fq button{cursor:auto}}
+@media(max-width:640px){nav div{gap:16px}nav a{font-size:10px}.hero-meta{flex-direction:column;align-items:flex-start}.scrl{display:none}section{padding:90px 0}}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}}
+</style>
 </head>
-
 <body>
+<div id="sp"></div>
+<div class="load" id="load"><span class="mono" style="color:#fff">Loading portfolio</span><b id="ld">0</b></div>
+<div class="cur" id="cur"></div><div class="curd" id="curd"></div>
+<canvas id="gl"></canvas>
 
-    <!-- Scroll progress (transform scaleX only, driven by js/visual.js) -->
-    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+<nav><b>Aben Sojan</b><div><a href="#about">About</a><a href="#work">Work</a><a href="#services">Services</a><a href="#contact">Contact</a></div></nav>
 
-    <!-- Floating Dots Background (dots are created by js/main.js — element must exist) -->
-    <div class="dots-background" id="dotsBackground"></div>
+<header class="hero" id="top"><div class="wrap" style="width:100%">
+  <h1 class="h1" id="h1" aria-label="Aben Sojan"><span class="l" data-s="ABEN"></span><span class="l o" data-s="SOJAN"></span></h1>
+  <div class="hero-meta"><p><b>Web developer and founder of Axofy.</b> I build premium, mobile-first websites and web apps with real backend work behind the interface.</p><div class="mono" style="text-align:right">Kerala, India<br>Open to<div class="roll"><div><span>freelance</span><span>internships</span><span>web apps</span><span>dashboards</span><span>freelance</span></div></div></div><div class="scrl"></div></div>
+</div></header>
 
-    <!-- WebGL Background Container (starfield runs on desktop only — see js/main.js) -->
-    <div id="canvas-container"></div>
+<div class="mq"><div id="mq"></div></div>
 
-    <!-- Navigation — floating Liquid Glass pill (real backdrop blur lives here, small surface) -->
-    <nav class="fixed-nav">
-        <div class="nav-logo">Aben Sojan</div>
-        <button class="mobile-menu-toggle" aria-label="Toggle menu"
-            onclick="document.querySelector('.nav-menu').classList.toggle('active'); this.classList.toggle('active');">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <div class="nav-menu">
-            <a href="#home" class="nav-item active">Home</a>
-            <a href="#arsenal" class="nav-item">Skills</a>
-            <a href="#ships" class="nav-item">Experience</a>
-            <a href="#work" class="nav-item">Projects</a>
-            <a href="#protocols" class="nav-item">Services</a>
-            <a href="#contact" class="nav-item">Contact</a>
-            <!-- Auth UI will be inserted here -->
-            <div id="authContainer" class="auth-container-menu"></div>
-        </div>
-    </nav>
+<main>
+<section id="about"><div class="wrap">
+  <div class="mono rv" style="margin-bottom:30px">01 — About</div>
+  <p class="scrub" id="scrub">I am a freelance web developer and the founder and developer of Axofy. I build premium websites and web applications in a clean, Apple-inspired style, with strong backend work, working daily with HTML, CSS, JavaScript, Python, Firebase and Vercel. Clean code, fast pages, clear communication from first message to handover.</p>
+  <div class="facts rv">
+    <div><b data-n="5">0</b><span class="mono">Years hands-on</span></div>
+    <div><b data-n="13">0</b><span class="mono">GitHub repos</span></div>
+    <div><b data-n="3">0</b><span class="mono">Live products</span></div>
+    <div><b id="clk">--:--</b><span class="mono">Kerala time, IST</span></div>
+  </div>
+  <div class="chips rv"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Python</span><span>Firebase</span><span>Firestore</span><span>Vercel</span><span>Cloudflare Workers</span><span>Zustand</span><span>REST APIs</span><span>GitHub</span><span>SEO basics</span></div>
+</div></section>
 
-    <!-- Fixed Logo (Global) — giant intro wordmark animated by js/main.js.
-         First letter in .letter-r, the rest in .rest-of-word .letter spans (hook structure unchanged). -->
-    <div class="rayzer-logo">
-        <span class="letter-r">A</span>
-        <span class="rest-of-word">
-            <span class="letter">B</span>
-            <span class="letter">E</span>
-            <span class="letter">N</span>
-            <span class="letter">&nbsp;</span>
-            <span class="letter">S</span>
-            <span class="letter">O</span>
-            <span class="letter">J</span>
-            <span class="letter">A</span>
-            <span class="letter">N</span>
-        </span>
-    </div>
+<section id="exp"><div class="wrap">
+  <div class="mono rv" style="margin-bottom:30px">02 — Experience</div>
+  <h2 class="rv" style="font-size:clamp(34px,7vw,92px);font-weight:800;letter-spacing:-.055em;line-height:.92">Five years of<br>shipping things.</h2>
+  <div class="tl" id="tl"><i class="f"></i>
+    <div class="ti rv"><span class="mono">Oct 2026 — Present</span><h4>Founder and Developer, Axofy</h4><p>Building a premium SMM panel platform on Vercel with UPI payment tracking, Google OAuth admin, a pricing engine and a reseller API.</p></div>
+    <div class="ti rv"><span class="mono">2026 — Present</span><h4>Technical Lead, NEXUS</h4><p>Leading the tech side of the BCA department's Association of Computer Applications at Mar Augusthinose College.</p></div>
+    <div class="ti rv"><span class="mono">Sep 2026 — Present</span><h4>Magazine Editor, Student Council</h4><p>Editing the college student council magazine at MAC.</p></div>
+    <div class="ti rv"><span class="mono">2021 — Present</span><h4>Freelance Web Developer</h4><p>Hands-on web work since about 2021: websites, bug fixes, dashboards and web apps with HTML, CSS, JavaScript, Python and Firebase.</p></div>
+  </div>
+</div></section>
 
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section (pinned intro stage for js/main.js) -->
-        <section class="hero-spacer" id="home">
-            <div class="orb orb-hero" data-depth="14" aria-hidden="true"></div>
-            <div class="hero-content-wrapper">
-                <!-- Availability chip -->
-                <div class="hero-tagline glass-chip"><span class="chip-dot"></span>Available for internships &amp;
-                    freelance work</div>
+<div class="work" id="work"><div class="stick" id="stick">
+  <div class="wh"><div class="mono">03 — Selected work</div><div class="mono" style="color:var(--ink);margin-top:8px">Scroll to rotate</div></div>
+  <div class="big-n" id="bn">01</div>
+  <div class="scene" id="scene"><div class="ring" id="ring">
+    <div class="pc" style="--i:0"><span class="mono">01 — Live</span><h3>Axofy</h3><p>Premium SMM panel at affordable prices. Serverless on Vercel with edge functions, UPI payment tracking, Google OAuth admin login, pricing markup engine and a reseller API.</p><div class="t"><i>Vercel</i><i>OAuth</i><i>UPI flow</i><i>API</i></div><a href="https://axofy.vercel.app" target="_blank" rel="noopener">Visit live <span>↗</span></a></div>
+    <div class="pc" style="--i:1"><span class="mono">02</span><h3>MacHub</h3><p>Student portal for Mar Augusthinose College: attendance, assessments, exams, assignments, seminars and Firestore-synced profiles.</p><div class="t"><i>Firestore</i><i>Zustand</i><i>Workers</i></div><a href="https://github.com/ItsRayZer/MacHub" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
+    <div class="pc" style="--i:2"><span class="mono">03</span><h3>MAC Exam Hub</h3><p>Exam resource hub for MAC students. Everything needed for revision in one fast place.</p><div class="t"><i>Web app</i><i>Student tools</i></div><a href="https://github.com/ItsRayZer/MAC-Exam-Hub" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
+    <div class="pc" style="--i:3"><span class="mono">04</span><h3>This portfolio</h3><p>Real-time WebGL, 3D scroll scenes and first-person copy, written by hand with no framework.</p><div class="t"><i>WebGL</i><i>Three.js</i><i>Vanilla JS</i></div><a href="https://github.com/ItsRayZer/RayZer-portfolio" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
+    <div class="pc" style="--i:4"><span class="mono">05</span><h3>mac-data-sync</h3><p>Data sync tooling that keeps MAC data flowing into the apps that depend on it.</p><div class="t"><i>Sync</i><i>Automation</i></div><a href="https://github.com/ItsRayZer/mac-data-sync" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
+  </div></div>
+  <div class="bar"><i id="bari"></i></div>
+</div></div>
 
-                <!-- Bottom left statement -->
-                <div class="hero-subtitle">I build premium<br>web apps.</div>
+<section id="services"><div class="wrap">
+  <div class="mono rv" style="margin-bottom:40px">04 — Services</div>
+  <div class="rv"><div class="row"><h4>Portfolio website</h4><span class="pr">INR 999 — 1,999</span><p>Personal brand site. Mobile-first, fast, and built to be remembered.</p></div>
+  <div class="row"><h4>Simple or business site</h4><span class="pr">INR 999 — 2,999</span><p>One page to a small multi-page site. Clean, responsive, easy to update.</p></div>
+  <div class="row"><h4>Department or institute site</h4><span class="pr">INR 2,999 — 4,999</span><p>Structured, trustworthy and simple to maintain.</p></div>
+  <div class="row"><h4>Bug fix, redesign, speed</h4><span class="pr">INR 499 — 1,499</span><p>Fix what is broken, polish what is slow.</p></div>
+  <div class="row"><h4>Web app or dashboard</h4><span class="pr">INR 5,000+</span><p>Auth, database, APIs and payment flows. Priced by scope.</p></div>
+  <div class="row"><h4>Hourly</h4><span class="pr">INR 200 / hr</span><p>Flexible help, pay as we go.</p></div></div>
+  <p class="mono note rv">Final price depends on scope. Direct clients: 50% advance, 50% before handover. Platforms: escrow only.</p>
+</div></section>
 
-                <!-- Scroll Indicator (Center Bottom) -->
-                <div class="scroll-indicator">
-                    <div class="scroll-text">SCROLL TO DISCOVER</div>
-                    <div class="scroll-icon">
-                        <div class="scroll-wheel"></div>
-                    </div>
-                </div>
+<section id="process"><div class="wrap">
+  <div class="mono rv" style="margin-bottom:40px">05 — Process</div>
+  <div class="pg">
+    <div class="ps rv"><b>01</b><h4>Brief</h4><p>You message me what you need. I reply with a clear scope and a fixed price.</p></div>
+    <div class="ps rv"><b>02</b><h4>Milestone</h4><p>We start with a small first milestone so you can check my work with zero risk.</p></div>
+    <div class="ps rv"><b>03</b><h4>Build</h4><p>I build it fast and clean, with an update at every step and fixes as you flag them.</p></div>
+    <div class="ps rv"><b>04</b><h4>Handover</h4><p>Final payment, then full files and handover. No surprises.</p></div>
+  </div>
+</div></section>
 
-                <!-- Stats (Bottom Right) -->
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <div class="stat-value">4</div>
-                        <div class="stat-label">CORE PROJECTS</div>
-                    </div>
-                    <div class="hero-stat">
-                        <div class="stat-value">2029</div>
-                        <div class="stat-label">BCA CLASS OF</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<section id="faq"><div class="wrap">
+  <div class="mono rv" style="margin-bottom:40px">06 — Questions</div>
+  <div class="fq rv" id="fq">
+    <div class="it"><button>What can you build?<span class="pl"></span></button><div class="a"><div><p>Portfolio, business and department websites, web apps and dashboards with login systems, APIs and payment flows, plus bug fixes, redesigns and speed work.</p></div></div></div>
+    <div class="it"><button>How does payment work?<span class="pl"></span></button><div class="a"><div><p>Direct clients: 50% advance and 50% before final handover. On freelance platforms I only work through escrow. All files are handed over after final payment.</p></div></div></div>
+    <div class="it"><button>Do you work with clients outside India?<span class="pl"></span></button><div class="a"><div><p>Yes. I work fully remote from Kerala (IST, UTC+05:30) and communicate in English.</p></div></div></div>
+    <div class="it"><button>Are you open to internships?<span class="pl"></span></button><div class="a"><div><p>Yes, I am open to both freelance projects and internships.</p></div></div></div>
+    <div class="it"><button>How is the price decided?<span class="pl"></span></button><div class="a"><div><p>By the work and its complexity. The ranges above are starting points, and you get a fixed quote before anything begins.</p></div></div></div>
+  </div>
+</div></section>
 
-        <!-- Statement Hero -->
-        <section class="professional-hero">
-            <div class="container reveal">
-                <div class="eyebrow">Hello, I'm Aben</div>
-                <h1 class="hero-headline">I build <span class="grad-text">premium</span> web apps with serious
-                    backends.</h1>
-                <p class="role-line">Right now I <span id="roleWord" class="role-word">run Axofy, my own live
-                        product</span><span class="role-caret" aria-hidden="true"></span></p>
-                <p class="hero-subtext">I'm a third-semester BCA (Honours) student at Mar Augusthinose College,
-                    Ramapuram. I founded Axofy, a serverless platform running live in production, and I built
-                    MacHub, the student portal my college runs on. I care about interfaces that feel like Apple
-                    made them — and backends that never blink.</p>
-                <div class="hero-cta">
-                    <a href="#work" class="btn-primary">See my work</a>
-                    <a href="#contact" class="btn-secondary">Get in touch</a>
-                </div>
-            </div>
-        </section>
+<section class="ct" id="contact">
+  <div class="mono rv">07 — Contact</div>
+  <h2 class="rv">Let's build<br><em>something.</em></h2>
+  <a class="mail rv" id="mail" href="mailto:mrabensojan@gmail.com">mrabensojan@gmail.com</a>
+  <div class="soc rv"><a href="https://github.com/ItsRayZer" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/aben-sojan-rayzer/" target="_blank" rel="noopener">LinkedIn</a><a href="https://axofy.vercel.app" target="_blank" rel="noopener">Axofy</a></div>
+</section>
+</main>
+<footer><span class="mono">2026 Aben Sojan</span><a class="mono top" href="#top">Back to top</a></footer>
 
-        <!-- Scrolling Banner (content is doubled by js/main.js — keep one copy here) -->
-        <div class="scrolling-banner">
-            <div class="banner-content">
-                <span class="banner-text">WEB DEVELOPMENT ✦ BACKEND SYSTEMS ✦ PREMIUM UI ✦ CYBERSECURITY ✦
-                    FIREBASE ✦ JAVASCRIPT ✦ PYTHON ✦ WEB DEVELOPMENT ✦ BACKEND SYSTEMS ✦ PREMIUM UI ✦
-                    CYBERSECURITY ✦ FIREBASE ✦ JAVASCRIPT ✦ PYTHON ✦ </span>
-            </div>
-        </div>
-
-        <!-- About Section -->
-        <section id="about" class="about-section content-section">
-            <div class="container">
-                <div class="section-head reveal">
-                    <div class="eyebrow">About</div>
-                    <h2 class="section-title">A student who ships.</h2>
-                </div>
-                <div class="bento-grid">
-                    <div class="bento-card bento-wide reveal">
-                        <h3>I'm Aben Sojan</h3>
-                        <p>I'm a BCA (Honours) student at Mar Augusthinose College, Ramapuram, affiliated with
-                            Mahatma Gandhi University, Kottayam. I don't wait for permission or perfect timing —
-                            I build real products while I study, and I put them live where everyone can use them.</p>
-                        <p>My biggest builds so far are Axofy, a serverless SMM platform running in production on
-                            Vercel, and MacHub, the student portal I built for my college. What I love most is
-                            making web apps that look premium — Apple inspired, modern, glassy — with strong
-                            backend work doing the heavy lifting underneath.</p>
-                    </div>
-                    <div class="bento-card reveal">
-                        <div class="bento-label">Where I study</div>
-                        <p>BCA (Honours), 2025 to 2029 — currently in my 3rd semester. I also represent BCA Batch 1
-                            as class representative.</p>
-                    </div>
-                    <div class="bento-card reveal">
-                        <div class="bento-label">What I lead</div>
-                        <p>I'm Technical Lead of NEXUS, my BCA department association, and Magazine Editor of the
-                            College Student Council for 2026.</p>
-                    </div>
-                    <div class="bento-card reveal">
-                        <div class="bento-label">What I'm into</div>
-                        <p>Cybersecurity and ethical hacking, premium interface design, backend systems — and
-                            turning all three into products people actually use.</p>
-                    </div>
-                    <div class="bento-card reveal">
-                        <div class="bento-label">What I want next</div>
-                        <p>I'm open to internships where I can ship real work, and to freelance website projects
-                            for clients who want the premium look.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section (cards animated by js/main.js — classes kept) -->
-        <section id="arsenal" class="arsenal-section content-section">
-            <div class="container">
-                <div class="section-head reveal">
-                    <div class="eyebrow">Skills</div>
-                    <h2 class="section-title">My arsenal.</h2>
-                </div>
-
-                <div class="arsenal-grid">
-                    <!-- Core Tech -->
-                    <div class="arsenal-card">
-                        <div class="arsenal-number">01</div>
-                        <h3>CORE TECH</h3>
-                        <div class="arsenal-divider"></div>
-                        <ul class="arsenal-list">
-                            <li>React, HTML5/CSS3, JavaScript</li>
-                            <li>Python</li>
-                            <li>System Architecture</li>
-                            <li>Git Version Control</li>
-                            <li>Database Management (SQL/NoSQL)</li>
-                        </ul>
-                    </div>
-
-                    <!-- Backend & Cloud -->
-                    <div class="arsenal-card">
-                        <div class="arsenal-number">02</div>
-                        <h3>BACKEND &amp; CLOUD</h3>
-                        <div class="arsenal-divider"></div>
-                        <ul class="arsenal-list">
-                            <li>Firebase &amp; Firestore</li>
-                            <li>REST API Development</li>
-                            <li>Serverless Functions (Vercel)</li>
-                            <li>Cloudflare Workers</li>
-                            <li>Authentication &amp; Payments (UPI)</li>
-                        </ul>
-                    </div>
-
-                    <!-- Visual & Editing -->
-                    <div class="arsenal-card">
-                        <div class="arsenal-number">03</div>
-                        <h3>VISUAL &amp; EDITING</h3>
-                        <div class="arsenal-divider"></div>
-                        <ul class="arsenal-list">
-                            <li>Cinematic Editing</li>
-                            <li>Motion Graphics</li>
-                            <li>Viral Formatting (Shorts/Reels)</li>
-                            <li>Adobe Premiere, DaVinci Resolve</li>
-                            <li>CapCut Pro, After Effects</li>
-                        </ul>
-                    </div>
-
-                    <!-- Security -->
-                    <div class="arsenal-card">
-                        <div class="arsenal-number">04</div>
-                        <h3>SECURITY</h3>
-                        <div class="arsenal-divider"></div>
-                        <ul class="arsenal-list">
-                            <li>Cybersecurity &amp; Ethical Hacking</li>
-                            <li>Security Audits</li>
-                            <li>Protocol-based Verification</li>
-                            <li>Digital Identity Protection</li>
-                            <li>Zero-Downtime Operations</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Skills marquee (pure CSS transform animation) -->
-                <div class="skills-marquee" aria-hidden="true">
-                    <div class="marquee-track">
-                        <span>JavaScript</span><span>Python</span><span>Firebase</span><span>Firestore</span>
-                        <span>Vercel</span><span>Cloudflare Workers</span><span>REST APIs</span><span>HTML/CSS</span>
-                        <span>React</span><span>Git</span><span>JavaScript</span><span>Python</span>
-                        <span>Firebase</span><span>Firestore</span><span>Vercel</span><span>Cloudflare Workers</span>
-                        <span>REST APIs</span><span>HTML/CSS</span><span>React</span><span>Git</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Experience Section (cards animated by js/main.js — classes kept) -->
-        <section id="ships" class="deployed-ships-section content-section">
-            <div class="container">
-                <div class="section-head reveal">
-                    <div class="eyebrow">Experience</div>
-                    <h2 class="section-title">What I'm doing right now.</h2>
-                </div>
-
-                <div class="ships-grid">
-                    <!-- Ship 1: Axofy -->
-                    <div class="ship-card">
-                        <div class="ship-badge ongoing">ONGOING</div>
-                        <h3>Founder &amp; Developer</h3>
-                        <p class="ship-company">Axofy</p>
-                        <p class="ship-description">
-                            I founded Axofy and I run it myself. I built the serverless SMM panel on Vercel — UPI
-                            payment workflows, live order tracking, a reseller API and an admin dashboard — and
-                            it's live in production right now.
-                        </p>
-                    </div>
-
-                    <!-- Ship 2: Leadership -->
-                    <div class="ship-card">
-                        <div class="ship-badge leadership">LEADERSHIP</div>
-                        <h3>Technical Lead, NEXUS</h3>
-                        <p class="ship-company">Mar Augusthinose College</p>
-                        <p class="ship-description">
-                            I lead the tech side of NEXUS, the Association of Computer Applications for the BCA
-                            department, for 2026 — and I edit the College Student Council magazine the same year.
-                        </p>
-                    </div>
-
-                    <!-- Ship 3: Student Builder -->
-                    <div class="ship-card">
-                        <div class="ship-badge original">STUDENT</div>
-                        <h3>BCA Student &amp; Builder</h3>
-                        <p class="ship-company">Mar Augusthinose College</p>
-                        <p class="ship-description">
-                            I'm pursuing BCA (Honours), 2025 to 2029. Between classes I built MacHub, the student
-                            portal for my college, and I represent BCA Batch 1 as class representative.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="work" class="projects-section content-section">
-            <div class="container">
-                <div class="section-head reveal">
-                    <div class="eyebrow">Projects</div>
-                    <h2 class="section-title">Things I've built.</h2>
-                </div>
-
-                <!-- Featured bento (display only — interactive index with comments/favourites is the table below) -->
-                <div class="feature-grid">
-                    <article class="feature-card tilt reveal">
-                        <div class="feature-tag">FEATURED · STUDENT PORTAL</div>
-                        <h3>MacHub</h3>
-                        <p>I built MacHub because my college needed one place for everything student. I wired it
-                            with Firestore sync and Cloudflare Workers, mobile first, in a dark glass style —
-                            attendance, academics and services without the chaos.</p>
-                        <a class="feature-link" href="https://github.com/ItsRayZer/MacHub" target="_blank"
-                            rel="noopener">See the code →</a>
-                    </article>
-                    <article class="feature-card tilt reveal">
-                        <div class="feature-tag">FEATURED · LIVE PRODUCT</div>
-                        <h3>Axofy</h3>
-                        <p>I built Axofy as a serverless SMM platform and I run it in production — UPI payments,
-                            live order tracking and a reseller API, all on Vercel edge functions.</p>
-                        <a class="feature-link" href="https://axofy.vercel.app/" target="_blank" rel="noopener">Visit
-                            the live site →</a>
-                    </article>
-                </div>
-
-                <!-- Interactive project index: rows open comments, hearts save favourites (js hooks unchanged) -->
-                <div class="timeline-container reveal">
-                    <table class="timeline-table">
-                        <thead>
-                            <tr>
-                                <th>PROJECT</th>
-                                <th>ROLE</th>
-                                <th>TECH</th>
-                                <th>YEAR</th>
-                                <th></th> <!-- Fav Column -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Project 1: MacHub -->
-                            <tr class="project-row" data-id="machub">
-                                <td class="project-name">MacHub</td>
-                                <td>Developer</td>
-                                <td>JavaScript, Firestore, Cloudflare Workers</td>
-                                <td>2026</td>
-                                <td class="fav-cell">
-                                    <button class="fav-btn" aria-label="Save MacHub to favorites"
-                                        onclick="window.handleFavoriteClick(event, 'machub', 'MacHub', 'Developer', 'JavaScript, Firestore, Cloudflare Workers', '2026')">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <!-- Project 2: Axofy -->
-                            <tr class="project-row" data-id="axofy">
-                                <td class="project-name">Axofy</td>
-                                <td>Founder &amp; Developer</td>
-                                <td>JavaScript, Vercel, REST APIs</td>
-                                <td>2026</td>
-                                <td class="fav-cell">
-                                    <button class="fav-btn" aria-label="Save Axofy to favorites"
-                                        onclick="window.handleFavoriteClick(event, 'axofy', 'Axofy', 'Founder & Developer', 'JavaScript, Vercel, REST APIs', '2026')">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <!-- Project 3: MAC Exam Hub -->
-                            <tr class="project-row" data-id="mac-exam-hub">
-                                <td class="project-name">MAC Exam Hub</td>
-                                <td>Developer</td>
-                                <td>JavaScript</td>
-                                <td>2026</td>
-                                <td class="fav-cell">
-                                    <button class="fav-btn" aria-label="Save MAC Exam Hub to favorites"
-                                        onclick="window.handleFavoriteClick(event, 'mac-exam-hub', 'MAC Exam Hub', 'Developer', 'JavaScript', '2026')">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <!-- Project 4: mac-data-sync -->
-                            <tr class="project-row" data-id="mac-data-sync">
-                                <td class="project-name">mac-data-sync</td>
-                                <td>Developer</td>
-                                <td>JavaScript</td>
-                                <td>2026</td>
-                                <td class="fav-cell">
-                                    <button class="fav-btn" aria-label="Save mac-data-sync to favorites"
-                                        onclick="window.handleFavoriteClick(event, 'mac-data-sync', 'mac-data-sync', 'Developer', 'JavaScript', '2026')">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <p class="projects-note">Tap a project row to open its discussion. All my code lives on
-                    <a href="https://github.com/ItsRayZer" target="_blank" rel="noopener">GitHub</a> — and Axofy is
-                    live at <a href="https://axofy.vercel.app/" target="_blank" rel="noopener">axofy.vercel.app</a>.
-                </p>
-            </div>
-        </section>
-
-        <!-- Services Section (id kept as #protocols — the nav and js/main.js already target it) -->
-        <section id="protocols" class="protocols-section content-section">
-            <div class="container">
-                <div class="section-head reveal">
-                    <div class="eyebrow">Services</div>
-                    <h2 class="section-title">Work with me.</h2>
-                </div>
-
-                <div class="protocols-grid">
-                    <div class="protocol-card">
-                        <h3>Portfolio &amp; Landing Sites</h3>
-                        <p class="protocol-desc">I design and build premium, fast, mobile first websites with an
-                            Apple inspired liquid glass look — for creators, students and small businesses.</p>
-                        <div class="protocol-price">Under ₹5,000</div>
-                    </div>
-
-                    <div class="protocol-card featured">
-                        <div class="featured-badge">FULL BUILD</div>
-                        <h3>Web Applications</h3>
-                        <p class="protocol-desc">I build full web apps with premium UI and a strong backend — auth,
-                            databases, dashboards and payments included, like the ones I run myself.</p>
-                        <div class="protocol-price">Priced by scope</div>
-                    </div>
-
-                    <div class="protocol-card">
-                        <h3>Backend &amp; APIs</h3>
-                        <p class="protocol-desc">I set up Firebase and Firestore backends, serverless APIs,
-                            Cloudflare Workers and third party integrations that stay fast under load.</p>
-                        <div class="protocol-price">Priced by scope</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="contact-section-graffico">
-            <div class="container reveal">
-                <div class="eyebrow">Contact</div>
-                <h2 class="contact-headline">
-                    Tell me what <span class="highlight-gold">you're</span><br>
-                    building <span class="highlight-gold">next</span>.
-                </h2>
-
-                <p class="contact-subtext">
-                    I reply fast, I quote honestly, and I build like it's my own product — because my name goes
-                    on it. Write to me directly at
-                    <a href="mailto:mrabensojan@gmail.com">mrabensojan@gmail.com</a> or use the form:
-                </p>
-
-                <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-                <form class="contact-form-graffico" id="contactForm"
-                    action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScQggEfG_Q68r0CGNi01ngs0z7mJCJHZhjuR9x4078dpYAysg/formResponse"
-                    method="POST" target="hidden_iframe">
-                    <div class="form-row">
-                        <input type="text" id="contactName" name="entry.731845534" placeholder="Name" class="form-input"
-                            required>
-                        <input type="email" id="contactEmail" name="entry.536258546" placeholder="Email"
-                            class="form-input" required>
-                    </div>
-
-                    <textarea id="contactMessage" name="entry.1836713341"
-                        placeholder="Hi Aben, I'd like to talk about a project..." class="form-textarea" rows="6"
-                        required></textarea>
-
-                    <button type="submit" class="btn-submit-graffico">
-                        SEND MESSAGE
-                    </button>
-
-                    <div class="form-success-message" id="formSuccessMessage" style="display: none;">
-                        ✅ Thank you! Your message has been sent successfully.
-                    </div>
-                </form>
-
-                <div class="social-links-graffico">
-                    <a href="https://www.linkedin.com/in/aben-sojan-rayzer/" target="_blank" rel="noopener"
-                        aria-label="LinkedIn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
-                        </svg>
-                    </a>
-                    <a href="https://github.com/ItsRayZer" target="_blank" rel="noopener" aria-label="GitHub">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.1.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.56 9.56 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85V21c0 .27.16.59.67.5A10 10 0 0 0 22 12 10 10 0 0 0 12 2z" />
-                        </svg>
-                    </a>
-                    <a href="https://instagram.com/rayzer.co" target="_blank" rel="noopener" aria-label="Instagram">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
-                        </svg>
-                    </a>
-                </div>
-
-                <footer class="site-footer">
-                    <p>© 2026 Aben Sojan — I designed and built this site myself.</p>
-                    <a href="#home" class="to-top">Back to top ↑</a>
-                </footer>
-            </div>
-        </section>
-    </main>
-
-    <!-- Form submission variable -->
-    <script>var submitted = false;</script>
-
-    <!-- Authentication Modules -->
-    <script type="module" src="js/auth-ui.js?v=2"></script>
-
-    <!-- Main Logic -->
-    <script type="module" src="js/db-service.js?v=2"></script>
-    <script type="module" src="js/comments-ui.js?v=2"></script>
-    <script type="module" src="js/favorites-ui.js?v=2"></script>
-    <script src="js/main.js?v=3"></script>
-
-    <!-- v2 visual layer (reveals, rotator, parallax, tilt, progress) -->
-    <script src="js/visual.js?v=1"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const lerp=(a,b,t)=>a+(b-a)*t,clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),ease=t=>t*t*(3-2*t);
+const touch=matchMedia('(hover:none)').matches;
+let mx=0,my=0,sy=0,vy=0,last=0;
+/* split hero */
+$$('[data-s]').forEach((l,k)=>{l.innerHTML=[...l.dataset.s].map((c,i)=>`<span class="c" style="--i:${i+k*4}">${c}</span>`).join('')});
+/* marquee */
+const sk=['Web apps','Liquid glass','Firebase','Vercel','Python','APIs','Dashboards','Mobile first'];
+$('#mq').innerHTML=[...sk,...sk,...sk].map(t=>`<span>${t}</span>`).join('');
+const mq=$('#mq');
+/* scrub words */
+const sc=$('#scrub');sc.innerHTML=sc.textContent.split(' ').map(w=>`<span>${w}</span>`).join(' ');const ws=[...sc.children];
+/* reveal + counters */
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.15});$$('.rv').forEach(el=>io.observe(el));
+const co=new IntersectionObserver(e=>e.forEach(x=>{if(!x.isIntersecting)return;const el=x.target,n=+el.dataset.n;let t0;const f=t=>{t0??=t;const p=Math.min((t-t0)/1400,1);el.textContent=Math.round(n*(1-Math.pow(1-p,4)));p<1&&requestAnimationFrame(f)};requestAnimationFrame(f);co.unobserve(el)}),{threshold:.8});$$('[data-n]').forEach(e=>co.observe(e));
+const clk=()=>$('#clk').textContent=new Date().toLocaleTimeString('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit'});clk();setInterval(clk,15000);
+/* loader */
+let n=0;const ld=$('#ld'),li=setInterval(()=>{n=Math.min(100,n+Math.ceil(Math.random()*9));ld.textContent=n;if(n>=100){clearInterval(li);setTimeout(()=>{$('#load').classList.add('out');document.body.classList.add('go')},250)}},45);
+/* cursor */
+const cur=$('#cur'),cd=$('#curd');let cx=0,cy=0,tx=0,ty=0;
+addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;mx=e.clientX/innerWidth*2-1;my=e.clientY/innerHeight*2-1;cd.style.transform=`translate(${tx}px,${ty}px)`});
+$$('a,button,.chips span,.row').forEach(a=>{a.addEventListener('pointerenter',()=>cur.classList.add('big'));a.addEventListener('pointerleave',()=>cur.classList.remove('big'))});
+/* magnetic mail */
+const ml=$('#mail');if(!touch)addEventListener('pointermove',e=>{const r=ml.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),d=Math.hypot(dx,dy);ml.style.transform=d<220?`translate(${dx*.25}px,${dy*.35}px)`:''});
+/* ring */
+const ring=$('#ring'),scene=$('#scene'),work=$('#work'),cards=$$('.pc'),bn=$('#bn'),bari=$('#bari');
+function size(){const w=Math.min(innerWidth*.8,340),h=Math.min(innerHeight*.62,440);scene.style.setProperty('--w',w+'px');scene.style.setProperty('--h',h+'px');scene.style.setProperty('--R',(w/2/Math.tan(Math.PI/5)+60)+'px');cards.forEach(c=>c.style.setProperty('--R',(w/2/Math.tan(Math.PI/5)+60)+'px'))}size();addEventListener('resize',size);
+let ang=0,wp=0,dr=0;const tl=$('#tl'),sp=$('#sp');$$('.fq button').forEach(b=>b.onclick=()=>{const it=b.parentElement,o=it.classList.contains('open');$$('.fq .it').forEach(x=>x.classList.remove('open'));if(!o)it.classList.add('open')});
+/* three */
+let gl=null,mesh,pts,uni;
+try{
+const cv=$('#gl'),R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio,2));
+const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(45,1,.1,100);C.position.z=6;
+uni={uT:{value:0},uH:{value:0}};
+mesh=new THREE.Mesh(new THREE.IcosahedronGeometry(1.5,96),new THREE.ShaderMaterial({uniforms:uni,
+vertexShader:`uniform float uT,uH;varying vec3 vN,vV;varying float vD;
+float n(vec3 p){return sin(p.x*1.7+uT)*sin(p.y*1.9+uT*.8)*sin(p.z*1.5+uT*1.1);}
+void main(){vec3 p=position;float d=n(p*1.2)*.32+n(p*2.6+3.)*.12+n(p*5.+7.)*.03;d*=1.+uH*.9;p+=normal*d;vD=d;vec4 mv=modelViewMatrix*vec4(p,1.);vN=normalize(normalMatrix*normal);vV=normalize(-mv.xyz);gl_Position=projectionMatrix*mv;}`,
+fragmentShader:`uniform float uT;varying vec3 vN,vV;varying float vD;
+void main(){float f=pow(1.-max(dot(normalize(vN),normalize(vV)),0.),2.4);float l=smoothstep(.92,1.,sin((vD*16.+vN.y*3.+uT*.2)*3.14159));
+vec3 c=vec3(.012)+vec3(1.,.33,.14)*f*1.1+vec3(.93,.9,.86)*l*.28+vec3(.9)*pow(f,6.)*.5;gl_FragColor=vec4(c,1.);}`}));
+S.add(mesh);const rg=new THREE.Group();for(let q=0;q<3;q++){const m=new THREE.Mesh(new THREE.TorusGeometry(2.1+q*.4,.005,8,240),new THREE.MeshBasicMaterial({color:0xece8e1,transparent:true,opacity:.3-q*.08}));m.rotation.set(1.1+q*.55,q*.9,q*.4);rg.add(m)}S.add(rg);
+const N=1800,pa=new Float32Array(N*3);for(let i=0;i<N;i++){const r=4+Math.random()*9,t=Math.random()*6.283,p=Math.acos(2*Math.random()-1);pa.set([r*Math.sin(p)*Math.cos(t),r*Math.sin(p)*Math.sin(t),r*Math.cos(p)-3],i*3)}
+const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pa,3));
+pts=new THREE.Points(pg,new THREE.PointsMaterial({size:.022,color:0xece8e1,transparent:true,opacity:.55,depthWrite:false}));S.add(pts);
+gl={R,S,C,rg};
+function rs(){R.setSize(innerWidth,innerHeight,false);C.aspect=innerWidth/innerHeight;C.updateProjectionMatrix()}rs();addEventListener('resize',rs);
+}catch(e){console.warn('WebGL off',e)}
+/* blob states per section */
+const secs=['#top','#about','#exp','#work','#services','#process','#contact'].map(s=>$(s));
+const st=[{x:.95,y:0,z:0,s:1},{x:-1.3,y:-.1,z:0,s:.8},{x:1.3,y:.1,z:-.5,s:.7},{x:0,y:0,z:-3.5,s:.8},{x:1.2,y:.2,z:-1,s:.7},{x:-1.2,y:-.2,z:-.5,s:.65},{x:0,y:-.1,z:1.2,s:1.25}];
+let B={x:0,y:0,z:0,s:1},rx=0,ry=0,hv=0;
+/* loop */
+function tick(t){
+ const y=scrollY;vy=lerp(vy,y-sy,.12);sy=y;
+ cx=lerp(cx,tx,.16);cy=lerp(cy,ty,.16);cur.style.transform=`translate(${cx}px,${cy}px)`;
+ const vh=innerHeight,tops=secs.map(s=>s.getBoundingClientRect().top+y),mid=y+vh*.5;
+ let i=0;const L=secs.length-1;while(i<L&&mid>=tops[i+1])i++;
+ const a=st[i],b=st[Math.min(i+1,L)],k=i<L?ease(clamp((mid-tops[i])/(tops[i+1]-tops[i]))):0;
+ const asp=Math.min(1,innerWidth/innerHeight*1.2),fx=innerWidth<700?.25:1;
+ const tg={x:lerp(a.x,b.x,k)*fx*asp,y:lerp(a.y,b.y,k),z:lerp(a.z,b.z,k)+(innerWidth<700?-1:0),s:lerp(a.s,b.s,k)};
+ for(const q in B)B[q]=lerp(B[q],tg[q],.06);
+ if(gl){uni.uT.value=t*.0004;hv=lerp(hv,clamp(Math.abs(vy)/40+Math.hypot(mx,my)*.15),.05);uni.uH.value=hv;
+  rx=lerp(rx,my*.5+y*.0006,.05);ry=lerp(ry,mx*.6+t*.00012+y*.0012,.05);
+  mesh.position.set(B.x,B.y,B.z);mesh.scale.setScalar(B.s);mesh.rotation.set(rx,ry,0);
+  gl.rg.position.copy(mesh.position);gl.rg.scale.setScalar(B.s);gl.rg.rotation.y=t*.0002;gl.rg.rotation.x=Math.sin(t*.0003)*.3;pts.rotation.y=t*.00003+y*.0003;pts.rotation.x=y*.00012;gl.C.position.x=lerp(gl.C.position.x,mx*.3,.04);gl.C.position.y=lerp(gl.C.position.y,-my*.2,.04);gl.C.lookAt(0,0,0);gl.R.render(gl.S,gl.C)}
+ /* hero 3d tilt */
+ $('#h1').style.transform=`rotateY(${mx*5}deg) rotateX(${-my*4}deg) translateY(${y*-.15}px)`;
+ /* marquee */
+ dr+=.7;const w3=mq.scrollWidth/3;mq.style.transform=`translateX(${-((y*.35+dr)%w3)}px) skewX(${clamp(vy*.25,-14,14)}deg)`;
+ /* scrub */
+ const r=sc.getBoundingClientRect(),p=clamp((vh*.8-r.top)/(r.height+vh*.2));ws.forEach((w,j)=>{w.style.opacity=.14+.86*clamp(p*1.5*ws.length-j,0,1)});
+ /* ring */
+ const tr=tl.getBoundingClientRect();tl.style.setProperty('--p',clamp((vh*.75-tr.top)/tr.height).toFixed(3));sp.style.width=y/(document.documentElement.scrollHeight-vh)*100+'%';
+ const wr=work.getBoundingClientRect();wp=clamp(-wr.top/(wr.height-vh));
+ ang=lerp(ang,-wp*288,.07);ring.style.transform=`rotateY(${ang}deg)`;
+ scene.style.transform=`rotateX(${-my*5+8}deg) rotateY(${mx*6}deg)`;
+ cards.forEach((c,j)=>{let d=((j*72+ang)%360+540)%360-180;c.style.opacity=(1-clamp(Math.abs(d)/110)*.82).toFixed(2)});
+ const idx=Math.round(clamp(-ang/72,0,4));bn.textContent='0'+(idx+1);bari.style.width=wp*100+'%';
+ requestAnimationFrame(tick)}
+requestAnimationFrame(tick);
+})();
+</script>
 </body>
-
 </html>
