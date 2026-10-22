@@ -3,13 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Aben Sojan — Web Developer</title>
+<title>Aben Sojan | Developer &amp; Founder, Axofy</title>
 <meta name="description" content="Aben Sojan (RayZer), freelance web developer and founder of Axofy. Premium, mobile-first websites and web apps.">
+<link rel="canonical" href="https://abensojan.vercel.app/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Aben Sojan | Developer & Founder, Axofy">
+<meta name="twitter:description" content="Premium, mobile-first websites and web apps. Founder of Axofy.">
 <meta name="theme-color" content="#050505">
-<meta property="og:title" content="Aben Sojan — Web Developer"><meta property="og:description" content="Premium, mobile-first websites and web apps. Founder of Axofy."><meta property="og:type" content="website"><meta property="og:url" content="https://abensojan.vercel.app">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Aben Sojan","alternateName":"RayZer","jobTitle":"Web Developer, Founder of Axofy","url":"https://abensojan.vercel.app","sameAs":["https://github.com/ItsRayZer","https://www.linkedin.com/in/aben-sojan-rayzer/","https://axofy.vercel.app"],"address":{"@type":"PostalAddress","addressRegion":"Kerala","addressCountry":"IN"}}</script>
+<meta property="og:title" content="Aben Sojan | Developer &amp; Founder, Axofy"><meta property="og:description" content="Premium, mobile-first websites and web apps. Founder of Axofy."><meta property="og:type" content="website"><meta property="og:url" content="https://abensojan.vercel.app/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Aben Sojan","alternateName":"RayZer","jobTitle":"Web Developer, Founder of Axofy","url":"https://abensojan.vercel.app/","sameAs":["https://github.com/ItsRayZer","https://www.linkedin.com/in/aben-sojan-rayzer/","https://axofy.vercel.app/"],"address":{"@type":"PostalAddress","addressRegion":"Kerala","addressCountry":"IN"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- GSAP & Three.js: deferred, exactly as the live v2 page loads them. They execute in
+     document order before DOMContentLoaded, so js/main.js and the design script below
+     both find the THREE / gsap / ScrollTrigger globals. -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
 :root{--bg:#050505;--ink:#ece8e1;--mute:rgba(236,232,225,.5);--line:rgba(236,232,225,.12);--acc:#ff5a2c;--mono:'JetBrains Mono',ui-monospace,monospace;--sans:'Inter',-apple-system,'SF Pro Display',sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -142,6 +152,81 @@ footer{padding:26px 22px 40px;display:flex;justify-content:space-between;flex-wr
 @media(hover:none){.fq button{cursor:auto}}
 @media(max-width:640px){nav div{gap:16px}nav a{font-size:10px}.hero-meta{flex-direction:column;align-items:flex-start}.scrl{display:none}section{padding:90px 0}}
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important;animation:none!important}}
+
+/* ==== MERGE ADDITIONS: v2 functionality restyled in the design's language ====
+   Colours/type come from the design variables above (--ink/--mute/--line/--acc). */
+/* main.js generates 100 floating dots into #dotsBackground on DOMContentLoaded;
+   the element MUST exist or that handler throws before auth/comments init. */
+.dots-background{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.dot{position:absolute;width:2px;height:2px;background:rgba(236,232,225,.14);border-radius:50%}
+.dot.large{width:3px;height:3px;background:rgba(236,232,225,.2)}
+.dot.small{width:1px;height:1px;background:rgba(236,232,225,.09)}
+/* Auth UI (js/auth-ui.js injects into #authContainer inside the nav) */
+.auth-container-menu{display:flex;align-items:center;gap:20px}
+nav .nav-item{font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:none;border:none;display:inline-flex;align-items:center;gap:8px;padding:0}
+nav button.nav-item{cursor:pointer}
+.btn-signin-nav{border:1px solid var(--line)!important;border-radius:99px;padding:8px 14px!important}
+.btn-signout-nav{opacity:.75}
+.btn-signout-nav:hover{opacity:1;color:var(--acc)}
+.admin-panel-nav,.dashboard-link-nav{color:var(--acc)}
+.user-profile-nav{cursor:default}
+.user-avatar-nav{width:26px;height:26px;border-radius:50%;object-fit:cover}
+.user-name-nav{max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:0;text-transform:none}
+.admin-badge-small{font:500 9px var(--mono);letter-spacing:.1em;background:var(--acc);color:#000;border-radius:99px;padding:3px 7px}
+@media(max-width:640px){.user-name-nav{display:none}nav .nav-item{font-size:10px}.auth-container-menu{gap:14px}}
+/* Project index table (rows are the hooks for comments-ui + favorites-ui) */
+#projects .graft-h2{font-size:clamp(30px,5.6vw,64px);font-weight:800;letter-spacing:-.05em;line-height:1;margin-bottom:16px}
+.graft-sub{color:var(--mute);max-width:580px;margin-bottom:44px;line-height:1.55;font-size:15px}
+.timeline-container{border:1px solid var(--line);border-radius:22px;padding:8px 18px;background:rgba(255,255,255,.02)}
+.timeline-table{width:100%;border-collapse:collapse}
+.timeline-table th{font:500 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mute);text-align:left;padding:16px 10px 10px}
+.project-row{border-top:1px solid var(--line);cursor:pointer;transition:background .25s}
+.project-row:hover{background:rgba(236,232,225,.04)}
+.timeline-table td{padding:16px 10px;color:var(--mute);font-size:15px;vertical-align:middle}
+.timeline-table td.project-name{color:var(--ink);font-weight:600;font-size:17px;letter-spacing:-.02em}
+.fav-cell{text-align:right;width:60px}
+.fav-btn{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--mute);cursor:pointer;transition:color .3s,border-color .3s,background .3s,transform .3s}
+.fav-btn:hover{color:var(--acc);border-color:var(--acc);transform:scale(1.08)}
+.fav-btn.active{color:#000;background:var(--acc);border-color:var(--acc)}
+.projects-note{margin-top:20px;color:var(--mute);font-size:14px}
+.projects-note a{color:var(--ink);border-bottom:1px solid var(--line)}
+@media(max-width:640px){.timeline-table thead{display:none}.timeline-table,.timeline-table tbody,.project-row,.timeline-table td{display:block;width:100%}.project-row{padding:12px 2px;position:relative}.timeline-table td{padding:3px 0;border:none}.timeline-table td.project-name{font-size:19px;padding-right:52px}.fav-cell{position:absolute;top:10px;right:0;width:auto}.comments-row{display:block}}
+/* Comments UI (markup injected by js/comments-ui.js when a row is tapped) */
+.comments-row td{padding:0 4px 14px}
+.comments-cell{background:transparent}
+.comments-container{border:1px solid var(--line);border-radius:18px;padding:20px;background:rgba(255,255,255,.03);cursor:default;text-align:left}
+.comments-title{font-size:16px;font-weight:600;letter-spacing:-.02em;margin-bottom:14px;color:var(--ink)}
+.highlight-gold{color:var(--acc)}
+.comments-list{display:flex;flex-direction:column;gap:14px;margin-bottom:16px}
+.comment-item{display:flex;gap:12px}
+.comment-avatar{width:36px;height:36px;flex:0 0 36px;border-radius:50%;object-fit:cover;background:#222}
+.comment-content{flex:1;min-width:0}
+.comment-header{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.comment-author{font-weight:600;font-size:14px;color:var(--ink)}
+.comment-date{color:var(--mute);font:400 10px var(--mono);letter-spacing:.08em}
+.comment-text{color:var(--mute);font-size:14.5px;line-height:1.5;margin-top:3px;overflow-wrap:anywhere}
+.delete-comment-btn{background:none;border:none;color:var(--acc);font-size:16px;cursor:pointer;padding:2px 6px;line-height:1}
+.no-comments,.loading-comments{color:var(--mute);font-size:14px;padding:2px 0 6px}
+.comment-form-container{border-top:1px solid var(--line);padding-top:14px}
+.comment-form{display:flex;gap:10px}
+.comment-input{flex:1;min-height:46px;padding:10px 18px;border-radius:99px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);font-family:var(--sans);font-size:16px}
+.comment-input:focus{outline:none;border-color:var(--acc)}
+.comment-submit{min-height:46px;padding:10px 22px;border:none;border-radius:99px;background:var(--ink);color:#000;font:500 11px var(--mono);letter-spacing:.12em;cursor:pointer}
+@media(max-width:640px){.comment-form{flex-direction:column}.comment-submit{width:100%}}
+/* Contact form (v2 Google Forms wiring, restyled) */
+.form-wrap{width:100%;max-width:680px;text-align:left;margin-top:16px}
+.contact-form-graffico{width:100%}
+.form-row{display:flex;gap:10px;margin-bottom:10px}
+.form-input,.form-textarea{width:100%;padding:15px 18px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);font-family:var(--sans);font-size:16px;transition:border-color .25s}
+.form-input:focus,.form-textarea:focus{outline:none;border-color:var(--acc)}
+.form-textarea{resize:vertical;min-height:130px;margin-bottom:14px}
+.btn-submit-graffico{min-height:52px;padding:14px 32px;border:1px solid var(--ink);border-radius:99px;background:var(--ink);color:#000;font:500 12px var(--mono);letter-spacing:.14em;cursor:pointer;transition:background .35s,border-color .35s}
+.btn-submit-graffico:hover{background:var(--acc);border-color:var(--acc)}
+.btn-submit-graffico:disabled{opacity:.55;cursor:wait}
+.form-success-message{margin-top:14px;padding:13px 16px;border-radius:14px;background:rgba(48,209,88,.12);border:1px solid rgba(48,209,88,.35);color:#7ee2a0;font-size:14px}
+@media(max-width:640px){.form-row{flex-direction:column}.btn-submit-graffico{width:100%}}
+/* Perf: backdrop blur on wide strips is a mobile scroll cost — off on small screens */
+@media(max-width:700px){.mq,.facts div{backdrop-filter:none;-webkit-backdrop-filter:none}}
 </style>
 </head>
 <body>
@@ -149,8 +234,12 @@ footer{padding:26px 22px 40px;display:flex;justify-content:space-between;flex-wr
 <div class="load" id="load"><span class="mono" style="color:#fff">Loading portfolio</span><b id="ld">0</b></div>
 <div class="cur" id="cur"></div><div class="curd" id="curd"></div>
 <canvas id="gl"></canvas>
+<!-- Floating dots layer: main.js fills this on DOMContentLoaded (hook must exist) -->
+<div class="dots-background" id="dotsBackground"></div>
 
-<nav><b>Aben Sojan</b><div><a href="#about">About</a><a href="#work">Work</a><a href="#services">Services</a><a href="#contact">Contact</a></div></nav>
+<nav class="fixed-nav"><b>Aben Sojan</b><div><a href="#about">About</a><a href="#work">Work</a><a href="#protocols">Services</a><a href="#contact">Contact</a>
+            <!-- Auth UI (js/auth-ui.js) renders sign in / profile here -->
+            <div id="authContainer" class="auth-container-menu"></div></div></nav>
 
 <header class="hero" id="top"><div class="wrap" style="width:100%">
   <h1 class="h1" id="h1" aria-label="Aben Sojan"><span class="l" data-s="ABEN"></span><span class="l o" data-s="SOJAN"></span></h1>
@@ -196,14 +285,33 @@ footer{padding:26px 22px 40px;display:flex;justify-content:space-between;flex-wr
   <div class="bar"><i id="bari"></i></div>
 </div></div>
 
-<section id="services"><div class="wrap">
+
+<section id="projects"><div class="wrap">
+  <div class="mono rv" style="margin-bottom:14px">03 — Selected work · Full index</div>
+  <h2 class="rv graft-h2">Every project, open<br>for discussion.</h2>
+  <p class="graft-sub rv">Tap any row to read or join its discussion. Tap the heart to save a project to your dashboard — sign in first and it stays yours.</p>
+  <div class="timeline-container rv">
+    <table class="timeline-table">
+      <thead><tr><th>PROJECT</th><th>ROLE</th><th>TECH</th><th>YEAR</th><th></th></tr></thead>
+      <tbody>
+        <tr class="project-row" data-id="machub"><td class="project-name">MacHub</td><td>Developer</td><td>JavaScript, Firestore, Cloudflare Workers</td><td>2026</td><td class="fav-cell"><button class="fav-btn" aria-label="Save MacHub to favorites" onclick="window.handleFavoriteClick(event, 'machub', 'MacHub', 'Developer', 'JavaScript, Firestore, Cloudflare Workers', '2026')"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button></td></tr>
+        <tr class="project-row" data-id="axofy"><td class="project-name">Axofy</td><td>Founder &amp; Developer</td><td>JavaScript, Vercel, REST APIs</td><td>2026</td><td class="fav-cell"><button class="fav-btn" aria-label="Save Axofy to favorites" onclick="window.handleFavoriteClick(event, 'axofy', 'Axofy', 'Founder &amp; Developer', 'JavaScript, Vercel, REST APIs', '2026')"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button></td></tr>
+        <tr class="project-row" data-id="mac-exam-hub"><td class="project-name">MAC Exam Hub</td><td>Developer</td><td>JavaScript</td><td>2026</td><td class="fav-cell"><button class="fav-btn" aria-label="Save MAC Exam Hub to favorites" onclick="window.handleFavoriteClick(event, 'mac-exam-hub', 'MAC Exam Hub', 'Developer', 'JavaScript', '2026')"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button></td></tr>
+        <tr class="project-row" data-id="mac-data-sync"><td class="project-name">mac-data-sync</td><td>Developer</td><td>JavaScript</td><td>2026</td><td class="fav-cell"><button class="fav-btn" aria-label="Save mac-data-sync to favorites" onclick="window.handleFavoriteClick(event, 'mac-data-sync', 'mac-data-sync', 'Developer', 'JavaScript', '2026')"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="projects-note">All my code lives on <a href="https://github.com/ItsRayZer" target="_blank" rel="noopener">GitHub</a> — and Axofy is live at <a href="https://axofy.vercel.app/" target="_blank" rel="noopener">axofy.vercel.app</a>.</p>
+</div></section>
+
+<section id="protocols" class="protocols-section"><div class="wrap">
   <div class="mono rv" style="margin-bottom:40px">04 — Services</div>
-  <div class="rv"><div class="row"><h4>Portfolio website</h4><span class="pr">INR 999 — 1,999</span><p>Personal brand site. Mobile-first, fast, and built to be remembered.</p></div>
-  <div class="row"><h4>Simple or business site</h4><span class="pr">INR 999 — 2,999</span><p>One page to a small multi-page site. Clean, responsive, easy to update.</p></div>
-  <div class="row"><h4>Department or institute site</h4><span class="pr">INR 2,999 — 4,999</span><p>Structured, trustworthy and simple to maintain.</p></div>
-  <div class="row"><h4>Bug fix, redesign, speed</h4><span class="pr">INR 499 — 1,499</span><p>Fix what is broken, polish what is slow.</p></div>
-  <div class="row"><h4>Web app or dashboard</h4><span class="pr">INR 5,000+</span><p>Auth, database, APIs and payment flows. Priced by scope.</p></div>
-  <div class="row"><h4>Hourly</h4><span class="pr">INR 200 / hr</span><p>Flexible help, pay as we go.</p></div></div>
+  <div class="rv"><div class="row"><h4>Portfolio website</h4><span class="pr">Under ₹5,000</span><p>Personal brand site. Mobile-first, fast, and built to be remembered.</p></div>
+  <div class="row"><h4>Simple or business site</h4><span class="pr">Under ₹5,000</span><p>One page to a small multi-page site. Clean, responsive, easy to update.</p></div>
+  <div class="row"><h4>Department or institute site</h4><span class="pr">Priced by scope</span><p>Structured, trustworthy and simple to maintain.</p></div>
+  <div class="row"><h4>Bug fix, redesign, speed</h4><span class="pr">Priced by scope</span><p>Fix what is broken, polish what is slow.</p></div>
+  <div class="row"><h4>Web app or dashboard</h4><span class="pr">₹5,000+ · by scope</span><p>Auth, database, APIs and payment flows. Priced by scope.</p></div>
+  </div>
   <p class="mono note rv">Final price depends on scope. Direct clients: 50% advance, 50% before handover. Platforms: escrow only.</p>
 </div></section>
 
@@ -233,13 +341,29 @@ footer{padding:26px 22px 40px;display:flex;justify-content:space-between;flex-wr
   <h2 class="rv">Let's build<br><em>something.</em></h2>
   <a class="mail rv" id="mail" href="mailto:mrabensojan@gmail.com">mrabensojan@gmail.com</a>
   <div class="soc rv"><a href="https://github.com/ItsRayZer" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/aben-sojan-rayzer/" target="_blank" rel="noopener">LinkedIn</a><a href="https://axofy.vercel.app" target="_blank" rel="noopener">Axofy</a></div>
+  <div class="wrap form-wrap rv">
+    <div class="mono" style="margin-bottom:18px">Or send a message</div>
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    <form class="contact-form-graffico" id="contactForm" action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScQggEfG_Q68r0CGNi01ngs0z7mJCJHZhjuR9x4078dpYAysg/formResponse" method="POST" target="hidden_iframe">
+      <div class="form-row">
+        <input type="text" id="contactName" name="entry.731845534" placeholder="Name" class="form-input" required>
+        <input type="email" id="contactEmail" name="entry.536258546" placeholder="Email" class="form-input" required>
+      </div>
+      <textarea id="contactMessage" name="entry.1836713341" placeholder="Hi Aben, I'd like to talk about a project..." class="form-textarea" rows="6" required></textarea>
+      <button type="submit" class="btn-submit-graffico">SEND MESSAGE</button>
+      <div class="form-success-message" id="formSuccessMessage" style="display: none;">✅ Thank you! Your message has been sent successfully.</div>
+    </form>
+  </div>
 </section>
 </main>
-<footer><span class="mono">2026 Aben Sojan</span><a class="mono top" href="#top">Back to top</a></footer>
+<footer><span class="mono">© 2026 Aben Sojan</span><a class="mono top" href="#top">Back to top</a></footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>var submitted = false;</script>
+<!-- Design engine (Claude design, inline): runs on DOMContentLoaded so the deferred
+     THREE / GSAP globals above are ready. Registration order is preserved: this listener
+     is added before js/main.js adds its own, exactly as the live page sequences them. -->
 <script>
-(()=>{
+document.addEventListener('DOMContentLoaded',()=>{
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const lerp=(a,b,t)=>a+(b-a)*t,clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)),ease=t=>t*t*(3-2*t);
 const touch=matchMedia('(hover:none)').matches;
@@ -271,10 +395,11 @@ let ang=0,wp=0,dr=0;const tl=$('#tl'),sp=$('#sp');$$('.fq button').forEach(b=>b.
 /* three */
 let gl=null,mesh,pts,uni;
 try{
-const cv=$('#gl'),R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio,2));
+if(matchMedia('(prefers-reduced-motion: reduce)').matches)throw new Error('reduced motion: WebGL off');
+const cv=$('#gl'),R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});R.setPixelRatio(Math.min(devicePixelRatio,touch?1.5:2));
 const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(45,1,.1,100);C.position.z=6;
 uni={uT:{value:0},uH:{value:0}};
-mesh=new THREE.Mesh(new THREE.IcosahedronGeometry(1.5,96),new THREE.ShaderMaterial({uniforms:uni,
+mesh=new THREE.Mesh(new THREE.IcosahedronGeometry(1.5,touch?40:96),new THREE.ShaderMaterial({uniforms:uni,
 vertexShader:`uniform float uT,uH;varying vec3 vN,vV;varying float vD;
 float n(vec3 p){return sin(p.x*1.7+uT)*sin(p.y*1.9+uT*.8)*sin(p.z*1.5+uT*1.1);}
 void main(){vec3 p=position;float d=n(p*1.2)*.32+n(p*2.6+3.)*.12+n(p*5.+7.)*.03;d*=1.+uH*.9;p+=normal*d;vD=d;vec4 mv=modelViewMatrix*vec4(p,1.);vN=normalize(normalMatrix*normal);vV=normalize(-mv.xyz);gl_Position=projectionMatrix*mv;}`,
@@ -282,21 +407,27 @@ fragmentShader:`uniform float uT;varying vec3 vN,vV;varying float vD;
 void main(){float f=pow(1.-max(dot(normalize(vN),normalize(vV)),0.),2.4);float l=smoothstep(.92,1.,sin((vD*16.+vN.y*3.+uT*.2)*3.14159));
 vec3 c=vec3(.012)+vec3(1.,.33,.14)*f*1.1+vec3(.93,.9,.86)*l*.28+vec3(.9)*pow(f,6.)*.5;gl_FragColor=vec4(c,1.);}`}));
 S.add(mesh);const rg=new THREE.Group();for(let q=0;q<3;q++){const m=new THREE.Mesh(new THREE.TorusGeometry(2.1+q*.4,.005,8,240),new THREE.MeshBasicMaterial({color:0xece8e1,transparent:true,opacity:.3-q*.08}));m.rotation.set(1.1+q*.55,q*.9,q*.4);rg.add(m)}S.add(rg);
-const N=1800,pa=new Float32Array(N*3);for(let i=0;i<N;i++){const r=4+Math.random()*9,t=Math.random()*6.283,p=Math.acos(2*Math.random()-1);pa.set([r*Math.sin(p)*Math.cos(t),r*Math.sin(p)*Math.sin(t),r*Math.cos(p)-3],i*3)}
+const N=touch?900:1800,pa=new Float32Array(N*3);for(let i=0;i<N;i++){const r=4+Math.random()*9,t=Math.random()*6.283,p=Math.acos(2*Math.random()-1);pa.set([r*Math.sin(p)*Math.cos(t),r*Math.sin(p)*Math.sin(t),r*Math.cos(p)-3],i*3)}
 const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pa,3));
 pts=new THREE.Points(pg,new THREE.PointsMaterial({size:.022,color:0xece8e1,transparent:true,opacity:.55,depthWrite:false}));S.add(pts);
 gl={R,S,C,rg};
 function rs(){R.setSize(innerWidth,innerHeight,false);C.aspect=innerWidth/innerHeight;C.updateProjectionMatrix()}rs();addEventListener('resize',rs);
 }catch(e){console.warn('WebGL off',e)}
 /* blob states per section */
-const secs=['#top','#about','#exp','#work','#services','#process','#contact'].map(s=>$(s));
+const secs=['#top','#about','#exp','#work','#protocols','#process','#contact'].map(s=>$(s));
 const st=[{x:.95,y:0,z:0,s:1},{x:-1.3,y:-.1,z:0,s:.8},{x:1.3,y:.1,z:-.5,s:.7},{x:0,y:0,z:-3.5,s:.8},{x:1.2,y:.2,z:-1,s:.7},{x:-1.2,y:-.2,z:-.5,s:.65},{x:0,y:-.1,z:1.2,s:1.25}];
 let B={x:0,y:0,z:0,s:1},rx=0,ry=0,hv=0;
+/* merge perf: cache static geometry instead of getBoundingClientRect() every frame.
+   Re-measured on resize, on load, and when webfonts settle (heights can shift). */
+let GT={tops:[],tlT:0,tlH:1,scT:0,scH:1,wT:0,wH:1,mqW:1,docH:1};
+function measure(){const y=scrollY;GT.tops=secs.map(s=>s.getBoundingClientRect().top+y);const a=tl.getBoundingClientRect();GT.tlT=a.top+y;GT.tlH=a.height||1;const b=sc.getBoundingClientRect();GT.scT=b.top+y;GT.scH=b.height||1;const c=work.getBoundingClientRect();GT.wT=c.top+y;GT.wH=c.height||1;GT.mqW=mq.scrollWidth/3||1;GT.docH=document.documentElement.scrollHeight||1}
+addEventListener('resize',measure);addEventListener('load',measure);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>measure());
 /* loop */
 function tick(t){
+ if(document.hidden){requestAnimationFrame(tick);return} /* merge perf: no rendering in a hidden tab */
  const y=scrollY;vy=lerp(vy,y-sy,.12);sy=y;
  cx=lerp(cx,tx,.16);cy=lerp(cy,ty,.16);cur.style.transform=`translate(${cx}px,${cy}px)`;
- const vh=innerHeight,tops=secs.map(s=>s.getBoundingClientRect().top+y),mid=y+vh*.5;
+ const vh=innerHeight,tops=GT.tops,mid=y+vh*.5;
  let i=0;const L=secs.length-1;while(i<L&&mid>=tops[i+1])i++;
  const a=st[i],b=st[Math.min(i+1,L)],k=i<L?ease(clamp((mid-tops[i])/(tops[i+1]-tops[i]))):0;
  const asp=Math.min(1,innerWidth/innerHeight*1.2),fx=innerWidth<700?.25:1;
@@ -309,19 +440,30 @@ function tick(t){
  /* hero 3d tilt */
  $('#h1').style.transform=`rotateY(${mx*5}deg) rotateX(${-my*4}deg) translateY(${y*-.15}px)`;
  /* marquee */
- dr+=.7;const w3=mq.scrollWidth/3;mq.style.transform=`translateX(${-((y*.35+dr)%w3)}px) skewX(${clamp(vy*.25,-14,14)}deg)`;
+ dr+=.7;const w3=GT.mqW;mq.style.transform=`translateX(${-((y*.35+dr)%w3)}px) skewX(${clamp(vy*.25,-14,14)}deg)`;
  /* scrub */
- const r=sc.getBoundingClientRect(),p=clamp((vh*.8-r.top)/(r.height+vh*.2));ws.forEach((w,j)=>{w.style.opacity=.14+.86*clamp(p*1.5*ws.length-j,0,1)});
+ const p=clamp((vh*.8-(GT.scT-y))/(GT.scH+vh*.2));ws.forEach((w,j)=>{w.style.opacity=.14+.86*clamp(p*1.5*ws.length-j,0,1)});
  /* ring */
- const tr=tl.getBoundingClientRect();tl.style.setProperty('--p',clamp((vh*.75-tr.top)/tr.height).toFixed(3));sp.style.width=y/(document.documentElement.scrollHeight-vh)*100+'%';
- const wr=work.getBoundingClientRect();wp=clamp(-wr.top/(wr.height-vh));
+ tl.style.setProperty('--p',clamp((vh*.75-(GT.tlT-y))/GT.tlH).toFixed(3));sp.style.width=y/(GT.docH-vh)*100+'%';
+ wp=clamp((y-GT.wT)/(GT.wH-vh));
  ang=lerp(ang,-wp*288,.07);ring.style.transform=`rotateY(${ang}deg)`;
  scene.style.transform=`rotateX(${-my*5+8}deg) rotateY(${mx*6}deg)`;
  cards.forEach((c,j)=>{let d=((j*72+ang)%360+540)%360-180;c.style.opacity=(1-clamp(Math.abs(d)/110)*.82).toFixed(2)});
  const idx=Math.round(clamp(-ang/72,0,4));bn.textContent='0'+(idx+1);bari.style.width=wp*100+'%';
  requestAnimationFrame(tick)}
+measure();
 requestAnimationFrame(tick);
-})();
+});
 </script>
+
+<!-- Authentication + data modules (identical includes/order to the live v2 page) -->
+<script type="module" src="js/auth-ui.js?v=2"></script>
+<script type="module" src="js/db-service.js?v=2"></script>
+<script type="module" src="js/comments-ui.js?v=2"></script>
+<script type="module" src="js/favorites-ui.js?v=2"></script>
+<script src="js/main.js?v=3"></script>
+<!-- js/visual.js intentionally NOT included: the design engine above already implements
+     reveals, the scroll progress bar and the role roll, and visual.js only targets v2
+     classes (.reveal / #roleWord / .orb / .tilt) that do not exist in this design. -->
 </body>
 </html>
