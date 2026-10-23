@@ -15,6 +15,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- GSAP & Three.js: deferred, exactly as the live v2 page loads them. They execute in
      document order before DOMContentLoaded, so js/main.js and the design script below
@@ -467,9 +470,7 @@ main h2,main h3,main h4,main p,main span,main td,main th,main button,main a,head
 <div class="dots-background" id="dotsBackground"></div>
 
 
-<nav class="fixed-nav"><b>Aben Sojan</b><div><a href="#about">About</a><a href="#work">Work</a><a href="#protocols">Services</a><a href="#contact">Contact</a>
-            <!-- Auth UI (js/auth-ui.js) renders sign in / profile here -->
-            <div id="authContainer" class="auth-container-menu"></div></div></nav>
+<nav class="fixed-nav"><b>Aben Sojan</b><div><a href="#about">About</a><a href="#work">Work</a><a href="#protocols">Services</a><a href="#contact">Contact</a></div></nav>
 
 <header class="hero" id="top"><div class="wrap" style="width:100%">
   <h1 class="h1" id="h1" aria-label="Aben Sojan"><span class="l" data-s="ABEN"></span><span class="l o" data-s="SOJAN"></span></h1>
@@ -689,10 +690,17 @@ $$('.fq-btn').forEach(b=>b.addEventListener('click',()=>{const it=b.parentElemen
    WITH O(1) FAR-FIELD RAY CULLING & ADAPTIVE DYNAMIC RESOLUTION SCALING (DRS)
    ============================================================================ */
 let gl=null;
-let currentDPR=Math.min(devicePixelRatio||1,touch?1.15:1.45);
-const maxDPR=currentDPR;
+const maxDPR=Math.min(devicePixelRatio||1,touch?1.15:1.45);
 const minDPR=touch?0.75:0.95;
+// Load ramp: the background starts at 55% of its target pixel ratio and eases
+// up to full quality over its first ~900ms of rendering (see tick), so the
+// first frames stay cheap while the page is still settling. The DRS in tick
+// governs afterwards, exactly as before.
+const startDPR=maxDPR*0.55;
+let currentDPR=startDPR;
+let rampT0=0;
 
+function initGL(){
 try{
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)throw new Error('reduced motion: WebGL off');
   const cv=$('#gl');
@@ -1311,6 +1319,11 @@ try{
   }
   rs();addEventListener('resize',rs,{passive:true});
 }catch(e){console.warn('WebGL off',e)}
+}
+// Deferred out of the DOMContentLoaded handler: the loader counter and the
+// scroll engine start immediately at DOMContentLoaded; renderer setup and
+// shader compilation land a task later instead of blocking them.
+setTimeout(initGL,0);
 
 /* Hardware-Synchronized Fast Loader (~360ms cubic-bezier rAF counter after shader pre-compile) */
 const ld=$('#ld'),loadEl=$('#load');
@@ -1395,8 +1408,22 @@ function tick(t){
   const dt=Math.min(rawDt,0.05)||0.016;
   lastT=t;
 
+  // Load ramp: ease the pixel ratio from startDPR to full quality across the
+  // background's first ~900ms of rendering; the DRS below takes over after.
+  if(gl && rampT0>=0){
+    if(!rampT0)rampT0=t;
+    const rp=Math.min((t-rampT0)/900,1);
+    const target=startDPR+(maxDPR-startDPR)*(1-Math.pow(1-rp,3));
+    if(Math.abs(target-currentDPR)>0.004){
+      currentDPR=target;
+      gl.R.setPixelRatio(currentDPR);
+      gl.pMat.uniforms.uPixelRatio.value=currentDPR;
+    }
+    if(rp>=1)rampT0=-1;
+  }
+
   // Adaptive Dynamic Resolution Scaling (DRS) to guarantee locked 60-120fps on every GPU
-  if(gl && rawDt > 0.001){
+  if(gl && rawDt > 0.001 && rampT0<0){
     if(rawDt > 0.021){
       slowFrames++;fastFrames=0;
       if(slowFrames > 6 && currentDPR > minDPR){
