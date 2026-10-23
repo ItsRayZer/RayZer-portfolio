@@ -137,6 +137,7 @@ const initBackground = () => {
 // --- GSAP ANIMATIONS ---
 const initAnimations = () => {
     const logoContainer = document.querySelector('.rayzer-logo');
+    if (!logoContainer) return;
     const restOfWord = document.querySelector('.rest-of-word');
     const nav = document.querySelector('nav.fixed-nav');
     const heroLabel = document.querySelector('.hero-label');
@@ -209,6 +210,7 @@ const initAnimations = () => {
 
 // --- 4. CONTENT ANIMATIONS (NEW) ---
 const initContentAnimations = () => {
+    if (!document.querySelector('.terminal-loader')) return;
 
     // A. About Section: Terminal Reveal
     gsap.from(".terminal-loader", {
@@ -266,6 +268,7 @@ const initContentAnimations = () => {
 
 // --- 5. NEW SECTIONS ANIMATIONS ---
 const initNewSectionAnimations = () => {
+    if (!document.querySelector('.reality-architect-section')) return;
     // A. Stats Counter Animation
     const statNumbers = document.querySelectorAll('.stat-number');
 
