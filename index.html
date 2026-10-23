@@ -13,6 +13,8 @@
 <meta property="og:title" content="Aben Sojan | Developer &amp; Founder, Axofy"><meta property="og:description" content="Premium, mobile-first websites and web apps. Founder of Axofy."><meta property="og:type" content="website"><meta property="og:url" content="https://abensojan.vercel.app/">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Aben Sojan","alternateName":"RayZer","jobTitle":"Web Developer, Founder of Axofy","url":"https://abensojan.vercel.app/","sameAs":["https://github.com/ItsRayZer","https://www.linkedin.com/in/aben-sojan-rayzer/","https://axofy.vercel.app/"],"address":{"@type":"PostalAddress","addressRegion":"Kerala","addressCountry":"IN"}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!-- GSAP & Three.js: deferred, exactly as the live v2 page loads them. They execute in
      document order before DOMContentLoaded, so js/main.js and the design script below
@@ -230,70 +232,230 @@ nav button.nav-item{cursor:pointer}
 
 
 
-/* ==== V9 KINETIC 3D & COLLISION CONTRAST ENGINE ==== */
-:root{--flash-inv:0;--card-bg:rgba(5,5,5,.78);--hover-ink:#000}
-body{transition:color .08s linear}
-/* Nav uses var(--ink) directly without mix-blend-mode:difference fighting the dynamic inversion */
-nav.fixed-nav{mix-blend-mode:normal;background:rgba(5,5,5,calc((1 - var(--flash-inv))*.35));backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding-block:10px;top:0;padding-top:calc(12px + env(safe-area-inset-top,0px))}
+/* ==== V11 LIVING APP, LOCAL PERSISTENCE & SUBTLE DUAL-SINGULARITY REACTIVITY ==== */
+:root{
+  --flash-inv:0;
+  --card-bg:rgba(7,8,11,.78);
+  --hover-ink:#000;
+  --bh-x:35%;
+  --bh-y:48%;
+  --wh-x:65%;
+  --wh-y:52%;
+  --orb-cos:1;
+  --orb-sin:0;
+  --grav-x:0px;
+  --grav-y:0px;
+  --wh-ratio:1;
+  --field-pulse:0.16;
+  --bh-glow:rgba(255,90,44,0.22);
+  --wh-glow:rgba(124,232,255,0.20);
+}
+body{transition:color .06s linear}
+section{contain:layout style}
+.load{transition:transform .72s cubic-bezier(.76,0,.24,1)}
+nav.fixed-nav{
+  mix-blend-mode:normal;
+  background:rgba(6,7,10,calc((1 - var(--flash-inv))*.52));
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(236,232,225,calc(.06 + var(--field-pulse)*.08));
+  padding-block:11px;top:0;
+  padding-top:calc(12px + env(safe-area-inset-top,0px));
+  transition:background .25s,border-color .25s;
+}
 @media(hover:hover){.row:hover h4,.row:hover .pr,.row:hover p{color:var(--hover-ink)}}
-/* During the white collision flash, add a crisp adaptive contrast halo so every letter is 100% legible */
 main h2,main h3,main h4,main p,main span,main td,main th,main button,main a,header h1,header p,header span,nav b,nav a,nav .nav-item{
   text-shadow:0 0 calc(var(--flash-inv)*18px) rgba(255,255,255,calc(var(--flash-inv)*.95)),
               0 1px calc(var(--flash-inv)*3px) rgba(255,255,255,calc(var(--flash-inv)*.8));
 }
-/* 3D Kinetic Stage Styling across all sections */
+
+/* Subtle Dual-Singularity Rim Lighting (Black Hole warm amber vs White Hole diamond cyan) */
+.facts > div,
+.ti,
+.timeline-container,
+.ps,
+#faq .it,
+.form-input,
+.form-textarea{
+  position:relative;
+}
+.facts > div,
+.ti,
+.pc,
+.timeline-container,
+.ps,
+#faq .it,
+.form-input,
+.form-textarea{
+  background:
+    radial-gradient(420px circle at var(--bh-x) var(--bh-y), rgba(255,90,44,calc(0.065 * (1 - var(--flash-inv)*0.7))), transparent 70%),
+    radial-gradient(420px circle at var(--wh-x) var(--wh-y), rgba(124,232,255,calc(0.06 * var(--wh-ratio) * (1 - var(--flash-inv)*0.7))), transparent 70%),
+    var(--card-bg);
+  box-shadow:
+    calc(var(--orb-cos) * -1px) calc(var(--orb-sin) * -1px) 0 0 rgba(255,90,44,calc(0.24 * (1 - var(--flash-inv)*0.6))),
+    calc(var(--orb-cos) * 1px) calc(var(--orb-sin) * 1px) 0 0 rgba(124,232,255,calc(0.22 * var(--wh-ratio) * (1 - var(--flash-inv)*0.6))),
+    0 18px 42px -24px rgba(0,0,0,0.65);
+  transition:transform .35s cubic-bezier(.16,1,.3,1), border-color .3s, box-shadow .35s, background .3s;
+}
+
 #scrub{perspective:900px}
-#scrub span{display:inline-block;will-change:transform,opacity;transform-origin:center bottom}
-.facts{perspective:1100px;background:var(--line)}
+#scrub span{display:inline-block;will-change:transform,opacity;transform-origin:center bottom;backface-visibility:hidden}
+.facts{perspective:1100px;background:var(--line);border-radius:18px;overflow:hidden}
 .facts div{
-  background:var(--card-bg);
-  position:relative;overflow:hidden;will-change:transform;
-  transition:border-color .3s,box-shadow .3s;
+  padding:26px;overflow:hidden;will-change:transform;backface-visibility:hidden;
 }
 .facts div::after{
   content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),rgba(255,90,44,.18),transparent 70%);
+  background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(255,90,44,.16),rgba(124,232,255,.08) 45%,transparent 72%);
   opacity:var(--hover-op,0);transition:opacity .3s;
 }
 .chips{perspective:800px}
-.chips span{display:inline-block;will-change:transform;transition:background .3s,color .3s,border-color .3s}
+.chips span{
+  display:inline-block;will-change:transform;backface-visibility:hidden;
+  box-shadow:
+    calc(var(--orb-cos) * -0.6px) calc(var(--orb-sin) * -0.6px) 0 0 rgba(255,90,44,0.22),
+    calc(var(--orb-cos) * 0.6px) calc(var(--orb-sin) * 0.6px) 0 0 rgba(124,232,255,calc(0.20 * var(--wh-ratio)));
+  transition:background .3s,color .3s,border-color .3s,transform .25s cubic-bezier(.16,1,.3,1);
+}
 #exp .tl{perspective:1200px}
 .ti{
-  transform-style:preserve-3d;will-change:transform,opacity;
-  padding:22px 26px;margin-bottom:24px;border-radius:18px;
-  border:1px solid transparent;
-  background:rgba(255,255,255,.015);
-  transition:border-color .35s,background .35s;
-}
-.ti.active-helix{
-  border-color:var(--line);
-  background:rgba(255,90,44,.045);
-}
-#protocols .rv{perspective:1200px}
-.row{will-change:transform,opacity;transform-origin:center center}
-#process .pg{perspective:1200px}
-.ps{
-  will-change:transform,opacity;transform-style:preserve-3d;
-  padding:28px 24px;border-radius:18px;
-  background:var(--card-bg);
+  will-change:transform,opacity;backface-visibility:hidden;
+  padding:24px 28px;margin-bottom:22px;border-radius:18px;
   border:1px solid var(--line);
 }
-#projects .timeline-container{perspective:1100px;background:var(--card-bg)}
-.project-row{will-change:transform}
-#faq .fq{perspective:1000px}
-#faq .it{will-change:transform}
+.ti.active-helix{
+  border-color:rgba(255,90,44,.42);
+}
+#protocols .rv{perspective:1200px}
+.row{will-change:transform;transform-origin:center center;backface-visibility:hidden}
+#process .pg{perspective:1200px}
+.ps{
+  will-change:transform;backface-visibility:hidden;
+  padding:28px 24px;border-radius:18px;
+  border:1px solid var(--line);
+}
+#projects .timeline-container{perspective:1100px;padding:10px 20px}
+.project-row{will-change:transform;backface-visibility:hidden;transition:background .25s,transform .3s cubic-bezier(.16,1,.3,1)}
+#faq .fq{perspective:1000px;border-top:none;display:flex;flex-direction:column;gap:10px}
+#faq .it{
+  will-change:transform;backface-visibility:hidden;
+  border:1px solid var(--line);border-radius:16px;padding:0 22px;
+}
 #contact{perspective:1200px}
-#contact h2,#contact .mail,#contact .form-wrap{will-change:transform}
+#contact h2,#contact .mail,#contact .form-wrap{will-change:transform;backface-visibility:hidden}
+
+/* Work Ring Card Top Bar & Like Button */
+.pc-top{display:flex;justify-content:space-between;align-items:center;gap:10px;position:relative;z-index:2}
+.fav-btn{
+  width:auto;min-width:42px;height:36px;padding:0 12px;gap:6px;
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:99px;border:1px solid var(--line);
+  background:rgba(255,255,255,.03);color:var(--mute);
+  cursor:pointer;font:500 11px var(--mono);
+  transition:color .25s,border-color .25s,background .25s,transform .25s cubic-bezier(.175,.885,.32,1.275);
+}
+.fav-btn:hover{color:var(--acc);border-color:var(--acc);transform:scale(1.05)}
+.fav-btn.active{color:#000;background:var(--acc);border-color:var(--acc);box-shadow:0 0 18px rgba(255,90,44,.4)}
+.fav-btn.pop{animation:favPop .42s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes favPop{0%{transform:scale(1)}40%{transform:scale(1.26)}100%{transform:scale(1)}}
+.fav-count{font:500 11px var(--mono);letter-spacing:.04em}
+.row-meta-pill{
+  display:inline-flex;align-items:center;gap:4px;
+  font:500 10px var(--mono);letter-spacing:.06em;
+  color:var(--mute);background:rgba(255,255,255,.04);
+  border:1px solid var(--line);border-radius:99px;
+  padding:2px 8px;margin-left:8px;vertical-align:middle;
+}
+.comment-alias-input{
+  width:170px;min-height:46px;padding:10px 16px;
+  border-radius:99px;border:1px solid var(--line);
+  background:rgba(255,255,255,.04);color:var(--ink);
+  font-family:var(--sans);font-size:14px;
+}
+.comment-alias-input:focus{outline:none;border-color:var(--acc)}
+@media(max-width:640px){.comment-alias-input{width:100%}}
+
+/* Navbar Singularity Telemetry Pill & Saved Collection Button (Replaces Google Login) */
+.field-status-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  font:500 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--mute);padding:6px 11px;border-radius:99px;
+  border:1px solid var(--line);background:rgba(255,255,255,.025);
+  user-select:none;
+}
+.field-dots{position:relative;width:14px;height:10px;display:inline-block}
+.field-dots i{
+  position:absolute;top:2px;width:6px;height:6px;border-radius:50%;
+  transition:transform .2s linear;
+}
+.field-dots .fd-bh{left:0;background:#ff5a2c;box-shadow:0 0 6px #ff5a2c;transform:translateX(calc((1 - var(--wh-ratio))*4px))}
+.field-dots .fd-wh{right:0;background:#7ce8ff;box-shadow:0 0 6px #7ce8ff;opacity:calc(0.35 + 0.65*var(--wh-ratio));transform:translateX(calc((var(--wh-ratio) - 1)*4px))}
+@media(max-width:860px){.field-status-pill{display:none}}
+
+.saved-Include-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink);background:rgba(255,255,255,.04);
+  border:1px solid var(--line);border-radius:99px;
+  padding:7px 13px;cursor:pointer;
+  transition:border-color .25s,background .25s,transform .2s;
+}
+.saved-Include-btn:hover{border-color:var(--acc);background:rgba(255,90,44,.1)}
+.saved-Include-btn svg{color:var(--acc)}
+.saved-badge-cnt{
+  background:var(--acc);color:#000;font:700 10px var(--mono);
+  padding:1px 6px;border-radius:99px;min-width:18px;text-align:center;
+}
+
+/* Slide-Over Local Saved Drawer & Toast */
+.app-drawer-backdrop{
+  position:fixed;inset:0;z-index:450;background:rgba(0,0,0,.62);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity .32s cubic-bezier(.16,1,.3,1);
+}
+.app-drawer-backdrop.open{opacity:1;pointer-events:auto}
+.app-drawer{
+  position:fixed;top:0;right:0;bottom:0;width:min(420px,92vw);z-index:460;
+  background:rgba(10,11,15,.96);border-left:1px solid var(--line);
+  padding:28px 24px;display:flex;flex-direction:column;gap:18px;
+  transform:translateX(104%);transition:transform .38s cubic-bezier(.16,1,.3,1);
+  box-shadow:-24px 0 60px rgba(0,0,0,.75);
+}
+.app-drawer.open{transform:translateX(0)}
+.app-drawer-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.app-drawer-close{background:none;border:1px solid var(--line);color:var(--ink);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px}
+.app-drawer-close:hover{border-color:var(--acc);color:var(--acc)}
+.saved-list{display:flex;flex-direction:column;gap:12px;overflow-y:auto;flex:1}
+.saved-card{
+  padding:16px;border-radius:16px;border:1px solid var(--line);
+  background:rgba(255,255,255,.03);display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.saved-card h5{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.saved-card p{font:400 11px var(--mono);color:var(--mute)}
+.saved-remove{background:none;border:1px solid var(--line);color:var(--mute);border-radius:99px;padding:6px 11px;font:500 10px var(--mono);cursor:pointer}
+.saved-remove:hover{border-color:var(--acc);color:var(--acc)}
+
+.app-toast{
+  position:fixed;bottom:24px;right:24px;z-index:480;
+  padding:12px 18px;border-radius:99px;
+  background:rgba(12,13,18,.92);border:1px solid rgba(255,90,44,.45);
+  color:#ece8e1;font:500 11px var(--mono);letter-spacing:.08em;
+  box-shadow:0 14px 36px rgba(0,0,0,.6), 0 0 18px rgba(255,90,44,.18);
+  transform:translateY(24px);opacity:0;pointer-events:none;
+  transition:transform .3s cubic-bezier(.16,1,.3,1),opacity .3s;
+}
+.app-toast.show{transform:translateY(0);opacity:1}
+
+.draft-status{font:400 10px var(--mono);color:var(--mute);letter-spacing:.1em;text-transform:uppercase;margin-left:auto}
+
 .kin-badge{
   display:inline-flex;align-items:center;gap:8px;
-  font:500 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  font:500 10px var(--mono);letter-spacing:.14em;text-transform:uppercase;
   color:var(--acc);margin-left:14px;opacity:.85;
 }
 .kin-badge::before{
   content:"";width:6px;height:6px;border-radius:50%;background:var(--acc);
-  box-shadow:0 0 8px var(--acc);display:inline-block;
+  box-shadow:0 0 8px var(--acc), 8px 0 8px #7ce8ff;display:inline-block;
 }
-
 </style>
 </head>
 <body>
@@ -344,11 +506,11 @@ main h2,main h3,main h4,main p,main span,main td,main th,main button,main a,head
   <div class="wh"><div class="mono">03 — Selected work</div><div class="mono" style="color:var(--ink);margin-top:8px">Scroll to rotate</div></div>
   <div class="big-n" id="bn">01</div>
   <div class="scene" id="scene"><div class="ring" id="ring">
-    <div class="pc" style="--i:0"><span class="mono">01 — Live</span><h3>Axofy</h3><p>Premium SMM panel at affordable prices. Serverless on Vercel with edge functions, UPI payment tracking, Google OAuth admin login, pricing markup engine and a reseller API.</p><div class="t"><i>Vercel</i><i>OAuth</i><i>UPI flow</i><i>API</i></div><a href="https://axofy.vercel.app" target="_blank" rel="noopener">Visit live <span>↗</span></a></div>
-    <div class="pc" style="--i:1"><span class="mono">02</span><h3>MacHub</h3><p>Student portal for Mar Augusthinose College: attendance, assessments, exams, assignments, seminars and Firestore-synced profiles.</p><div class="t"><i>Firestore</i><i>Zustand</i><i>Workers</i></div><a href="https://github.com/ItsRayZer/MacHub" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
-    <div class="pc" style="--i:2"><span class="mono">03</span><h3>MAC Exam Hub</h3><p>Exam resource hub for MAC students. Everything needed for revision in one fast place.</p><div class="t"><i>Web app</i><i>Student tools</i></div><a href="https://github.com/ItsRayZer/MAC-Exam-Hub" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
-    <div class="pc" style="--i:3"><span class="mono">04</span><h3>This portfolio</h3><p>Real-time WebGL, 3D scroll scenes and first-person copy, written by hand with no framework.</p><div class="t"><i>WebGL</i><i>Three.js</i><i>Vanilla JS</i></div><a href="https://github.com/ItsRayZer/RayZer-portfolio" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
-    <div class="pc" style="--i:4"><span class="mono">05</span><h3>mac-data-sync</h3><p>Data sync tooling that keeps MAC data flowing into the apps that depend on it.</p><div class="t"><i>Sync</i><i>Automation</i></div><a href="https://github.com/ItsRayZer/mac-data-sync" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
+    <div class="pc bh-wh-react" style="--i:0" data-id="axofy"><div class="pc-top"><span class="mono">01 — Live</span><button type="button" class="fav-btn pc-fav" data-id="axofy" aria-label="Like Axofy" onclick="window.handleFavoriteClick(event, 'axofy', 'Axofy', 'Founder & Developer', 'JavaScript, Vercel, REST APIs', '2026')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="axofy">48</span></button></div><h3>Axofy</h3><p>Premium SMM panel at affordable prices. Serverless on Vercel with edge functions, UPI payment tracking, Google OAuth admin login, pricing markup engine and a reseller API.</p><div class="t"><i>Vercel</i><i>OAuth</i><i>UPI flow</i><i>API</i></div><a href="https://axofy.vercel.app" target="_blank" rel="noopener">Visit live <span>↗</span></a></div>
+    <div class="pc bh-wh-react" style="--i:1" data-id="machub"><div class="pc-top"><span class="mono">02</span><button type="button" class="fav-btn pc-fav" data-id="machub" aria-label="Like MacHub" onclick="window.handleFavoriteClick(event, 'machub', 'MacHub', 'Developer', 'JavaScript, Firestore, Cloudflare Workers', '2026')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="machub">39</span></button></div><h3>MacHub</h3><p>Student portal for Mar Augusthinose College: attendance, assessments, exams, assignments, seminars and Firestore-synced profiles.</p><div class="t"><i>Firestore</i><i>Zustand</i><i>Workers</i></div><a href="https://github.com/ItsRayZer/MacHub" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
+    <div class="pc bh-wh-react" style="--i:2" data-id="mac-exam-hub"><div class="pc-top"><span class="mono">03</span><button type="button" class="fav-btn pc-fav" data-id="mac-exam-hub" aria-label="Like MAC Exam Hub" onclick="window.handleFavoriteClick(event, 'mac-exam-hub', 'MAC Exam Hub', 'Developer', 'JavaScript', '2026')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="mac-exam-hub">31</span></button></div><h3>MAC Exam Hub</h3><p>Exam resource hub for MAC students. Everything needed for revision in one fast place.</p><div class="t"><i>Web app</i><i>Student tools</i></div><a href="https://github.com/ItsRayZer/MAC-Exam-Hub" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
+    <div class="pc bh-wh-react" style="--i:3" data-id="rayzer-portfolio"><div class="pc-top"><span class="mono">04</span><button type="button" class="fav-btn pc-fav" data-id="rayzer-portfolio" aria-label="Like This portfolio" onclick="window.handleFavoriteClick(event, 'rayzer-portfolio', 'RayZer Portfolio', 'Creator', 'WebGL, Three.js, GLSL', '2026')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="rayzer-portfolio">64</span></button></div><h3>This portfolio</h3><p>Real-time WebGL, 3D scroll scenes and first-person copy, written by hand with no framework.</p><div class="t"><i>WebGL</i><i>Three.js</i><i>Vanilla JS</i></div><a href="https://github.com/ItsRayZer/RayZer-portfolio" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
+    <div class="pc bh-wh-react" style="--i:4" data-id="mac-data-sync"><div class="pc-top"><span class="mono">05</span><button type="button" class="fav-btn pc-fav" data-id="mac-data-sync" aria-label="Like mac-data-sync" onclick="window.handleFavoriteClick(event, 'mac-data-sync', 'mac-data-sync', 'Developer', 'JavaScript', '2026')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="mac-data-sync">24</span></button></div><h3>mac-data-sync</h3><p>Data sync tooling that keeps MAC data flowing into the apps that depend on it.</p><div class="t"><i>Sync</i><i>Automation</i></div><a href="https://github.com/ItsRayZer/mac-data-sync" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
   </div></div>
   <div class="bar"><i id="bari"></i></div>
 </div></div>
@@ -362,10 +524,10 @@ main h2,main h3,main h4,main p,main span,main td,main th,main button,main a,head
     <table class="timeline-table">
       <thead><tr><th>PROJECT</th><th>ROLE</th><th>TECH</th><th>YEAR</th><th></th></tr></thead>
       <tbody>
-        <tr class="project-row" data-id="machub"><td class="project-name">MacHub</td><td>Developer</td><td>JavaScript, Firestore, Cloudflare Workers</td><td>2026</td><td class="fav-cell"><button class="fav-btn" aria-label="Save MacHub to favorites" onclick="window.handleFavoriteClick(event, 'machub', 'MacHub', 'Developer', 'JavaScript, Firestore, Cloudflare Workers', '2026')"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button></td></tr>
-        <tr class="project-row" data-id="axofy"><td class="project-name">Axofy</td><td>Founder &amp; Developer</td><td>JavaScript, Vercel, REST APIs</td><td>2026</td><td class="fav-cell"><button class="fav-btn" aria-label="Save Axofy to favorites" onclick="window.handleFavoriteClick(event, 'axofy', 'Axofy', 'Founder &amp; Developer', 'JavaScript, Vercel, REST APIs', '2026')"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button></td></tr>
-        <tr class="project-row" data-id="mac-exam-hub"><td class="project-name">MAC Exam Hub</td><td>Developer</td><td>JavaScript</td><td>2026</td><td class="fav-cell"><button class="fav-btn" aria-label="Save MAC Exam Hub to favorites" onclick="window.handleFavoriteClick(event, 'mac-exam-hub', 'MAC Exam Hub', 'Developer', 'JavaScript', '2026')"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button></td></tr>
-        <tr class="project-row" data-id="mac-data-sync"><td class="project-name">mac-data-sync</td><td>Developer</td><td>JavaScript</td><td>2026</td><td class="fav-cell"><button class="fav-btn" aria-label="Save mac-data-sync to favorites" onclick="window.handleFavoriteClick(event, 'mac-data-sync', 'mac-data-sync', 'Developer', 'JavaScript', '2026')"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></button></td></tr>
+        <tr class="project-row" data-id="machub"><td class="project-name">MacHub <span class="row-meta-pill" data-cmt-for="machub">💬 1</span></td><td>Developer</td><td>JavaScript, Firestore, Cloudflare Workers</td><td>2026</td><td class="fav-cell"><button type="button" class="fav-btn" data-id="machub" aria-label="Save MacHub to favorites" onclick="window.handleFavoriteClick(event, 'machub', 'MacHub', 'Developer', 'JavaScript, Firestore, Cloudflare Workers', '2026')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="machub">39</span></button></td></tr>
+        <tr class="project-row" data-id="axofy"><td class="project-name">Axofy <span class="row-meta-pill" data-cmt-for="axofy">💬 1</span></td><td>Founder &amp; Developer</td><td>JavaScript, Vercel, REST APIs</td><td>2026</td><td class="fav-cell"><button type="button" class="fav-btn" data-id="axofy" aria-label="Save Axofy to favorites" onclick="window.handleFavoriteClick(event, 'axofy', 'Axofy', 'Founder &amp; Developer', 'JavaScript, Vercel, REST APIs', '2026')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="axofy">48</span></button></td></tr>
+        <tr class="project-row" data-id="mac-exam-hub"><td class="project-name">MAC Exam Hub <span class="row-meta-pill" data-cmt-for="mac-exam-hub">💬 1</span></td><td>Developer</td><td>JavaScript</td><td>2026</td><td class="fav-cell"><button type="button" class="fav-btn" data-id="mac-exam-hub" aria-label="Save MAC Exam Hub to favorites" onclick="window.handleFavoriteClick(event, 'mac-exam-hub', 'MAC Exam Hub', 'Developer', 'JavaScript', '2026')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="mac-exam-hub">31</span></button></td></tr>
+        <tr class="project-row" data-id="mac-data-sync"><td class="project-name">mac-data-sync <span class="row-meta-pill" data-cmt-for="mac-data-sync">💬 1</span></td><td>Developer</td><td>JavaScript</td><td>2026</td><td class="fav-cell"><button type="button" class="fav-btn" data-id="mac-data-sync" aria-label="Save mac-data-sync to favorites" onclick="window.handleFavoriteClick(event, 'mac-data-sync', 'mac-data-sync', 'Developer', 'JavaScript', '2026')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="mac-data-sync">24</span></button></td></tr>
       </tbody>
     </table>
   </div>
@@ -434,12 +596,13 @@ main h2,main h3,main h4,main p,main span,main td,main th,main button,main a,head
 document.addEventListener('DOMContentLoaded',()=>{
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const lerp=(a,b,t)=>a+(b-a)*t,clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+// Frame-rate-independent exponential damping (identical feel on 60Hz, 120Hz ProMotion & 144Hz)
+const damp=(a,b,lambda,dt)=>a+(b-a)*(1-Math.exp(-lambda*dt));
 const touch=matchMedia('(hover:none)').matches;
-let mx=0,my=0,sy=0,vy=0;
+let mx=0,my=0,sy=scrollY,smoothY=scrollY,vy=0;
 
-/* split hero letters for 3D per-character gravitational warp */
+/* split hero letters */
 $$('[data-s]').forEach((l,k)=>{l.innerHTML=[...l.dataset.s].map((c,i)=>`<span class="c" style="--i:${i+k*4}">${c}</span>`).join('')});
-const heroChars=$$('.h1 .c');
 
 /* marquee */
 const sk=['Web apps','Liquid glass','Firebase','Vercel','Python','APIs','Dashboards','Mobile first'];
@@ -449,14 +612,14 @@ const mq=$('#mq'),mqWrap=$('.mq');
 /* scrub words */
 const sc=$('#scrub');sc.innerHTML=sc.textContent.split(' ').map(w=>`<span>${w}</span>`).join(' ');const ws=[...sc.children];
 
-/* Add subtle kinetic mode badges to section headers so each section's unique scroll mechanic is clear */
+/* Kinetic mode badges */
 const secBadges=[
-  ['#about .mono','Scroll 3D Wave · Magnetic Chips'],
-  ['#exp .mono','Scroll to Unfold 3D Helix'],
-  ['#projects .mono','Scroll Depth Cascade'],
-  ['#protocols .mono','Scroll 3D Louver Deck'],
-  ['#process .mono','Scroll to Rotate 3D Cubes'],
-  ['#faq .mono','Scroll Harmonic Ripple'],
+  ['#about .mono','Dual-Field Rim · Magnetic Chips'],
+  ['#exp .mono','Binary Gravity Timeline'],
+  ['#projects .mono','Local Likes & Instant Discussion'],
+  ['#protocols .mono','Tidal Field Louvers'],
+  ['#process .mono','Orbital Dipole Cards'],
+  ['#faq .mono','Harmonic Field Accordion'],
   ['#contact .mono','Singularity Gravity Well']
 ];
 secBadges.forEach(([sel,label])=>{
@@ -470,27 +633,19 @@ secBadges.forEach(([sel,label])=>{
 });
 
 /* reveal + counters */
-const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.15});$$('.rv').forEach(el=>io.observe(el));
-const co=new IntersectionObserver(e=>e.forEach(x=>{if(!x.isIntersecting)return;const el=x.target,n=+el.dataset.n;let t0;const f=t=>{t0??=t;const p=Math.min((t-t0)/1400,1);el.textContent=Math.round(n*(1-Math.pow(1-p,4)));p<1&&requestAnimationFrame(f)};requestAnimationFrame(f);co.unobserve(el)}),{threshold:.8});$$('[data-n]').forEach(e=>co.observe(e));
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.12});$$('.rv').forEach(el=>io.observe(el));
+const co=new IntersectionObserver(e=>e.forEach(x=>{if(!x.isIntersecting)return;const el=x.target,n=+el.dataset.n;let t0;const f=t=>{t0??=t;const p=Math.min((t-t0)/1200,1);el.textContent=Math.round(n*(1-Math.pow(1-p,4)));p<1&&requestAnimationFrame(f)};requestAnimationFrame(f);co.unobserve(el)}),{threshold:.75});$$('[data-n]').forEach(e=>co.observe(e));
 const clk=()=>$('#clk').textContent=new Date().toLocaleTimeString('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit'});clk();setInterval(clk,15000);
-
-/* loader */
-let n=0;const ld=$('#ld'),li=setInterval(()=>{n=Math.min(100,n+Math.ceil(Math.random()*9));ld.textContent=n;if(n>=100){clearInterval(li);setTimeout(()=>{$('#load').classList.add('out');document.body.classList.add('go')},250)}},45);
 
 /* cursor */
 const cur=$('#cur'),cd=$('#curd');let cx=0,cy=0,tx=0,ty=0;
-addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;mx=e.clientX/innerWidth*2-1;my=e.clientY/innerHeight*2-1;cd.style.transform=`translate(${tx}px,${ty}px)`});
-$$('a,button,.chips span,.row').forEach(a=>{a.addEventListener('pointerenter',()=>cur.classList.add('big'));a.addEventListener('pointerleave',()=>cur.classList.remove('big'))});
+addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;mx=e.clientX/innerWidth*2-1;my=e.clientY/innerHeight*2-1;cd.style.transform=`translate3d(${tx}px,${ty}px,0)`},{passive:true});
+$$('a,button,.chips span,.row').forEach(a=>{a.addEventListener('pointerenter',()=>cur.classList.add('big'),{passive:true});a.addEventListener('pointerleave',()=>cur.classList.remove('big'),{passive:true})});
 
 /* Interactive 3D Specular Tilt on Fact Cards & Magnetic Chips */
 const factCards=$$('.facts > div');
 factCards.forEach(card=>{
-  card.addEventListener('pointerenter',()=>card.style.setProperty('--hover-op','1'));
-  card.addEventListener('pointerMove',e=>{
-    const r=card.getBoundingClientRect();
-    card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
-    card.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
-  });
+  card.addEventListener('pointerenter',()=>card.style.setProperty('--hover-op','1'),{passive:true});
   card.addEventListener('pointermove',e=>{
     const r=card.getBoundingClientRect();
     const px=(e.clientX-r.left)/r.width-0.5, py=(e.clientY-r.top)/r.height-0.5;
@@ -498,12 +653,12 @@ factCards.forEach(card=>{
     card.style.setProperty('--my',((py+0.5)*100)+'%');
     card.dataset.hx=(-py*14).toFixed(2);
     card.dataset.hy=(px*16).toFixed(2);
-  });
+  },{passive:true});
   card.addEventListener('pointerleave',()=>{
     card.style.setProperty('--hover-op','0');
     card.dataset.hx='0';
     card.dataset.hy='0';
-  });
+  },{passive:true});
 });
 
 const chipEls=$$('.chips span');
@@ -513,34 +668,42 @@ chipEls.forEach(ch=>{
     const dx=e.clientX-(r.left+r.width/2), dy=e.clientY-(r.top+r.height/2);
     ch.dataset.mx=(dx*0.35).toFixed(1);
     ch.dataset.my=(dy*0.45).toFixed(1);
-  });
+  },{passive:true});
   ch.addEventListener('pointerleave',()=>{
     ch.dataset.mx='0';
     ch.dataset.my='0';
-  });
+  },{passive:true});
 });
 
 /* magnetic mail */
-const ml=$('#mail');if(!touch&&ml)addEventListener('pointermove',e=>{const r=ml.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),d=Math.hypot(dx,dy);ml.style.transform=d<220?`translate(${dx*.25}px,${dy*.35}px)`:''});
+const ml=$('#mail');if(!touch&&ml)addEventListener('pointermove',e=>{const r=ml.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),d=Math.hypot(dx,dy);ml.style.transform=d<220?`translate3d(${dx*.25}px,${dy*.35}px,0)`:''},{passive:true});
 
 /* ring & FAQ */
 const ring=$('#ring'),scene=$('#scene'),work=$('#work'),cards=$$('.pc'),bn=$('#bn'),bari=$('#bari');
-function size(){const w=Math.min(innerWidth*.8,340),h=Math.min(innerHeight*.62,440);scene.style.setProperty('--w',w+'px');scene.style.setProperty('--h',h+'px');scene.style.setProperty('--R',(w/2/Math.tan(Math.PI/5)+60)+'px');cards.forEach(c=>c.style.setProperty('--R',(w/2/Math.tan(Math.PI/5)+60)+'px'))}size();addEventListener('resize',size);
+function size(){const small=innerWidth<560;const w=Math.min(innerWidth*(small?.68:.8),340),h=Math.min(innerHeight*.62,440);const R=w/2/Math.tan(Math.PI/5)+(small?30:60);scene.style.setProperty('--w',w+'px');scene.style.setProperty('--h',h+'px');scene.style.setProperty('--R',R+'px');cards.forEach(c=>c.style.setProperty('--R',R+'px'))}size();addEventListener('resize',size,{passive:true});
 let ang=0,wp=0,dr=0;const tl=$('#tl'),sp=$('#sp');
 $$('.fq-btn').forEach(b=>b.addEventListener('click',()=>{const it=b.parentElement,o=it.classList.contains('open');$$('.fq .it').forEach(x=>x.classList.remove('open'));if(!o)it.classList.add('open')}));
 
 /* ============================================================================
    CINEMA-GRADE RELATIVISTIC GEODESIC RAYMARCHED BLACK HOLE vs WHITE HOLE
-   COLLISION, MASSIVE WHITE SUPERNOVA FLASH & POST-MERGER REMNANT ENGINE
+   WITH O(1) FAR-FIELD RAY CULLING & ADAPTIVE DYNAMIC RESOLUTION SCALING (DRS)
    ============================================================================ */
 let gl=null;
+let currentDPR=Math.min(devicePixelRatio||1,touch?1.15:1.45);
+const maxDPR=currentDPR;
+const minDPR=touch?0.75:0.95;
+
 try{
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)throw new Error('reduced motion: WebGL off');
   const cv=$('#gl');
-  const R=new THREE.WebGLRenderer({canvas:cv,antialias:false,alpha:false,powerPreference:'high-performance'});
-  R.setPixelRatio(Math.min(devicePixelRatio,touch?1.15:1.5));
+  const R=new THREE.WebGLRenderer({canvas:cv,antialias:false,alpha:false,powerPreference:'high-performance',stencil:false,depth:false});
+  R.setPixelRatio(currentDPR);
   const S=new THREE.Scene();
   const C=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,0.1,100);
+
+  // Hide the redundant 100-div .dots-background layer when WebGL is active to save 100 DOM composite layers
+  const dotsBg=$('#dotsBackground');
+  if(dotsBg)dotsBg.style.display='none';
 
   const uShared={
     uTime:{value:0},
@@ -779,146 +942,168 @@ try{
         float preMerger = 1.0 - smoothstep(0.45, 0.86, uRemnant);
         float rsWH = 0.49 * preMerger;
 
-        float tiltBH = 0.22 - uRemnant * 0.04;
-        float ctB = cos(tiltBH), stB = sin(tiltBH);
-        float tiltWH = 0.20;
-        float ctW = cos(tiltWH), stW = sin(tiltWH);
+        // O(1) FAR-FIELD IMPACT-PARAMETER RAY CULLING:
+        // Compute analytic closest approach of ray (ro, rd) to Black Hole and White Hole.
+        // Pixels in outer space (minImpact > 4.55) skip the 56-step raymarching loop entirely!
+        vec3 toBH0 = uBHPos - ro;
+        float projBH = max(0.0, dot(toBH0, rd));
+        vec3 perpBH = toBH0 - rd * projBH;
+        float bBH = length(perpBH);
 
-        vec3 p = ro;
+        vec3 toWH0 = uWHPos - ro;
+        float projWH = max(0.0, dot(toWH0, rd));
+        vec3 perpWH = toWH0 - rd * projWH;
+        float bWH = length(perpWH);
+
+        float minImpact = min(bBH, mix(bWH, 100.0, uRemnant));
+
         vec3 col = vec3(0.0);
         float trans = 1.0;
         bool hitBHHov = false;
         bool hitWHCore = false;
         vec3 whHitNormal = vec3(0.0, 0.0, 1.0);
         vec3 whHitDir = vec3(0.0, 0.0, -1.0);
-        float closestBH = 100.0;
-        float closestWH = 100.0;
+        float closestBH = bBH;
+        float closestWH = bWH;
 
-        float sysDist = length(ro);
-        if(sysDist > 5.8){
-          p += rd * (sysDist - 5.5);
-        }
-
-        for(int i=0; i<60; i++){
-          vec3 toBH = uBHPos - p;
-          float rBH = length(toBH);
-          closestBH = min(closestBH, rBH);
-
-          vec3 toWH = uWHPos - p;
-          float rWH = length(toWH);
-          closestWH = min(closestWH, rWH);
-
-          float minR = min(rBH, mix(rWH, 10.0, uRemnant));
-          float dt = clamp(minR * 0.16, 0.034, 0.38);
-
-          float bendBH = (1.58 * rsBH * rsBH) / pow(rBH*rBH + 0.045, 1.65);
-          vec3 accel = normalize(toBH) * bendBH;
+        if(minImpact > 4.55){
+          // Analytic far-field Einstein deflection for background stars (0 loop iterations!)
+          vec3 deflect = normalize(perpBH + 1e-5) * (2.2 * rsBH * rsBH / (bBH * bBH + 0.5));
           if(preMerger > 0.01){
-            float bendWH = (1.55 * rsWH * rsWH * preMerger) / pow(rWH*rWH + 0.045, 1.65);
-            accel += normalize(toWH) * bendWH;
+            deflect += normalize(perpWH + 1e-5) * (2.0 * rsWH * rsWH * preMerger / (bWH * bWH + 0.5));
           }
+          rd = normalize(rd + deflect);
+        } else {
+          float tiltBH = 0.22 - uRemnant * 0.04;
+          float ctB = cos(tiltBH), stB = sin(tiltBH);
+          float tiltWH = 0.20;
+          float ctW = cos(tiltWH), stW = sin(tiltWH);
 
-          vec3 nextRd = normalize(rd + accel * dt);
-          vec3 nextP = p + nextRd * dt;
+          vec3 p = ro;
+          float startJump = max(0.0, min(projBH, mix(projWH, 100.0, uRemnant)) - 4.75);
+          p += rd * startJump;
 
-          vec3 seg = nextP - p;
-          float segLen2 = dot(seg, seg) + 1e-8;
-          float tSegBH = clamp(dot(uBHPos - p, seg) / segLen2, 0.0, 1.0);
-          float segDistBH = length((p + seg * tSegBH) - uBHPos);
-          closestBH = min(closestBH, segDistBH);
+          for(int i=0; i<56; i++){
+            vec3 toBH = uBHPos - p;
+            float rBH = length(toBH);
+            closestBH = min(closestBH, rBH);
 
-          float tSegWH = clamp(dot(uWHPos - p, seg) / segLen2, 0.0, 1.0);
-          vec3 closestPtWH = p + seg * tSegWH;
-          float segDistWH = length(closestPtWH - uWHPos);
-          closestWH = min(closestWH, segDistWH);
+            vec3 toWH = uWHPos - p;
+            float rWH = length(toWH);
+            closestWH = min(closestWH, rWH);
 
-          // 1. Analytic Plane Crossing for Black Hole Accretion Disk & Tidal Bridge
-          vec3 relB0 = p - uBHPos;
-          vec3 relB1 = nextP - uBHPos;
-          float yB0 = relB0.y * ctB - relB0.z * stB;
-          float yB1 = relB1.y * ctB - relB1.z * stB;
-          if(yB0 * yB1 <= 0.0){
-            float fracB = clamp(-yB0 / (yB1 - yB0 + 1e-6), 0.0, 1.0);
-            if(fracB <= tSegBH || segDistBH >= rsBH){
-              vec3 hitRelB = mix(relB0, relB1, fracB);
-              vec3 dPos = vec3(hitRelB.x, 0.0, hitRelB.y * stB + hitRelB.z * ctB);
-              vec4 dSample = shadeBlackHoleDisk(dPos, nextRd, ctB, stB);
-              if(dSample.a > 0.001){
-                col += trans * dSample.rgb;
-                trans *= (1.0 - dSample.a * 0.90);
+            float minR = min(rBH, mix(rWH, 10.0, uRemnant));
+            float dt = clamp(minR * 0.165, 0.035, 0.38);
+
+            float bendBH = (1.58 * rsBH * rsBH) / pow(rBH*rBH + 0.045, 1.65);
+            vec3 accel = normalize(toBH) * bendBH;
+            if(preMerger > 0.01){
+              float bendWH = (1.55 * rsWH * rsWH * preMerger) / pow(rWH*rWH + 0.045, 1.65);
+              accel += normalize(toWH) * bendWH;
+            }
+
+            vec3 nextRd = normalize(rd + accel * dt);
+            vec3 nextP = p + nextRd * dt;
+
+            vec3 seg = nextP - p;
+            float segLen2 = dot(seg, seg) + 1e-8;
+            float tSegBH = clamp(dot(uBHPos - p, seg) / segLen2, 0.0, 1.0);
+            float segDistBH = length((p + seg * tSegBH) - uBHPos);
+            closestBH = min(closestBH, segDistBH);
+
+            float tSegWH = clamp(dot(uWHPos - p, seg) / segLen2, 0.0, 1.0);
+            vec3 closestPtWH = p + seg * tSegWH;
+            float segDistWH = length(closestPtWH - uWHPos);
+            closestWH = min(closestWH, segDistWH);
+
+            // 1. Analytic Plane Crossing for Black Hole Accretion Disk & Tidal Bridge
+            vec3 relB0 = p - uBHPos;
+            vec3 relB1 = nextP - uBHPos;
+            float yB0 = relB0.y * ctB - relB0.z * stB;
+            float yB1 = relB1.y * ctB - relB1.z * stB;
+            if(yB0 * yB1 <= 0.0){
+              float fracB = clamp(-yB0 / (yB1 - yB0 + 1e-6), 0.0, 1.0);
+              if(fracB <= tSegBH || segDistBH >= rsBH){
+                vec3 hitRelB = mix(relB0, relB1, fracB);
+                vec3 dPos = vec3(hitRelB.x, 0.0, hitRelB.y * stB + hitRelB.z * ctB);
+                vec4 dSample = shadeBlackHoleDisk(dPos, nextRd, ctB, stB);
+                if(dSample.a > 0.001){
+                  col += trans * dSample.rgb;
+                  trans *= (1.0 - dSample.a * 0.90);
+                }
+                if(preMerger > 0.01){
+                  vec3 hitWorld = uBHPos + hitRelB;
+                  vec4 bSample = shadeTidalBridge(hitWorld, preMerger);
+                  if(bSample.a > 0.001){
+                    col += trans * bSample.rgb;
+                    trans *= (1.0 - bSample.a * 0.85);
+                  }
+                }
+              }
+            }
+
+            // 2. Analytic Plane Crossing for White Hole Relativistic Ejection Disk
+            if(preMerger > 0.01){
+              vec3 relW0 = p - uWHPos;
+              vec3 relW1 = nextP - uWHPos;
+              float yW0 = relW0.y * ctW - relW0.z * stW;
+              float yW1 = relW1.y * ctW - relW1.z * stW;
+              if(yW0 * yW1 <= 0.0){
+                float fracW = clamp(-yW0 / (yW1 - yW0 + 1e-6), 0.0, 1.0);
+                if(fracW <= tSegWH || segDistWH >= rsWH){
+                  vec3 hitRelW = mix(relW0, relW1, fracW);
+                  vec3 wPos = vec3(hitRelW.x, 0.0, hitRelW.y * stW + hitRelW.z * ctW);
+                  vec4 wSample = shadeWhiteHoleDisk(wPos, nextRd, ctW, stW, preMerger);
+                  if(wSample.a > 0.001){
+                    col += trans * wSample.rgb;
+                    trans *= (1.0 - wSample.a * 0.90);
+                  }
+                }
+              }
+            }
+
+            // 3. Black Hole Event Horizon Capture
+            if(segDistBH < rsBH){
+              hitBHHov = true;
+              break;
+            }
+
+            // 4. White Hole Cauchy Horizon Sphere Capture
+            if(preMerger > 0.01 && segDistWH < rsWH){
+              hitWHCore = true;
+              whHitNormal = normalize(closestPtWH - uWHPos);
+              whHitDir = nextRd;
+              break;
+            }
+
+            // 5. Relativistic Polar Jets
+            if(uBurst > 0.01 || uRemnant > 0.05 || preMerger > 0.01){
+              float jetCylB = length(vec2(relB1.x, relB1.z * ctB - relB1.y * stB));
+              float jetHB = abs(relB1.y * ctB + relB1.z * stB);
+              float jetPowB = clamp(0.35 + uBurst * 0.95 + uRemnant * 1.15, 0.0, 1.4);
+              if(jetCylB < 0.38 && jetHB > rsBH * 1.15 && jetHB < 4.5){
+                float jW = 0.04 + jetHB * 0.048;
+                float jFade = exp(-pow(jetCylB / jW, 2.0)) * exp(-jetHB * 0.48) * smoothstep(rsBH*1.15, rsBH*1.5, jetHB);
+                vec3 jCol = mix(vec3(1.0, 0.88, 0.78), vec3(1.0, 0.38, 0.16), clamp(jetHB * 0.3, 0.0, 1.0));
+                col += trans * jCol * jFade * jetPowB * dt * 0.95;
               }
               if(preMerger > 0.01){
-                vec3 hitWorld = uBHPos + hitRelB;
-                vec4 bSample = shadeTidalBridge(hitWorld, preMerger);
-                if(bSample.a > 0.001){
-                  col += trans * bSample.rgb;
-                  trans *= (1.0 - bSample.a * 0.85);
+                vec3 relW1 = nextP - uWHPos;
+                float jetCylW = length(vec2(relW1.x, relW1.z * ctW - relW1.y * stW));
+                float jetHW = abs(relW1.y * ctW + relW1.z * stW);
+                if(jetCylW < 0.34 && jetHW > rsWH * 1.15 && jetHW < 4.0){
+                  float jWW = 0.038 + jetHW * 0.045;
+                  float jFadeW = exp(-pow(jetCylW / jWW, 2.0)) * exp(-jetHW * 0.50) * smoothstep(rsWH*1.15, rsWH*1.5, jetHW);
+                  vec3 jColW = mix(vec3(1.0, 0.99, 0.98), vec3(0.68, 0.93, 1.0), clamp(jetHW * 0.35, 0.0, 1.0));
+                  col += trans * jColW * jFadeW * preMerger * dt * 0.85;
                 }
               }
             }
-          }
 
-          // 2. Analytic Plane Crossing for White Hole Relativistic Ejection Disk
-          if(preMerger > 0.01){
-            vec3 relW0 = p - uWHPos;
-            vec3 relW1 = nextP - uWHPos;
-            float yW0 = relW0.y * ctW - relW0.z * stW;
-            float yW1 = relW1.y * ctW - relW1.z * stW;
-            if(yW0 * yW1 <= 0.0){
-              float fracW = clamp(-yW0 / (yW1 - yW0 + 1e-6), 0.0, 1.0);
-              if(fracW <= tSegWH || segDistWH >= rsWH){
-                vec3 hitRelW = mix(relW0, relW1, fracW);
-                vec3 wPos = vec3(hitRelW.x, 0.0, hitRelW.y * stW + hitRelW.z * ctW);
-                vec4 wSample = shadeWhiteHoleDisk(wPos, nextRd, ctW, stW, preMerger);
-                if(wSample.a > 0.001){
-                  col += trans * wSample.rgb;
-                  trans *= (1.0 - wSample.a * 0.90);
-                }
-              }
-            }
+            p = nextP;
+            rd = nextRd;
+            if(trans < 0.02 || length(p - ro) > 16.5) break;
           }
-
-          // 3. Black Hole Event Horizon Capture
-          if(segDistBH < rsBH){
-            hitBHHov = true;
-            break;
-          }
-
-          // 4. White Hole Cauchy Horizon Sphere Capture
-          if(preMerger > 0.01 && segDistWH < rsWH){
-            hitWHCore = true;
-            whHitNormal = normalize(closestPtWH - uWHPos);
-            whHitDir = nextRd;
-            break;
-          }
-
-          // 5. Relativistic Polar Jets
-          if(uBurst > 0.01 || uRemnant > 0.05 || preMerger > 0.01){
-            float jetCylB = length(vec2(relB1.x, relB1.z * ctB - relB1.y * stB));
-            float jetHB = abs(relB1.y * ctB + relB1.z * stB);
-            float jetPowB = clamp(0.35 + uBurst * 0.95 + uRemnant * 1.15, 0.0, 1.4);
-            if(jetCylB < 0.38 && jetHB > rsBH * 1.15 && jetHB < 4.5){
-              float jW = 0.04 + jetHB * 0.048;
-              float jFade = exp(-pow(jetCylB / jW, 2.0)) * exp(-jetHB * 0.48) * smoothstep(rsBH*1.15, rsBH*1.5, jetHB);
-              vec3 jCol = mix(vec3(1.0, 0.88, 0.78), vec3(1.0, 0.38, 0.16), clamp(jetHB * 0.3, 0.0, 1.0));
-              col += trans * jCol * jFade * jetPowB * dt * 0.95;
-            }
-            if(preMerger > 0.01){
-              vec3 relW1 = nextP - uWHPos;
-              float jetCylW = length(vec2(relW1.x, relW1.z * ctW - relW1.y * stW));
-              float jetHW = abs(relW1.y * ctW + relW1.z * stW);
-              if(jetCylW < 0.34 && jetHW > rsWH * 1.15 && jetHW < 4.0){
-                float jWW = 0.038 + jetHW * 0.045;
-                float jFadeW = exp(-pow(jetCylW / jWW, 2.0)) * exp(-jetHW * 0.50) * smoothstep(rsWH*1.15, rsWH*1.5, jetHW);
-                vec3 jColW = mix(vec3(1.0, 0.99, 0.98), vec3(0.68, 0.93, 1.0), clamp(jetHW * 0.35, 0.0, 1.0));
-                col += trans * jColW * jFadeW * preMerger * dt * 0.85;
-              }
-            }
-          }
-
-          p = nextP;
-          rd = nextRd;
-          if(trans < 0.02 || length(p - ro) > 19.0) break;
         }
 
         // SHADE WHITE HOLE CAUCHY SINGULARITY SPHERE
@@ -963,15 +1148,13 @@ try{
           col += trans * sampleCosmos(rd, gwStrain);
         }
 
-        //Filmic ACES Tonemapping & Vignette first
+        // Filmic ACES Tonemapping & Vignette
         col = (col * (2.51 * col + 0.03)) / (col * (2.43 * col + 0.59) + 0.14);
         col = pow(clamp(col, 0.0, 1.0), vec3(0.96));
         float vig = smoothstep(1.65, 0.35, length(vUv - 0.5)*1.35);
         col = mix(vec3(0.0196, 0.0196, 0.0196), col, 0.58 + 0.42*vig);
 
         // MASSIVE WHITE COLLISION SUPERNOVA DETONATION
-        // Uniform luminous pearl-white supernova envelope + shockwave ring so that when CSS inverts
-        // the foreground text to stark obsidian-black (#08090c), EVERY word on screen has 15:1 contrast!
         if(uWhiteFlash > 0.001){
           vec3 midWorld = mix(uBHPos, uWHPos, 0.5);
           float projZ = max(0.1, dot(midWorld - ro, uCamForward));
@@ -986,7 +1169,6 @@ try{
           float rays = (0.5 + 0.5*sin(angScreen * 8.0 + uTime*3.0)) * (0.5 + 0.5*cos(angScreen * 14.0 - uTime*2.0));
           float starburst = exp(-rScreen * 0.85) * pow(rays, 2.0);
 
-          // Luminous alabaster-pearl supernova field with subtle Cerenkov cyan & plasma gold shockwave accents
           vec3 supernovaField = mix(vec3(0.93, 0.95, 0.98), vec3(1.0, 0.99, 0.97), clamp(starburst + anamorphic, 0.0, 1.0));
           supernovaField -= vec3(0.12, 0.05, 0.0) * shockRing * (1.0 - uWhiteFlash * 0.4);
           float flashBlend = smoothstep(0.0, 0.72, uWhiteFlash);
@@ -1004,7 +1186,7 @@ try{
   /* -------------------------------------------------------------------------
      PASS 2: 3D GPU RELATIVISTIC EJECTA, ROCHE STREAM & POST-MERGER HALO PARTICLES
      ------------------------------------------------------------------------- */
-  const pCount=touch?2400:4800;
+  const pCount=touch?2000:4000;
   const pGeo=new THREE.BufferGeometry();
   const aSeed=new Float32Array(pCount*4);
   for(let i=0;i<pCount;i++){
@@ -1024,7 +1206,7 @@ try{
       uWHPos:uShared.uWHPos,
       uBurst:uShared.uBurst,
       uRemnant:uShared.uRemnant,
-      uPixelRatio:{value:Math.min(devicePixelRatio,1.75)}
+      uPixelRatio:{value:currentDPR}
     },
     transparent:true,
     depthWrite:false,
@@ -1117,18 +1299,38 @@ try{
   const particleSystem=new THREE.Points(pGeo,pMat);
   S.add(particleSystem);
 
-  gl={R,S,C,uShared};
+  // Pre-compile WebGL shaders immediately during loader so first frame has 0ms shader compile stutter!
+  R.compile(S,C);
+
+  gl={R,S,C,uShared,pMat};
   function rs(){
     R.setSize(innerWidth,innerHeight,false);
     C.aspect=innerWidth/innerHeight;
     C.updateProjectionMatrix();
     uShared.uResolution.value.set(innerWidth,innerHeight);
   }
-  rs();addEventListener('resize',rs);
+  rs();addEventListener('resize',rs,{passive:true});
 }catch(e){console.warn('WebGL off',e)}
 
+/* Hardware-Synchronized Fast Loader (~360ms cubic-bezier rAF counter after shader pre-compile) */
+const ld=$('#ld'),loadEl=$('#load');
+let loadStart=0;
+function runFastLoader(ts){
+  if(!loadStart)loadStart=ts;
+  const p=Math.min((ts-loadStart)/360,1);
+  const eased=1-Math.pow(1-p,3);
+  if(ld)ld.textContent=Math.round(eased*100);
+  if(p<1){
+    requestAnimationFrame(runFastLoader);
+  }else{
+    if(loadEl)loadEl.classList.add('out');
+    document.body.classList.add('go');
+  }
+}
+requestAnimationFrame(runFastLoader);
+
 /* ============================================================================
-   FULL-WEBSITE CREATIVE 3D SCROLL MECHANICS & DYNAMIC FLASH CONTRAST ENGINE
+   LIQUID-SILK SUB-PIXEL VIRTUAL SCROLL & VIEWPORT-GATED 3D KINETICS
    ============================================================================ */
 const tiEls=$$('#exp .ti');
 const srvRows=$$('#protocols .row');
@@ -1141,7 +1343,8 @@ const heroLines=$$('.h1 .l');
 
 let GT={
   tlT:0,tlH:1,scT:0,scH:1,wT:0,wH:1,mqW:1,docH:1,
-  factsT:0,chipsT:0,tiTops:[],srvTops:[],procT:0,procH:1,projTops:[],faqTops:[],ctT:0
+  factsT:0,chipsT:0,expT:0,expB:0,srvT:0,srvB:0,procT:0,procH:1,projT:0,projB:0,faqT:0,faqB:0,ctT:0,
+  tiTops:[],srvTops:[],projTops:[],faqTops:[]
 };
 
 function measure(){
@@ -1152,15 +1355,19 @@ function measure(){
   if(mq){GT.mqW=mq.scrollWidth/3||1;}
   const fEl=$('.facts');if(fEl)GT.factsT=fEl.getBoundingClientRect().top+y;
   const chEl=$('.chips');if(chEl)GT.chipsT=chEl.getBoundingClientRect().top+y;
+  const expEl=$('#exp');if(expEl){const r=expEl.getBoundingClientRect();GT.expT=r.top+y;GT.expB=r.bottom+y;}
+  const srvEl=$('#protocols');if(srvEl){const r=srvEl.getBoundingClientRect();GT.srvT=r.top+y;GT.srvB=r.bottom+y;}
+  const prEl=$('#process');if(prEl){const r=prEl.getBoundingClientRect();GT.procT=r.top+y;GT.procH=r.height||1;}
+  const pjEl=$('#projects');if(pjEl){const r=pjEl.getBoundingClientRect();GT.projT=r.top+y;GT.projB=r.bottom+y;}
+  const fqEl=$('#faq');if(fqEl){const r=fqEl.getBoundingClientRect();GT.faqT=r.top+y;GT.faqB=r.bottom+y;}
   GT.tiTops=tiEls.map(el=>{const r=el.getBoundingClientRect();return r.top+y+r.height*0.5;});
   GT.srvTops=srvRows.map(el=>{const r=el.getBoundingClientRect();return r.top+y+r.height*0.5;});
-  const prEl=$('#process');if(prEl){const r=prEl.getBoundingClientRect();GT.procT=r.top+y;GT.procH=r.height||1;}
   GT.projTops=projRows.map(el=>{const r=el.getBoundingClientRect();return r.top+y+r.height*0.5;});
   GT.faqTops=faqItems.map(el=>{const r=el.getBoundingClientRect();return r.top+y+r.height*0.5;});
   if(contactSec){const r=contactSec.getBoundingClientRect();GT.ctT=r.top+y;}
   GT.docH=document.documentElement.scrollHeight||1;
 }
-addEventListener('resize',measure);addEventListener('load',measure);
+addEventListener('resize',measure,{passive:true});addEventListener('load',measure,{passive:true});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>measure());
 
 function smoothstep(a,b,x){
@@ -1173,6 +1380,8 @@ let smoothMx=0,smoothMy=0;
 let baseOrbitTime=0;
 let lastT=0;
 let lastInv=-1;
+let lastScrubP=-1;
+let slowFrames=0,fastFrames=0;
 const rootStyle=document.documentElement.style;
 const tmpTarget=new THREE.Vector3();
 const tmpUp=new THREE.Vector3();
@@ -1182,21 +1391,46 @@ const tmpTrueUp=new THREE.Vector3();
 
 function tick(t){
   if(document.hidden){requestAnimationFrame(tick);return;}
-  const dt=Math.min((t-lastT)*0.001,0.05)||0.016;
+  const rawDt=(t-lastT)*0.001;
+  const dt=Math.min(rawDt,0.05)||0.016;
   lastT=t;
 
-  const y=scrollY;
-  vy=lerp(vy,y-sy,0.12);
-  sy=y;
-  cx=lerp(cx,tx,0.16);cy=lerp(cy,ty,0.16);
-  cur.style.transform=`translate(${cx}px,${cy}px)`;
+  // Adaptive Dynamic Resolution Scaling (DRS) to guarantee locked 60-120fps on every GPU
+  if(gl && rawDt > 0.001){
+    if(rawDt > 0.021){
+      slowFrames++;fastFrames=0;
+      if(slowFrames > 6 && currentDPR > minDPR){
+        currentDPR = Math.max(minDPR, currentDPR - 0.15);
+        gl.R.setPixelRatio(currentDPR);
+        gl.pMat.uniforms.uPixelRatio.value = currentDPR;
+        slowFrames = 0;
+      }
+    } else if(rawDt < 0.014 && currentDPR < maxDPR){
+      fastFrames++;slowFrames=0;
+      if(fastFrames > 45){
+        currentDPR = Math.min(maxDPR, currentDPR + 0.1);
+        gl.R.setPixelRatio(currentDPR);
+        gl.pMat.uniforms.uPixelRatio.value = currentDPR;
+        fastFrames = 0;
+      }
+    }
+  }
+
+  const targetY=scrollY;
+  // Sub-pixel critically-damped virtual scroll (eliminates notched mouse-wheel stepping!)
+  smoothY=damp(smoothY,targetY,14.5,dt);
+  vy=damp(vy,targetY-sy,16.0,dt);
+  sy=targetY;
+
+  cx=damp(cx,tx,18.0,dt);cy=damp(cy,ty,18.0,dt);
+  cur.style.transform=`translate3d(${cx.toFixed(1)}px,${cy.toFixed(1)}px,0)`;
 
   const vh=innerHeight;
-  const centerViewY=y+vh*0.5;
-  const rawScroll=clamp(y/Math.max(1,GT.docH-vh),0,1);
-  smoothScroll=lerp(smoothScroll,rawScroll,0.055);
-  smoothMx=lerp(smoothMx,mx,0.05);
-  smoothMy=lerp(smoothMy,my,0.05);
+  const centerViewY=smoothY+vh*0.5;
+  const rawScroll=clamp(targetY/Math.max(1,GT.docH-vh),0,1);
+  smoothScroll=damp(smoothScroll,rawScroll,7.5,dt);
+  smoothMx=damp(smoothMx,mx,7.0,dt);
+  smoothMy=damp(smoothMy,my,7.0,dt);
 
   const p=smoothScroll;
   const sec=t*0.001;
@@ -1205,11 +1439,7 @@ function tick(t){
   const whiteFlashBell = Math.exp(-Math.pow((p - 0.685)/0.048, 2.0));
   const whiteFlashVal = clamp(whiteFlashBell, 0.0, 1.0);
 
-  /* =========================================================================
-     DYNAMIC COLLISION WHITE-SCREEN TEXT CONTRAST INVERSION
-     Smoothly flips --ink from ivory (#ece8e1) to stark obsidian-black (#08090c)
-     during the white supernova flash so text is 100% visible with 15:1 contrast!
-     ========================================================================= */
+  // Dynamic Collision White-Screen Text Contrast Inversion
   const inv = smoothstep(0.14, 0.52, whiteFlashVal);
   if(Math.abs(inv - lastInv) > 0.004){
     lastInv = inv;
@@ -1233,7 +1463,7 @@ function tick(t){
     u.uTime.value=sec;
     u.uScroll.value=p;
     const scrollSpeed=clamp(Math.abs(vy)/50,0,1.0);
-    u.uScrollVel.value=lerp(u.uScrollVel.value,scrollSpeed,0.08);
+    u.uScrollVel.value=damp(u.uScrollVel.value,scrollSpeed,10.0,dt);
 
     const inspiralProgress=smoothstep(0.0,0.67,p);
     const sep = 3.75 * Math.pow(1.0 - inspiralProgress, 0.78);
@@ -1302,130 +1532,163 @@ function tick(t){
   }
 
   /* =========================================================================
-     CREATIVE SCROLL-DRIVEN 3D BEHAVIORS ACROSS EVERY SECTION OF THE WEBSITE
+     SUBTLE DUAL-SINGULARITY FIELD PROJECTION & RELIABLE APP MOTION FLOW
+     ("Don't overdo it — smooth flow & reliable user experience first")
      ========================================================================= */
+  if(sp) sp.style.width=(smoothY/Math.max(1,GT.docH-vh)*100).toFixed(2)+'%';
 
-  /* 1. HERO (#top): Relativistic Binary Split on Scroll + 3D Magnetic Letter Gravity */
-  const h1=$('#h1');
-  if(h1 && y < vh * 1.3){
-    const heroP = clamp(y / vh, 0, 1);
-    h1.style.transform=`rotateY(${smoothMx*7}deg) rotateX(${-smoothMy*5 + heroP*18}deg) translate3d(0,${y*-0.18}px,${-heroP*120}px)`;
-    if(heroLines[0]) heroLines[0].style.transform=`translate3d(${-heroP*65}px,0,0) rotateZ(${-heroP*3}deg)`;
-    if(heroLines[1]) heroLines[1].style.transform=`translate3d(${heroP*65}px,0,0) rotateZ(${heroP*3}deg)`;
+  // Project live 3D Black Hole & White Hole positions into screen percentages for subtle UI rim reaction
+  const remNow = gl ? gl.uShared.uRemnant.value : smoothstep(0.65, 0.80, p);
+  const orbNow = gl ? gl.uShared.uOrbAngle.value : (sec * 0.4 + p * 8.0);
+  const cosO = Math.cos(orbNow), sinO = Math.sin(orbNow);
+  const spread = (1.0 - remNow * 0.85) * 24;
+  const bhScreenX = clamp(50 - cosO * spread + smoothMx * 6, 8, 92);
+  const bhScreenY = clamp(50 - sinO * spread * 0.45 + smoothMy * 5, 10, 90);
+  const whScreenX = clamp(50 + cosO * spread + smoothMx * 6, 8, 92);
+  const whScreenY = clamp(50 + sinO * spread * 0.45 + smoothMy * 5, 10, 90);
+  const gravPullX = (cosO * (1.0 - remNow) * 2.2 + smoothMx * 2.5);
+  const gravPullY = (sinO * (1.0 - remNow) * 1.4 + smoothMy * 2.0);
+
+  rootStyle.setProperty('--bh-x', bhScreenX.toFixed(1) + '%');
+  rootStyle.setProperty('--bh-y', bhScreenY.toFixed(1) + '%');
+  rootStyle.setProperty('--wh-x', whScreenX.toFixed(1) + '%');
+  rootStyle.setProperty('--wh-y', whScreenY.toFixed(1) + '%');
+  rootStyle.setProperty('--orb-cos', (cosO * 1.6).toFixed(2));
+  rootStyle.setProperty('--orb-sin', (sinO * 1.6).toFixed(2));
+  rootStyle.setProperty('--wh-ratio', (1.0 - remNow * 0.65).toFixed(2));
+  rootStyle.setProperty('--field-pulse', (0.12 + 0.14 * Math.sin(sec * 2.4)).toFixed(3));
+
+  // Update live Spacetime Telemetry Pill text in navbar when phase changes
+  const phaseEl = document.getElementById('fieldPhaseText');
+  if(phaseEl){
+    const nextPhase = p < 0.35 ? 'Binary Orbit' : (p < 0.63 ? 'Roche Stream' : (p < 0.74 ? 'Horizon Merger' : 'Kerr Remnant'));
+    if(phaseEl.textContent !== nextPhase) phaseEl.textContent = nextPhase;
   }
 
-  /* 2. MARQUEE (#mq): Lorentz Velocity Boost & 3D Cylinder Ribbon Tilt */
-  dr += 0.7 + Math.abs(vy) * 0.06;
-  const w3=GT.mqW;
-  if(mq) mq.style.transform=`translate3d(${-((y*0.38+dr)%w3)}px,0,0) skewX(${clamp(vy*0.32,-18,18)}deg) scaleY(${1+clamp(Math.abs(vy)*0.004,0,0.18)})`;
-  if(mqWrap) mqWrap.style.transform=`perspective(900px) rotateX(${clamp(vy*0.12,-10,10)}deg)`;
+  /* 1. HERO (#top) & MARQUEE (#mq): Subtle gravitational breathing & smooth scroll drift */
+  if(smoothY < vh * 1.4){
+    const h1=$('#h1');
+    if(h1){
+      const heroP = clamp(smoothY / vh, 0, 1);
+      h1.style.transform=`rotateY(${(smoothMx*3.2 + cosO*1.2).toFixed(2)}deg) rotateX(${(-smoothMy*2.4 + heroP*6).toFixed(2)}deg) translate3d(${(gravPullX*0.8).toFixed(1)}px,${(smoothY*-0.12).toFixed(1)}px,${(-heroP*35).toFixed(1)}px)`;
+      if(heroLines[0]) heroLines[0].style.transform=`translate3d(${(-heroP*22 - cosO*2.5).toFixed(1)}px,0,0)`;
+      if(heroLines[1]) heroLines[1].style.transform=`translate3d(${(heroP*22 + cosO*2.5).toFixed(1)}px,0,0)`;
+    }
+    dr += (38 + Math.abs(vy) * 2.0) * dt;
+    const w3=GT.mqW;
+    if(mq) mq.style.transform=`translate3d(${(-((smoothY*0.32+dr)%w3)).toFixed(1)}px,0,0) skewX(${clamp(vy*0.14,-6,6).toFixed(2)}deg)`;
+  }
 
-  /* 3. ABOUT (#about): 3D Kinetic Word Wave on #scrub + 3D Specular Fact Cubes + Orbital Tech Chips */
-  const pScrub=clamp((vh*0.85-(GT.scT-y))/(GT.scH+vh*0.25));
-  ws.forEach((w,j)=>{
-    const prog = clamp(pScrub*1.55*ws.length - j, 0, 1);
-    const wave = (1 - prog);
-    w.style.opacity = (0.14 + 0.86 * prog).toFixed(2);
-    w.style.transform = `translate3d(0,${(wave*18).toFixed(1)}px,${(-wave*36).toFixed(1)}px) rotateX(${(-wave*42).toFixed(1)}deg)`;
-  });
+  /* 2. ABOUT (#about): Crisp word reveal + Subtle 3D Specular Fact Cards & Magnetic Chips */
+  const pScrub=clamp((vh*0.85-(GT.scT-smoothY))/(GT.scH+vh*0.25));
+  if(Math.abs(pScrub - lastScrubP) > 0.0008){
+    lastScrubP = pScrub;
+    ws.forEach((w,j)=>{
+      const prog = clamp(pScrub*1.55*ws.length - j, 0, 1);
+      const wave = 1 - prog;
+      w.style.opacity = (0.16 + 0.84 * prog).toFixed(2);
+      w.style.transform = wave > 0.005 ? `translate3d(0,${(wave*7).toFixed(1)}px,0)` : 'none';
+    });
+  }
 
-  if(Math.abs(centerViewY - GT.factsT) < vh * 1.1){
-    const fRel = (centerViewY - GT.factsT) / vh;
+  if(Math.abs(centerViewY - GT.factsT) < vh * 0.95){
+    const fRel = clamp((centerViewY - GT.factsT) / vh, -1, 1);
     factCards.forEach((card, idx)=>{
-      const hx = parseFloat(card.dataset.hx || 0);
-      const hy = parseFloat(card.dataset.hy || 0);
-      const scrollTiltX = Math.sin(fRel * 3.14159 + idx * 0.55) * 9;
-      const scrollTiltY = (idx - 1.5) * fRel * 11;
-      const liftZ = Math.cos(fRel * 2.5 + idx * 0.4) * 14;
-      card.style.transform = `perspective(900px) rotateX(${(scrollTiltX + hx).toFixed(2)}deg) rotateY(${(scrollTiltY + hy).toFixed(2)}deg) translateZ(${liftZ.toFixed(1)}px)`;
+      const hx = parseFloat(card.dataset.hx || 0) * 0.45;
+      const hy = parseFloat(card.dataset.hy || 0) * 0.45;
+      const dualBias = (idx < 2 ? -1 : 1) * cosO * 1.4;
+      const scrollTiltX = Math.sin(fRel * 2.2 + idx * 0.5) * 2.4 + hx;
+      const scrollTiltY = dualBias + hy;
+      const driftY = Math.cos(sec * 1.8 + idx * 0.9) * 2.2;
+      card.style.transform = `perspective(1000px) translate3d(${(gravPullX*0.5).toFixed(1)}px,${driftY.toFixed(1)}px,0) rotateX(${scrollTiltX.toFixed(2)}deg) rotateY(${scrollTiltY.toFixed(2)}deg)`;
     });
   }
 
-  if(Math.abs(centerViewY - GT.chipsT) < vh * 1.1){
-    const cRel = (centerViewY - GT.chipsT) / vh;
+  if(Math.abs(centerViewY - GT.chipsT) < vh * 0.95){
     chipEls.forEach((ch, idx)=>{
-      const cmx = parseFloat(ch.dataset.mx || 0);
-      const cmy = parseFloat(ch.dataset.my || 0);
-      const phase = sec * 2.2 + idx * 0.65 + y * 0.008;
-      const orbY = Math.sin(phase) * 5;
-      const orbRot = Math.cos(phase * 0.8) * 6 + cRel * (idx % 2 ? 12 : -12);
-      ch.style.transform = `translate3d(${cmx}px,${(orbY + cmy).toFixed(1)}px,0) rotateZ(${orbRot.toFixed(1)}deg)`;
+      const cmx = parseFloat(ch.dataset.mx || 0) * 0.6;
+      const cmy = parseFloat(ch.dataset.my || 0) * 0.6;
+      const phase = sec * 1.8 + idx * 0.55;
+      const orbY = Math.sin(phase) * 2.2;
+      const orbX = Math.cos(phase + orbNow * 0.5) * 1.6;
+      ch.style.transform = `translate3d(${(cmx + orbX).toFixed(1)}px,${(orbY + cmy).toFixed(1)}px,0)`;
     });
   }
 
-  /* 4. EXPERIENCE (#exp): Scroll-to-Unfold 3D Cylindrical Helix Timeline */
-  if(tl) tl.style.setProperty('--p',clamp((vh*0.75-(GT.tlT-y))/GT.tlH).toFixed(3));
-  tiEls.forEach((el, idx)=>{
-    const itemY = GT.tiTops[idx] || 0;
-    const distNorm = clamp((itemY - centerViewY) / (vh * 0.65), -1.4, 1.4);
-    if(Math.abs(distNorm) < 1.35){
-      const rotX = -distNorm * 24;
-      const rotY = distNorm * (idx % 2 === 0 ? 18 : -18);
-      const zDepth = (1 - Math.min(1, Math.abs(distNorm))) * 28;
-      const xShift = Math.abs(distNorm) * -18;
-      el.style.transform = `perspective(1000px) translate3d(${xShift.toFixed(1)}px,0,${zDepth.toFixed(1)}px) rotateX(${rotX.toFixed(1)}deg) rotateY(${rotY.toFixed(1)}deg)`;
-      el.classList.toggle('active-helix', Math.abs(distNorm) < 0.32);
-    }
-  });
+  /* 3. EXPERIENCE (#exp): Clean, readable timeline cards with subtle gravitational depth */
+  if(smoothY + vh > GT.expT - 150 && smoothY < GT.expB + 150){
+    if(tl) tl.style.setProperty('--p',clamp((vh*0.75-(GT.tlT-smoothY))/GT.tlH).toFixed(3));
+    tiEls.forEach((el, idx)=>{
+      const itemY = GT.tiTops[idx] || 0;
+      const distNorm = clamp((itemY - centerViewY) / (vh * 0.7), -1.2, 1.2);
+      const focus = 1 - Math.min(1, Math.abs(distNorm));
+      const rotX = -distNorm * 3.2;
+      const rotY = cosO * 1.2 * (idx % 2 === 0 ? 1 : -1);
+      const xShift = focus * 4 + gravPullX * 0.4;
+      el.style.transform = `perspective(1100px) translate3d(${xShift.toFixed(1)}px,0,0) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
+      el.classList.toggle('active-helix', Math.abs(distNorm) < 0.36);
+    });
+  }
 
-  /* 5. SELECTED WORK (#work) & FULL INDEX (#projects): 3D Ring Velocity Banking + Scroll Depth Cascade */
-  if(sp) sp.style.width=y/Math.max(1,GT.docH-vh)*100+'%';
-  wp=clamp((y-GT.wT)/Math.max(1,GT.wH-vh));
-  ang=lerp(ang,-wp*288,0.07);
-  if(ring) ring.style.transform=`rotateY(${ang}deg) rotateZ(${clamp(vy*0.08,-8,8)}deg)`;
-  if(scene) scene.style.transform=`rotateX(${-smoothMy*6+8+clamp(vy*0.06,-6,6)}deg) rotateY(${smoothMx*7}deg)`;
-  cards.forEach((c,j)=>{let d=((j*72+ang)%360+540)%360-180;c.style.opacity=(1-clamp(Math.abs(d)/110)*0.82).toFixed(2)});
-  const idx=Math.round(clamp(-ang/72,0,4));
-  if(bn) bn.textContent='0'+(idx+1);
-  if(bari) bari.style.width=wp*100+'%';
+  /* 4. SELECTED WORK (#work): Smooth 3D Carousel Ring with gentle binary tilt */
+  if(smoothY + vh > GT.wT - 200 && smoothY < GT.wT + GT.wH + 200){
+    wp=clamp((smoothY-GT.wT)/Math.max(1,GT.wH-vh));
+    ang=damp(ang,-wp*288,8.5,dt);
+    if(ring) ring.style.transform=`rotateY(${ang.toFixed(2)}deg) rotateZ(${clamp(vy*0.035,-3.5,3.5).toFixed(2)}deg)`;
+    if(scene) scene.style.transform=`rotateX(${(-smoothMy*3.5+6+sinO*1.2).toFixed(2)}deg) rotateY(${(smoothMx*4.5+cosO*1.5).toFixed(2)}deg)`;
+    cards.forEach((c,j)=>{let d=((j*72+ang)%360+540)%360-180;c.style.opacity=(1-clamp(Math.abs(d)/110)*0.82).toFixed(2)});
+    const idx=Math.round(clamp(-ang/72,0,4));
+    if(bn) bn.textContent='0'+(idx+1);
+    if(bari) bari.style.width=(wp*100).toFixed(1)+'%';
+  }
 
-  projRows.forEach((row, j)=>{
-    const rY = GT.projTops[j] || 0;
-    const dNorm = clamp((rY - centerViewY) / (vh * 0.7), -1.2, 1.2);
-    if(Math.abs(dNorm) < 1.15){
-      row.style.transform = `perspective(900px) rotateX(${(-dNorm * 14).toFixed(1)}deg) translate3d(${(Math.sin(dNorm*2.5)*10).toFixed(1)}px,0,0)`;
-    }
-  });
+  /* 5. FULL INDEX (#projects): Zero distortion on interactive rows; subtle breathing on container */
+  if(smoothY + vh > GT.projT - 150 && smoothY < GT.projB + 150){
+    projRows.forEach((row, j)=>{
+      const rY = GT.projTops[j] || 0;
+      const dNorm = clamp((rY - centerViewY) / (vh * 0.75), -1.0, 1.0);
+      const xGlide = Math.sin(dNorm * 2.0 + orbNow * 0.4) * 2.0;
+      row.style.transform = `translate3d(${xGlide.toFixed(1)}px,0,0)`;
+    });
+  }
 
-  /* 6. SERVICES (#protocols): Scroll-to-Fan 3D Spatial Louver Deck */
-  srvRows.forEach((row, j)=>{
-    const rY = GT.srvTops[j] || 0;
-    const dNorm = clamp((rY - centerViewY) / (vh * 0.65), -1.3, 1.3);
-    if(Math.abs(dNorm) < 1.25){
-      const rotX = dNorm * 28;
-      const rotZ = dNorm * (j % 2 === 0 ? 2.2 : -2.2);
-      const xSlide = Math.pow(dNorm, 2) * (j % 2 === 0 ? -24 : 24);
-      const scRow = 1 - Math.min(0.08, Math.abs(dNorm) * 0.06);
-      row.style.transform = `perspective(1000px) translate3d(${xSlide.toFixed(1)}px,0,0) rotateX(${rotX.toFixed(1)}deg) rotateZ(${rotZ.toFixed(2)}deg) scale(${scRow.toFixed(3)})`;
-    }
-  });
+  /* 6. SERVICES (#protocols): Subtle, reliable micro-louver glide (easy to hover & read) */
+  if(smoothY + vh > GT.srvT - 150 && smoothY < GT.srvB + 150){
+    srvRows.forEach((row, j)=>{
+      const rY = GT.srvTops[j] || 0;
+      const dNorm = clamp((rY - centerViewY) / (vh * 0.7), -1.1, 1.1);
+      const rotX = dNorm * 3.5;
+      const xSlide = dNorm * (j % 2 === 0 ? -3.5 : 3.5) + gravPullX * 0.35;
+      row.style.transform = `perspective(1100px) translate3d(${xSlide.toFixed(1)}px,0,0) rotateX(${rotX.toFixed(2)}deg)`;
+    });
+  }
 
-  /* 7. PROCESS (#process): Scroll-to-Rotate 3D Tumbling Cubes (01 - 04) */
-  if(Math.abs(centerViewY - (GT.procT + GT.procH*0.5)) < vh * 1.2){
+  /* 7. PROCESS (#process): Gentle 3D floating cards reacting to Black Hole vs White Hole dipole */
+  if(Math.abs(centerViewY - (GT.procT + GT.procH*0.5)) < vh * 1.05){
     const prProg = clamp((centerViewY - GT.procT) / Math.max(1, GT.procH), -0.5, 1.5);
     procSteps.forEach((ps, j)=>{
-      const cardPhase = (prProg - 0.5) * 2.0 + (j - 1.5) * 0.28;
-      const rotY = cardPhase * 34 + smoothMx * 8;
-      const rotX = -cardPhase * 16 - smoothMy * 6;
-      const liftY = Math.sin(prProg * 3.14159 + j * 0.7) * -18;
-      const zPush = (1 - Math.min(1, Math.abs(cardPhase))) * 26;
-      ps.style.transform = `perspective(900px) translate3d(0,${liftY.toFixed(1)}px,${zPush.toFixed(1)}px) rotateY(${rotY.toFixed(1)}deg) rotateX(${rotX.toFixed(1)}deg)`;
+      const cardPhase = (prProg - 0.5) + (j - 1.5) * 0.15;
+      const rotY = cardPhase * 4.5 + cosO * 1.8 + smoothMx * 2.5;
+      const rotX = -cardPhase * 3.0 + sinO * 1.2 - smoothMy * 2.0;
+      const liftY = Math.sin(sec * 1.6 + j * 0.8) * -3.5;
+      ps.style.transform = `perspective(1000px) translate3d(${(gravPullX*0.4).toFixed(1)}px,${liftY.toFixed(1)}px,0) rotateY(${rotY.toFixed(2)}deg) rotateX(${rotX.toFixed(2)}deg)`;
     });
   }
 
-  /* 8. QUESTIONS (#faq) & CONTACT (#contact): Harmonic Scroll Ripple & Singularity Gravity Well */
-  faqItems.forEach((it, j)=>{
-    const fY = GT.faqTops[j] || 0;
-    const dNorm = clamp((fY - centerViewY) / (vh * 0.7), -1.2, 1.2);
-    if(Math.abs(dNorm) < 1.15){
-      it.style.transform = `perspective(900px) rotateX(${(dNorm * 15).toFixed(1)}deg) translate3d(${(Math.cos(dNorm*3.14)*8 - 8).toFixed(1)}px,0,0)`;
-    }
-  });
+  /* 8. QUESTIONS (#faq) & CONTACT (#contact): Reliable accordions & gentle remnant gravity well */
+  if(smoothY + vh > GT.faqT - 150 && smoothY < GT.faqB + 150){
+    faqItems.forEach((it, j)=>{
+      const fY = GT.faqTops[j] || 0;
+      const dNorm = clamp((fY - centerViewY) / (vh * 0.75), -1.0, 1.0);
+      const xWave = Math.sin(dNorm * 2.2 + j * 0.4) * 2.2 + gravPullX * 0.3;
+      it.style.transform = `translate3d(${xWave.toFixed(1)}px,0,0)`;
+    });
+  }
 
-  if(contactH2 && y + vh > GT.ctT - vh * 0.3){
-    const ctProg = clamp((y + vh - GT.ctT) / vh, 0, 1.2);
-    const pullScale = 0.88 + 0.12 * Math.sin(ctProg * 1.5708);
-    contactH2.style.transform = `perspective(1000px) rotateY(${(smoothMx * 9).toFixed(2)}deg) rotateX(${(-smoothMy * 7 + (1 - ctProg)*18).toFixed(2)}deg) scale(${pullScale.toFixed(3)})`;
+  if(contactH2 && smoothY + vh > GT.ctT - vh * 0.25){
+    const ctProg = clamp((smoothY + vh - GT.ctT) / vh, 0, 1.2);
+    const pullScale = 0.96 + 0.04 * Math.sin(ctProg * 1.5708);
+    contactH2.style.transform = `perspective(1000px) translate3d(${(gravPullX*0.6).toFixed(1)}px,${(gravPullY*0.6).toFixed(1)}px,0) rotateY(${(smoothMx * 3.5).toFixed(2)}deg) rotateX(${(-smoothMy * 2.5 + (1 - ctProg)*4).toFixed(2)}deg) scale(${pullScale.toFixed(3)})`;
   }
 
   requestAnimationFrame(tick);
@@ -1436,14 +1699,11 @@ requestAnimationFrame(tick);
 });
 </script>
 
-<!-- Authentication + data modules (identical includes/order to the live v2 page) -->
+
 <script type="module" src="js/auth-ui.js?v=2"></script>
 <script type="module" src="js/db-service.js?v=2"></script>
 <script type="module" src="js/comments-ui.js?v=2"></script>
 <script type="module" src="js/favorites-ui.js?v=2"></script>
 <script src="js/main.js?v=3"></script>
-<!-- js/visual.js intentionally NOT included: the design engine above already implements
-     reveals, the scroll progress bar and the role roll, and visual.js only targets v2
-     classes (.reveal / #roleWord / .orb / .tilt) that do not exist in this design. -->
 </body>
 </html>
