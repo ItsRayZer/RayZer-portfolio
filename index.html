@@ -690,12 +690,15 @@ $$('.fq-btn').forEach(b=>b.addEventListener('click',()=>{const it=b.parentElemen
    WITH O(1) FAR-FIELD RAY CULLING & ADAPTIVE DYNAMIC RESOLUTION SCALING (DRS)
    ============================================================================ */
 let gl=null;
-const maxDPR=Math.min(devicePixelRatio||1,touch?1.15:1.45);
+const maxDPR=Math.min(devicePixelRatio||1,touch?1.5:2.0);
 const minDPR=touch?0.75:0.95;
 // Load ramp: the background starts at 55% of its target pixel ratio and eases
 // up to full quality over its first ~900ms of rendering (see tick), so the
 // first frames stay cheap while the page is still settling. The DRS in tick
 // governs afterwards, exactly as before.
+// Quality pass: the post-ramp ceiling is the device's full pixel ratio,
+// capped at 2.0 on desktop-class screens and 1.5 on touch; if a GPU cannot
+// hold it, the DRS steps currentDPR back down exactly as before.
 const startDPR=maxDPR*0.55;
 let currentDPR=startDPR;
 let rampT0=0;
@@ -780,7 +783,7 @@ try{
       }
       float fbm(vec3 p){
         float v=0.0,a=0.53;
-        for(int i=0;i<4;i++){
+        for(int i=0;i<5;i++){
           v+=a*noise3(p);
           p=p*2.07+vec3(17.3,9.1,11.7);
           a*=0.47;
@@ -794,10 +797,10 @@ try{
         vec3 fracP=fract(dir*280.0)-0.5;
         float h=hash13(cell);
         float star=0.0;
-        if(h>0.974){
+        if(h>0.966){
           float d=length(fracP);
           float sz=0.035+0.12*fract(h*43.1);
-          star=exp(-d*d/(sz*sz))*smoothstep(0.974,0.999,h);
+          star=exp(-d*d/(sz*sz))*smoothstep(0.966,0.999,h);
           star*=0.72+0.28*sin(uTime*3.0+h*120.0);
         }
         vec3 cell2=floor(dir*540.0);
@@ -952,7 +955,7 @@ try{
 
         // O(1) FAR-FIELD IMPACT-PARAMETER RAY CULLING:
         // Compute analytic closest approach of ray (ro, rd) to Black Hole and White Hole.
-        // Pixels in outer space (minImpact > 4.55) skip the 56-step raymarching loop entirely!
+        // Pixels in outer space (minImpact > 4.55) skip the 64-step raymarching loop entirely!
         vec3 toBH0 = uBHPos - ro;
         float projBH = max(0.0, dot(toBH0, rd));
         vec3 perpBH = toBH0 - rd * projBH;
@@ -991,7 +994,7 @@ try{
           float startJump = max(0.0, min(projBH, mix(projWH, 100.0, uRemnant)) - 4.75);
           p += rd * startJump;
 
-          for(int i=0; i<56; i++){
+          for(int i=0; i<64; i++){
             vec3 toBH = uBHPos - p;
             float rBH = length(toBH);
             closestBH = min(closestBH, rBH);
@@ -1001,7 +1004,7 @@ try{
             closestWH = min(closestWH, rWH);
 
             float minR = min(rBH, mix(rWH, 10.0, uRemnant));
-            float dt = clamp(minR * 0.165, 0.035, 0.38);
+            float dt = clamp(minR * 0.15, 0.035, 0.35);
 
             float bendBH = (1.58 * rsBH * rsBH) / pow(rBH*rBH + 0.045, 1.65);
             vec3 accel = normalize(toBH) * bendBH;
@@ -1183,6 +1186,11 @@ try{
           col = mix(col, supernovaField, flashBlend);
         }
 
+        // Sub-LSB dither: dissolves gradient banding in the tonemapped sky and
+        // disk falloff, so dark gradients read as continuous tone.
+        float dith = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
+        col += (dith - 0.5) * (1.6 / 255.0);
+
         gl_FragColor = vec4(col, 1.0);
       }
     `
@@ -1194,7 +1202,7 @@ try{
   /* -------------------------------------------------------------------------
      PASS 2: 3D GPU RELATIVISTIC EJECTA, ROCHE STREAM & POST-MERGER HALO PARTICLES
      ------------------------------------------------------------------------- */
-  const pCount=touch?2000:4000;
+  const pCount=touch?2600:5500;
   const pGeo=new THREE.BufferGeometry();
   const aSeed=new Float32Array(pCount*4);
   for(let i=0;i<pCount;i++){
@@ -1660,11 +1668,14 @@ function tick(t){
   /* 4. SELECTED WORK (#work): Smooth 3D Carousel Ring with gentle binary tilt */
   if(smoothY + vh > GT.wT - 200 && smoothY < GT.wT + GT.wH + 200){
     wp=clamp((smoothY-GT.wT)/Math.max(1,GT.wH-vh));
-    ang=damp(ang,-wp*288,8.5,dt);
+    // 576deg sweep over the section (2x the original 288deg): the ring turns
+    // twice as far per unit of scroll, with an exact front-facing landing
+    // every 1/8 of the section (one card step per waypoint).
+    ang=damp(ang,-wp*576,8.5,dt);
     if(ring) ring.style.transform=`rotateY(${ang.toFixed(2)}deg) rotateZ(${clamp(vy*0.035,-3.5,3.5).toFixed(2)}deg)`;
     if(scene) scene.style.transform=`rotateX(${(-smoothMy*3.5+6+sinO*1.2).toFixed(2)}deg) rotateY(${(smoothMx*4.5+cosO*1.5).toFixed(2)}deg)`;
     cards.forEach((c,j)=>{let d=((j*72+ang)%360+540)%360-180;c.style.opacity=(1-clamp(Math.abs(d)/110)*0.82).toFixed(2)});
-    const idx=Math.round(clamp(-ang/72,0,4));
+    const idx=((Math.round(-ang/72)%5)+5)%5;
     if(bn) bn.textContent='0'+(idx+1);
     if(bari) bari.style.width=(wp*100).toFixed(1)+'%';
   }
