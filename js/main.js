@@ -544,7 +544,7 @@ function handleContactFormAutoFill(user) {
 document.addEventListener("DOMContentLoaded", function () {
     // Generate Floating Dots Grid
     const dotsContainer = document.getElementById('dotsBackground');
-    const dotCount = 100;
+    const dotCount = 20;
 
     for (let i = 0; i < dotCount; i++) {
         const dot = document.createElement('div');
