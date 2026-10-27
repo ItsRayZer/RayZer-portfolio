@@ -34,6 +34,10 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-
 a{color:inherit;text-decoration:none;cursor:none}
 ::selection{background:var(--acc);color:#000}
 #gl{position:fixed;inset:0;z-index:0;width:100%;height:100%;pointer-events:none}
+/* V6BG DIM: services screenshot proved muted text washes out over the v6
+   merger disk (near-white over a large area). Fixed veil between the canvas
+   (z 0) and content (z 2); pointer-events none, no layout effect. */
+#bgDim{position:fixed;inset:0;z-index:1;width:100%;height:100%;pointer-events:none;background:rgba(4,5,10,0.28)}
 main,header,footer{position:relative;z-index:2}
 .wrap{max-width:1200px;margin:0 auto;padding:0 22px}
 .mono{font:500 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
@@ -89,7 +93,7 @@ section{padding:130px 0}
 .big-n{position:absolute;font:800 clamp(200px,45vw,640px)/.8 var(--sans);letter-spacing:-.08em;color:transparent;-webkit-text-stroke:1px rgba(236,232,225,.07);bottom:-4vw;right:-2vw;pointer-events:none}
 .scene{position:relative;transform-style:preserve-3d;width:var(--w);height:var(--h);will-change:transform}
 .ring{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
-.pc{position:absolute;inset:0;transform:rotateY(calc(var(--i)*72deg)) translateZ(var(--R));background:linear-gradient(160deg,rgba(26,26,26,.92),rgba(8,8,8,.95));border:1px solid var(--line);border-radius:22px;padding:26px;display:flex;flex-direction:column;gap:14px;backface-visibility:hidden;box-shadow:0 40px 80px -30px #000,inset 0 1px 0 rgba(255,255,255,.1);overflow:hidden}
+.pc{position:absolute;inset:0;transform:rotateY(calc(var(--i)*51.428571deg)) translateZ(var(--R));background:linear-gradient(160deg,rgba(26,26,26,.92),rgba(8,8,8,.95));border:1px solid var(--line);border-radius:22px;padding:26px;display:flex;flex-direction:column;gap:14px;backface-visibility:hidden;box-shadow:0 40px 80px -30px #000,inset 0 1px 0 rgba(255,255,255,.1);overflow:hidden}
 .pc::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,90,44,.35),transparent 70%);top:-90px;right:-90px}
 .pc h3{font-size:clamp(30px,4.5vw,44px);letter-spacing:-.045em;line-height:1;margin-top:auto}
 .pc p{color:var(--mute);font-size:14px;line-height:1.5}
@@ -100,7 +104,7 @@ section{padding:130px 0}
 .bar{position:absolute;bottom:calc(28px + env(safe-area-inset-bottom,0px));left:22px;right:22px;height:1px;background:var(--line);z-index:3}
 .bar i{display:block;height:1px;background:var(--acc);width:0}
 /* services */
-.row{display:grid;grid-template-columns:1fr auto;gap:10px 30px;align-items:center;padding:30px 0;border-top:1px solid var(--line);position:relative;overflow:hidden;isolation:isolate;transition:padding .6s cubic-bezier(.16,1,.3,1)}
+.row{display:grid;grid-template-columns:1fr auto;gap:10px 30px;align-items:center;padding:30px 0;border-top:1px solid var(--line);position:relative;overflow:hidden;isolation:isolate;background:rgba(5,5,5,0.60);transition:padding .6s cubic-bezier(.16,1,.3,1)}
 .row:last-child{border-bottom:1px solid var(--line)}
 .row::before{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleY(0);transform-origin:bottom;transition:transform .6s cubic-bezier(.76,0,.24,1);z-index:-1}
 .row h4{font-size:clamp(24px,4.2vw,52px);letter-spacing:-.045em;font-weight:600;transition:transform .6s cubic-bezier(.16,1,.3,1),color .4s}
@@ -465,7 +469,7 @@ main h2,main h3,main h4,main p,main span,main td,main th,main button,main a,head
 <div id="sp"></div>
 <div class="load" id="load"><span class="mono" style="color:#fff">Loading portfolio</span><b id="ld">0</b></div>
 <div class="cur" id="cur"></div><div class="curd" id="curd"></div>
-<canvas id="gl"></canvas>
+<canvas id="gl"></canvas><div id="bgDim"></div>
 <!-- Floating dots layer: main.js fills this on DOMContentLoaded (hook must exist) -->
 <div class="dots-background" id="dotsBackground"></div>
 
@@ -512,6 +516,8 @@ main h2,main h3,main h4,main p,main span,main td,main th,main button,main a,head
     <div class="pc bh-wh-react" style="--i:2" data-id="mac-exam-hub"><div class="pc-top"><span class="mono">03</span><button type="button" class="fav-btn pc-fav" data-id="mac-exam-hub" aria-label="Like MAC Exam Hub" onclick="window.handleFavoriteClick(event, 'mac-exam-hub', 'MAC Exam Hub', 'Developer', 'JavaScript', '2026')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="mac-exam-hub">31</span></button></div><h3>MAC Exam Hub</h3><p>Exam resource hub for MAC students. Everything needed for revision in one fast place.</p><div class="t"><i>Web app</i><i>Student tools</i></div><a href="https://github.com/ItsRayZer/MAC-Exam-Hub" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
     <div class="pc bh-wh-react" style="--i:3" data-id="rayzer-portfolio"><div class="pc-top"><span class="mono">04</span><button type="button" class="fav-btn pc-fav" data-id="rayzer-portfolio" aria-label="Like This portfolio" onclick="window.handleFavoriteClick(event, 'rayzer-portfolio', 'RayZer Portfolio', 'Creator', 'WebGL, Three.js, GLSL', '2026')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="rayzer-portfolio">64</span></button></div><h3>This portfolio</h3><p>Real-time WebGL, 3D scroll scenes and first-person copy, written by hand with no framework.</p><div class="t"><i>WebGL</i><i>Three.js</i><i>Vanilla JS</i></div><a href="https://github.com/ItsRayZer/RayZer-portfolio" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
     <div class="pc bh-wh-react" style="--i:4" data-id="mac-data-sync"><div class="pc-top"><span class="mono">05</span><button type="button" class="fav-btn pc-fav" data-id="mac-data-sync" aria-label="Like mac-data-sync" onclick="window.handleFavoriteClick(event, 'mac-data-sync', 'mac-data-sync', 'Developer', 'JavaScript', '2026')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="mac-data-sync">24</span></button></div><h3>mac-data-sync</h3><p>Data sync tooling that keeps MAC data flowing into the apps that depend on it.</p><div class="t"><i>Sync</i><i>Automation</i></div><a href="https://github.com/ItsRayZer/mac-data-sync" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
+    <div class="pc bh-wh-react" style="--i:5" data-id="axo-chat"><div class="pc-top"><span class="mono">06</span><button type="button" class="fav-btn pc-fav" data-id="axo-chat" aria-label="Like Axo Chat" onclick="window.handleFavoriteClick(event, 'axo-chat', 'Axo Chat', 'Developer', 'JavaScript, Widget, AI', '2026')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="axo-chat">0</span></button></div><h3>Axo Chat</h3><p>Drop-in AI chatbot template for any website. Vanilla JS widget that works with no API key through its FAQ brain, and plugs into OpenAI-compatible, Gemini or custom endpoints.</p><div class="t"><i>Vanilla JS</i><i>FAQ brain</i><i>MIT</i></div><a href="https://github.com/ItsRayZer/axo-ai" target="_blank" rel="noopener">GitHub <span>↗</span></a></div>
+    <div class="pc bh-wh-react" style="--i:6" data-id="ai-workspace"><div class="pc-top"><span class="mono">07</span><button type="button" class="fav-btn pc-fav" data-id="ai-workspace" aria-label="Like AI Workspace" onclick="window.handleFavoriteClick(event, 'ai-workspace', 'AI Workspace', 'Creator', 'Web app, Agents', '2026')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="ai-workspace">0</span></button></div><h3>AI Workspace</h3><p>Agent-first workspace: a public board, a human mode and a wiki over the same files, shared by agents and humans alike.</p><div class="t"><i>Board</i><i>Wiki</i><i>Human mode</i></div><a href="https://ai-ws.vercel.app" target="_blank" rel="noopener">Visit live <span>↗</span></a></div>
   </div></div>
   <div class="bar"><i id="bari"></i></div>
 </div></div>
@@ -529,6 +535,8 @@ main h2,main h3,main h4,main p,main span,main td,main th,main button,main a,head
         <tr class="project-row" data-id="axofy"><td class="project-name">Axofy <span class="row-meta-pill" data-cmt-for="axofy">💬 1</span></td><td>Founder &amp; Developer</td><td>JavaScript, Vercel, REST APIs</td><td>2026</td><td class="fav-cell"><button type="button" class="fav-btn" data-id="axofy" aria-label="Save Axofy to favorites" onclick="window.handleFavoriteClick(event, 'axofy', 'Axofy', 'Founder &amp; Developer', 'JavaScript, Vercel, REST APIs', '2026')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="axofy">48</span></button></td></tr>
         <tr class="project-row" data-id="mac-exam-hub"><td class="project-name">MAC Exam Hub <span class="row-meta-pill" data-cmt-for="mac-exam-hub">💬 1</span></td><td>Developer</td><td>JavaScript</td><td>2026</td><td class="fav-cell"><button type="button" class="fav-btn" data-id="mac-exam-hub" aria-label="Save MAC Exam Hub to favorites" onclick="window.handleFavoriteClick(event, 'mac-exam-hub', 'MAC Exam Hub', 'Developer', 'JavaScript', '2026')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="mac-exam-hub">31</span></button></td></tr>
         <tr class="project-row" data-id="mac-data-sync"><td class="project-name">mac-data-sync <span class="row-meta-pill" data-cmt-for="mac-data-sync">💬 1</span></td><td>Developer</td><td>JavaScript</td><td>2026</td><td class="fav-cell"><button type="button" class="fav-btn" data-id="mac-data-sync" aria-label="Save mac-data-sync to favorites" onclick="window.handleFavoriteClick(event, 'mac-data-sync', 'mac-data-sync', 'Developer', 'JavaScript', '2026')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="mac-data-sync">24</span></button></td></tr>
+        <tr class="project-row" data-id="axo-chat"><td class="project-name">Axo Chat</td><td>Developer</td><td>JavaScript, Widget, AI</td><td>2026</td><td class="fav-cell"><button type="button" class="fav-btn" data-id="axo-chat" aria-label="Save Axo Chat to favorites" onclick="window.handleFavoriteClick(event, 'axo-chat', 'Axo Chat', 'Developer', 'JavaScript, Widget, AI', '2026')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="axo-chat">0</span></button></td></tr>
+        <tr class="project-row" data-id="ai-workspace"><td class="project-name">AI Workspace</td><td>Creator</td><td>Web app, Agents</td><td>2026</td><td class="fav-cell"><button type="button" class="fav-btn" data-id="ai-workspace" aria-label="Save AI Workspace to favorites" onclick="window.handleFavoriteClick(event, 'ai-workspace', 'AI Workspace', 'Creator', 'Web app, Agents', '2026')"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><span class="fav-count" data-count-for="ai-workspace">0</span></button></td></tr>
       </tbody>
     </table>
   </div>
@@ -681,7 +689,7 @@ const ml=$('#mail');if(!touch&&ml)addEventListener('pointermove',e=>{const r=ml.
 
 /* ring & FAQ */
 const ring=$('#ring'),scene=$('#scene'),work=$('#work'),cards=$$('.pc'),bn=$('#bn'),bari=$('#bari');
-function size(){const small=innerWidth<560;const w=Math.min(innerWidth*(small?.68:.8),340),h=Math.min(innerHeight*.62,440);const R=w/2/Math.tan(Math.PI/5)+(small?30:60);scene.style.setProperty('--w',w+'px');scene.style.setProperty('--h',h+'px');scene.style.setProperty('--R',R+'px');cards.forEach(c=>c.style.setProperty('--R',R+'px'))}size();addEventListener('resize',size,{passive:true});
+function size(){const small=innerWidth<560;const w=Math.min(innerWidth*(small?.68:.8),340),h=Math.min(innerHeight*.62,440);const R=w/2/Math.tan(Math.PI/7)+(small?30:60);scene.style.setProperty('--w',w+'px');scene.style.setProperty('--h',h+'px');scene.style.setProperty('--R',R+'px');cards.forEach(c=>c.style.setProperty('--R',R+'px'))}size();addEventListener('resize',size,{passive:true});
 let ang=0,wp=0,dr=0;const tl=$('#tl'),sp=$('#sp');
 $$('.fq-btn').forEach(b=>b.addEventListener('click',()=>{const it=b.parentElement,o=it.classList.contains('open');$$('.fq .it').forEach(x=>x.classList.remove('open'));if(!o)it.classList.add('open')}));
 
@@ -709,30 +717,40 @@ try{
   const cv=$('#gl');
   const R=new THREE.WebGLRenderer({canvas:cv,antialias:false,alpha:false,powerPreference:'high-performance',stencil:false,depth:false});
   R.setPixelRatio(currentDPR);
-  const S=new THREE.Scene();
-  const C=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,0.1,100);
-
-  // Hide the redundant 100-div .dots-background layer when WebGL is active to save 100 DOM composite layers
   const dotsBg=$('#dotsBackground');
   if(dotsBg)dotsBg.style.display='none';
+  const S=new THREE.Scene();
+  const C=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,0.1,120);
 
   const uShared={
     uTime:{value:0},
-    uScroll:{value:0},
-    uScrollVel:{value:0},
+    uEvertPhase:{value:0},
+    uMerger:{value:0},
+    uPeace:{value:1.0},
+    uInsideOut:{value:0.22},
+    uParticleShare:{value:0.0},
+    uSpider:{value:0.45},
     uResolution:{value:new THREE.Vector2(innerWidth,innerHeight)},
-    uCamPos:{value:new THREE.Vector3(0,1.18,8.3)},
-    uCamForward:{value:new THREE.Vector3(0,-0.14,-0.99)},
+    uCamPos:{value:new THREE.Vector3(0,0.95,18.2)},
+    uCamForward:{value:new THREE.Vector3(0,-0.052,-0.998)},
     uCamRight:{value:new THREE.Vector3(1,0,0)},
-    uCamUp:{value:new THREE.Vector3(0,0.99,-0.14)},
-    uFovScale:{value:Math.tan(21*Math.PI/180)},
-    uBHPos:{value:new THREE.Vector3(-1.85,0,0)},
-    uWHPos:{value:new THREE.Vector3(1.85,0,0)},
-    uOrbAngle:{value:0.16},
-    uSep:{value:3.75},
+    uCamUp:{value:new THREE.Vector3(0,0.998,-0.052)},
+    uFovScale:{value:Math.tan(22*Math.PI/180)},
+    uWHPos:{value:new THREE.Vector3(-3.35,0,0)},
+    uBHPos:{value:new THREE.Vector3(3.35,0,0)},
+    uOrbVel:{value:0.35},
+    uImplosion:{value:0},
     uBurst:{value:0},
+    uBoomWave:{value:0},
+    uGodRays:{value:0},
+    uRingdown:{value:0},
     uWhiteFlash:{value:0},
-    uRemnant:{value:0}
+    uRemnant:{value:0},
+    uGW:{value:0},
+    uEat:{value:0},
+    uOrb:{value:0},
+    uPulse:{value:new THREE.Vector3()},
+    uPulsePos:{value:new THREE.Vector2()}
   };
 
   const quadGeo=new THREE.PlaneGeometry(2,2);
@@ -750,21 +768,33 @@ try{
     fragmentShader:`
       precision highp float;
       uniform float uTime;
-      uniform float uScroll;
-      uniform float uScrollVel;
+      uniform float uEvertPhase;
+      uniform float uMerger;
+      uniform float uPeace;
+      uniform float uInsideOut;
+      uniform float uParticleShare;
+      uniform float uSpider;
       uniform vec2 uResolution;
       uniform vec3 uCamPos;
       uniform vec3 uCamForward;
       uniform vec3 uCamRight;
       uniform vec3 uCamUp;
       uniform float uFovScale;
-      uniform vec3 uBHPos;
       uniform vec3 uWHPos;
-      uniform float uOrbAngle;
-      uniform float uSep;
+      uniform vec3 uBHPos;
+      uniform float uOrbVel;
+      uniform float uImplosion;
       uniform float uBurst;
+      uniform float uBoomWave;
+      uniform float uGodRays;
+      uniform float uRingdown;
       uniform float uWhiteFlash;
       uniform float uRemnant;
+      uniform float uGW;
+      uniform float uEat;
+      uniform float uOrb;
+      uniform vec3 uPulse;
+      uniform vec2 uPulsePos;
       varying vec2 vUv;
 
       float hash13(vec3 p3){
@@ -782,164 +812,363 @@ try{
               mix(hash13(i+vec3(0,1,1)),hash13(i+vec3(1,1,1)),f.x),f.y),f.z);
       }
       float fbm(vec3 p){
-        float v=0.0,a=0.53;
+        float v=0.0,a=0.52;
         for(int i=0;i<5;i++){
           v+=a*noise3(p);
-          p=p*2.07+vec3(17.3,9.1,11.7);
-          a*=0.47;
+          p=p*2.05+vec3(13.7,9.2,17.4);
+          a*=0.48;
+        }
+        return v;
+      }
+      // v6d perf: 4-octave sky variant — the sky is sampled for EVERY pixel, so
+      // this saves 6 noise calls per pixel. Disks/torus keep full 5-octave fbm.
+      float fbmCheap(vec3 p){
+        float v=0.0,a=0.52;
+        for(int i=0;i<4;i++){
+          v+=a*noise3(p);
+          p=p*2.05+vec3(13.7,9.2,17.4);
+          a*=0.48;
         }
         return v;
       }
 
-      vec3 sampleCosmos(vec3 rd, float gwRipple){
-        vec3 dir=normalize(rd + vec3(gwRipple*0.025, -gwRipple*0.020, gwRipple*0.015));
-        vec3 cell=floor(dir*280.0);
-        vec3 fracP=fract(dir*280.0)-0.5;
+      // 3D Rodrigues Axis-Angle Rotation for Inside-Out Toroidal Eversion
+      vec3 rotateAxis(vec3 v, vec3 axis, float ang){
+        float c = cos(ang), s = sin(ang);
+        return v * c + cross(axis, v) * s + axis * dot(axis, v) * (1.0 - c);
+      }
+
+      // Deep-space sky: Milky Way dust lanes, colour nebulae, spiked stars, distant jetted galaxy, warm sun-glow
+      vec3 sampleCosmos(vec3 rd, float lensShear){
+        vec3 dir=normalize(rd + vec3(lensShear*0.042, -lensShear*0.032, lensShear*0.024));
+        vec3 gN=normalize(vec3(0.55,0.83,0.05));
+        float gb=dot(dir,gN);
+        float band=exp(-gb*gb/0.045);
+        float core=exp(-pow(length(dir-normalize(vec3(0.30,-0.20,-0.93)))/0.6,2.0));
+        float cl1=fbmCheap(dir*2.3+vec3(3.1,0.0,1.7)+vec3(0.0,0.0,uTime*0.01));
+        float cl2=fbmCheap(dir*5.2+cl1*1.6);
+        float dust=fbmCheap(dir*8.5+cl1*2.0);
+        float lane=smoothstep(0.50,0.70,dust)*band;
+        vec3 magenta=vec3(0.92,0.24,0.68),violet=vec3(0.36,0.16,0.88),blue=vec3(0.10,0.30,0.95),gold=vec3(1.0,0.62,0.18);
+        float sel=fbmCheap(dir*1.7+vec3(7.7,1.3,4.1));
+        vec3 nc=mix(blue,violet,smoothstep(0.35,0.55,sel));
+        nc=mix(nc,magenta,smoothstep(0.50,0.68,sel));
+        float cloud=smoothstep(0.38,0.80,cl2)*(0.35+0.65*cl1);
+        float edge=smoothstep(0.52,0.62,cl2)*(1.0-smoothstep(0.62,0.74,cl2));
+        vec3 bg=vec3(0.004,0.006,0.020)+nc*cloud*0.18+gold*edge*cloud*0.12;
+        vec3 mw=mix(vec3(0.20,0.30,0.55),vec3(1.0,0.66,0.34),core);
+        bg+=mw*band*(0.10+0.24*cl2)*(1.0-0.85*lane)+vec3(1.0,0.6,0.3)*core*band*0.16*(1.0-lane);
+        float ridge=pow(1.0-abs(cl2*2.0-1.0),5.0);
+        float fil=fbmCheap(dir*13.0+cl2*2.5);
+        bg+=nc*ridge*cloud*0.14*(0.5+fil)+vec3(0.9,0.12,0.22)*smoothstep(0.55,0.8,fbmCheap(dir*3.1+vec3(2.2,5.1,9.4)))*cloud*0.07;
+        bg*=1.0-0.55*lane;
+        vec2 sq=vec2(atan(dir.x,dir.z),asin(clamp(dir.y,-1.0,1.0)))*22.0;
+        vec2 sid=floor(sq);float hg=hash13(vec3(sid,3.7));
+        if(hg>0.93){
+          vec2 sf=fract(sq)-0.5;float ga=hg*40.0;
+          vec2 rr=vec2(sf.x*cos(ga)-sf.y*sin(ga),(sf.x*sin(ga)+sf.y*cos(ga))*2.6);
+          bg+=mix(vec3(1.0,0.85,0.6),vec3(0.7,0.8,1.0),fract(hg*77.0))*exp(-dot(rr,rr)*160.0)*0.22;
+        }
+        float dens=0.6+1.5*band;
+        vec3 cell=floor(dir*320.0);vec3 fp=fract(dir*320.0)-0.5;
         float h=hash13(cell);
-        float star=0.0;
-        if(h>0.966){
-          float d=length(fracP);
-          float sz=0.035+0.12*fract(h*43.1);
-          star=exp(-d*d/(sz*sz))*smoothstep(0.966,0.999,h);
-          star*=0.72+0.28*sin(uTime*3.0+h*120.0);
+        if(h>1.0-0.045*dens){
+          float d=length(fp);float sz=0.03+0.11*fract(h*43.1);
+          float st=exp(-d*d/(sz*sz))*(0.55+0.45*fract(h*7.7))*(0.75+0.25*sin(uTime*2.2+h*110.0));
+          float tp=fract(h*19.0);
+          vec3 sc=mix(mix(vec3(0.70,0.80,1.0),vec3(1.0,0.95,0.85),smoothstep(0.0,0.5,tp)),vec3(1.0,0.55,0.25),smoothstep(0.6,1.0,tp));
+          bg+=sc*st*2.0;
         }
-        vec3 cell2=floor(dir*540.0);
-        float h2=hash13(cell2);
-        if(h2>0.986){
-          float d2=length(fract(dir*540.0)-0.5);
-          star+=exp(-d2*d2/0.01)*0.5;
+        float h2=hash13(floor(dir*600.0));
+        if(h2>0.980){float d2=length(fract(dir*600.0)-0.5);bg+=vec3(0.9,0.9,1.0)*exp(-d2*d2/0.008)*0.55;}
+        vec2 q=vec2(atan(dir.x,dir.z),asin(clamp(dir.y,-1.0,1.0)))*46.0;
+        vec2 id=floor(q),f=fract(q)-0.5;
+        float hs=hash13(vec3(id,7.3));
+        if(hs>0.965){
+          vec2 jit=(vec2(hash13(vec3(id,1.1)),hash13(vec3(id,2.2)))-0.5)*0.3;
+          vec2 pp=f-jit;
+          float c2=exp(-dot(pp,pp)*420.0);
+          float spike=exp(-abs(pp.x)*38.0)*exp(-abs(pp.y)*3.5)+exp(-abs(pp.y)*38.0)*exp(-abs(pp.x)*3.5);
+          vec3 sc2=mix(vec3(0.75,0.85,1.0),vec3(1.0,0.82,0.6),fract(hs*91.0));
+          bg+=sc2*(c2*2.2+spike*0.5)*(0.8+0.2*sin(uTime*1.7+hs*80.0));
         }
-        vec3 starCol=mix(vec3(0.94,0.91,0.87),vec3(1.0,0.52,0.28),fract(h*17.0));
-        starCol=mix(starCol,vec3(0.74,0.90,1.0),fract(h*31.0)*0.65);
-        float dust=pow(max(0.0,1.0-abs(dir.y)*2.1),3.5)*fbm(dir*3.2+vec3(0.0,0.0,uTime*0.02));
-        vec3 bg=vec3(0.0196,0.0196,0.020) + dust*vec3(0.04,0.016,0.01);
-        return bg + star*starCol*1.85;
+        vec3 gd=normalize(vec3(-0.34,-0.26,-0.90));
+        vec3 gu=normalize(cross(vec3(0.0,1.0,0.0),gd));vec3 gv=cross(gd,gu);
+        float gz=dot(dir,gd);
+        if(gz>0.5){
+          vec2 gp=vec2(dot(dir,gu),dot(dir,gv))/gz;
+          float ya=gp.x*0.84+gp.y*0.55;
+          vec2 e=vec2(gp.x*0.55-gp.y*0.84,ya*3.2);
+          float r=length(e);
+          float arms=0.5+0.5*sin(log(r+0.004)*7.0-atan(e.y,e.x)*2.0);
+          float bulge=exp(-r*60.0)*1.6;
+          float gdisk=exp(-r*16.0)*0.30*(0.55+0.45*arms);
+          float jet=exp(-abs(e.x)*220.0)*exp(-abs(ya)*10.0);
+          bg+=vec3(0.95,0.88,1.0)*bulge+vec3(0.65,0.55,0.95)*gdisk+vec3(0.5,0.65,1.0)*jet*0.4;
+        }
+        vec3 sd=normalize(vec3(0.30,0.22,-0.93));float sv=max(dot(dir,sd),0.0);
+        bg+=vec3(1.0,0.72,0.42)*(pow(sv,1400.0)*4.0+pow(sv,90.0)*0.35+pow(sv,14.0)*0.05);
+        return bg;
       }
 
-      // 1. BLACK HOLE (AND POST-COLLISION HYBRID REMNANT) ACCRETION DISK
-      vec4 shadeBlackHoleDisk(vec3 dPos, vec3 rd, float ct, float st){
-        float r = length(dPos.xz);
-        float innerR = mix(0.68, 0.88, uRemnant);
-        float outerR = mix(2.55, 4.35, clamp(uRemnant + uBurst*0.4, 0.0, 1.0));
-        if(r < innerR*0.84 || r > outerR) return vec4(0.0);
+      // 1. LEFT SINGULARITY: WHITE HOLE SPHERE
+      // At top (uPeace = 1): calm, serene, pearlescent concentric rings with upper-left slate eye.
+      // On scroll (uInsideOut & uParticleShare ramp up): violent 4D-to-3D Clifford-torus inside-out
+      // eversion and tidal Roche-lobe particle-sharing filaments erupting toward the Black Hole!
+      vec3 shadeWhiteHoleSphere3D(vec3 N, vec3 rd, vec3 toPartnerDir, float preMerger){
+        vec3 poleAxis = normalize(vec3(-0.33, 0.36, 0.87));
+        vec3 t1 = normalize(cross(vec3(0.0, 1.0, 0.0), poleAxis));
+        vec3 t2 = cross(poleAxis, t1);
 
-        float normR = clamp((r - innerR)/(outerR - innerR), 0.0, 1.0);
-        float rProfile = smoothstep(innerR*0.84, innerR*1.05, r) * pow(max(0.0, 1.0 - normR), 1.50);
+        float cosTheta = clamp(dot(N, poleAxis), -1.0, 1.0);
+        float proj1 = dot(N, t1) * 0.92;
+        float proj2 = dot(N, t2) * 1.18;
+        float rEye = length(vec2(proj1, proj2));
+        float phiEye = atan(proj2, proj1);
+        float theta = acos(cosTheta);
 
-        float angle = atan(dPos.z, dPos.x);
-        float kepler = (5.2 + uRemnant*2.6 + uBurst*2.0) / (pow(r, 1.32) + 0.14);
-        float spiralAng = angle + uTime * kepler + 8.5 * log(max(r, 0.1));
+        // 3D Poloidal + Toroidal Inside-Out Hopper Eversion (calm at rest, intense on scroll)
+        vec3 ringTangent = normalize(-sin(phiEye) * t1 + cos(phiEye) * t2);
+        float evertSpeed = uEvertPhase * (1.25 + uInsideOut * 1.45 + uImplosion * 1.45);
+        float foldAmp = mix(0.28, 1.25, clamp(uInsideOut, 0.0, 1.4));
+        vec3 evertedN = rotateAxis(N, ringTangent, -evertSpeed * foldAmp);
+        evertedN = rotateAxis(evertedN, poleAxis, uEvertPhase * 1.15 + rEye * 3.1 - sin(theta * 4.0 - evertSpeed) * 0.55 * foldAmp);
 
-        vec2 uvSpiral = vec2(cos(spiralAng), sin(spiralAng)) * r;
-        float n1 = fbm(vec3(uvSpiral * 1.65, r * 3.4 - uTime * 0.75));
-        float concentric = 0.5 + 0.5 * sin(r * 46.0 - uTime * 6.5 + n1 * 5.5);
-        float fineMicro = 0.5 + 0.5 * sin(r * 95.0 + spiralAng * 2.0 + n1 * 4.0);
-        float spiralStreaks = 0.5 + 0.5 * sin(spiralAng * 3.0 + r * 11.0 + n1 * 6.0);
-        float tex = (n1 * 0.48 + concentric * 0.32 + fineMicro * 0.20) * (0.52 + 0.48 * spiralStreaks);
+        vec3 swirlCoord = evertedN * 3.9 + vec3(0.0, 0.0, uEvertPhase * 0.55);
+        float turbAmp = mix(0.45, 1.0, 1.0 - uPeace * 0.65);
+        float turb = (fbm(swirlCoord) * 2.05 + fbm(swirlCoord * 2.45 - evertSpeed * 0.75) * 0.88) * turbAmp;
 
-        vec3 tangent = normalize(vec3(-dPos.z, 0.0, dPos.x));
-        vec3 worldVel = vec3(tangent.x, tangent.y*ct + tangent.z*st, -tangent.y*st + tangent.z*ct);
-        float beta = 0.52 * sqrt(innerR / max(r, innerR));
-        float cosTheta = dot(worldVel, -rd);
-        float doppler = 1.0 / (1.0 - beta * cosTheta);
-        float beaming = pow(clamp(doppler, 0.46, 1.85), 2.65);
+        // Multi-layered inside-out radial + poloidal wave trains erupting from the vortex eye
+        float evertWave1 = rEye * 58.0 - phiEye * 3.0 - evertSpeed * 6.4 + turb * 2.7;
+        float evertWave2 = theta * 86.0 - phiEye * 4.0 - evertSpeed * 8.2 + turb * 3.4;
+        float evertWave3 = (theta * 146.0 + rEye * 42.0) - phiEye * 2.0 - evertSpeed * 10.2 + turb * 4.8;
 
-        vec3 colISCO = vec3(1.0, 0.97, 0.91);
-        vec3 colAcc = vec3(1.0, 0.36, 0.15);
-        vec3 colOuter = vec3(0.42, 0.04, 0.01);
-        vec3 colBlue = vec3(0.82, 0.94, 1.0);
+        // 4D Clifford-Torus Inside-Out Folding Harmonics
+        float insideOutFold1 = sin(theta * 20.0 - evertSpeed * 5.6 + sin(phiEye * 2.0 - uEvertPhase * 2.4) * 1.65);
+        float insideOutFold2 = cos(rEye * 32.0 - evertSpeed * 7.2 - phiEye * 3.0 + turb * 1.8);
+        float shellPeel = smoothstep(-0.2, 0.85, insideOutFold1 * 0.6 + insideOutFold2 * 0.4) * clamp(uInsideOut, 0.15, 1.2) * smoothstep(0.0, 0.05, uInsideOut); // v6d: no peel at all while insideOut==0
 
-        vec3 col = mix(colISCO, colAcc, smoothstep(0.0, 0.34, normR));
-        col = mix(col, colOuter, smoothstep(0.34, 0.96, normR));
-        col = mix(col, colBlue, clamp((doppler - 1.12)*0.75, 0.0, 0.58));
+        float rings1 = 0.5 + 0.5 * sin(evertWave1);
+        float rings2 = 0.5 + 0.5 * sin(evertWave2);
+        float rings3 = 0.5 + 0.5 * sin(evertWave3);
+        float swirlTex = rings1 * 0.44 + rings2 * 0.32 + rings3 * 0.24;
+        swirlTex = clamp(swirlTex * 0.82 + shellPeel * 0.28, 0.0, 1.0);
 
-        if(uRemnant > 0.01){
-          float qBand = exp(-pow((normR - 0.09)/0.065, 2.0)) * uRemnant;
-          float kilonovaSpiral = exp(-pow((normR - 0.44)/0.18, 2.0)) * (0.5 + 0.5*sin(angle*2.0 - r*10.0 + uTime*4.0 + n1*3.0)) * uRemnant;
-          vec3 qCol = mix(vec3(1.0, 0.99, 0.97), vec3(0.70, 0.94, 1.0), 0.5+0.5*sin(angle*3.0+uTime*5.0));
-          col = mix(col, qCol * 1.55, clamp(qBand * 0.92 + kilonovaSpiral * 0.58, 0.0, 0.95));
-        }
+        vec3 colPureWhite = vec3(0.93, 0.96, 1.0);
+        vec3 colAlabaster = vec3(0.88, 0.92, 1.0);
+        vec3 colSilverGray = vec3(0.69, 0.71, 0.76);
+        vec3 sphereCol = mix(colSilverGray, colAlabaster, smoothstep(0.12, 0.52, swirlTex));
+        sphereCol = mix(sphereCol, colPureWhite * 1.08, smoothstep(0.52, 0.88, swirlTex));
 
-        if(uBurst > 0.01){
-          float waveFront = innerR + 0.35 + (1.0 - uBurst*0.35) * 1.85;
-          float shockBand = exp(-pow((r - waveFront)/0.25, 2.0)) * uBurst;
-          col += vec3(1.0, 0.96, 0.92) * shockBand * 1.65;
-        }
+        // Upper-Left Slate-Gray Circular Vortex Eye with Deep Inside-Out Erupting Tunnel Rings
+        float eyeCore = 1.0 - smoothstep(0.110, 0.148, rEye);
+        float eyeTunnelWaves = 0.5 + 0.5 * sin(log(max(rEye, 0.015)) * 18.0 - evertSpeed * 9.5 + phiEye * 2.0);
+        float eyeInnerPulse = 0.5 + 0.5 * sin(rEye * 98.0 - evertSpeed * 8.8 + phiEye * 2.0);
+        float eyeInnerRim = exp(-pow((rEye - 0.155) / 0.026, 2.0)) * (0.80 + 0.45 * eyeInnerPulse);
+        float eyeOuterDark = exp(-pow((rEye - 0.215) / 0.035, 2.0));
+        vec3 colEyeGray = vec3(0.63, 0.65, 0.68) * (0.85 + 0.22 * eyeTunnelWaves);
+        sphereCol = mix(sphereCol, colEyeGray * 0.84, eyeOuterDark * 0.65);
+        sphereCol = mix(sphereCol, colPureWhite * 1.22, eyeInnerRim * 0.88);
+        sphereCol = mix(sphereCol, colEyeGray, eyeCore * 0.94);
 
-        float alpha = clamp(rProfile * tex * beaming * (1.55 + uBurst*0.65 + uRemnant*0.30), 0.0, 0.98);
-        return vec4(col * alpha * 1.35, alpha);
+        // Equatorial White-Hot Relativistic Core Beam across the lower-middle of White Hole
+        float eqY = N.y + 0.06 - 0.05 * N.x;
+        float eqGlow = exp(-pow(eqY / 0.19, 2.0)) * (0.72 + 0.28 * rings1);
+        sphereCol = mix(sphereCol, vec3(1.0, 0.99, 0.95) * (1.35 + (1.0 - uPeace) * 0.25), clamp(eqGlow * 0.84, 0.0, 0.92));
+
+        // Tidal Roche-Lobe Tearing & Particle-Sharing Ejection Cusps toward partner Black Hole
+        // Calm & smooth when separate at top (uPeace = 1); intense tearing & particle sharing as user scrolls!
+        float activeTearing = clamp(1.0 - uPeace * 0.72 + uParticleShare * 0.45, 0.25, 1.25);
+        float bridgeSide = smoothstep(0.12, 0.86, dot(N, toPartnerDir));
+        float sawWave = sin(N.y * 46.0 + turb * 5.8 - evertSpeed * 7.2) * 0.5 + 0.5;
+        float jagTeeth = smoothstep(0.42, 0.84, bridgeSide * activeTearing + (sawWave - 0.5) * 0.42 * activeTearing);
+        vec3 colGoldFire = mix(vec3(1.0, 0.90, 0.55), vec3(1.0, 0.38, 0.04), smoothstep(0.48, 0.90, bridgeSide));
+        sphereCol = mix(sphereCol, colGoldFire * (1.35 + uImplosion * 0.65), jagTeeth * 0.85);
+
+        // Warm Golden-Orange Relativistic Limb Glow at grazing angles
+        float mu = clamp(dot(N, -rd), 0.0, 1.0);
+        float limb = pow(1.0 - mu, 3.1);
+        sphereCol = mix(sphereCol, vec3(1.0, 0.62, 0.18) * (1.45 + uBurst * 0.5), limb * 0.76);
+
+        vec3 irid = 0.5 + 0.5 * cos(6.2831 * (swirlTex * 1.3 + vec3(0.0, 0.33, 0.67) + turb * 0.15));
+        sphereCol = mix(sphereCol, sphereCol * mix(vec3(1.0), irid * 1.15, 0.22), 0.8 * (1.0 - eyeCore));
+        return sphereCol * preMerger;
       }
 
-      // 2. ULTRA-DETAILED WHITE HOLE RELATIVISTIC EJECTION DISK
-      vec4 shadeWhiteHoleDisk(vec3 wPos, vec3 rd, float ct, float st, float preMerger){
-        float r = length(wPos.xz);
-        float innerR = 0.65;
-        float outerR = 2.45;
-        if(r < innerR*0.84 || r > outerR) return vec4(0.0);
+      // 2. RIGHT SINGULARITY & POST-MERGER COLOSSAL GARGANTUA BLACK HOLE
+      // Strictly PITCH-BLACK (vec3(0.0)) interior before & after collision!
+      vec3 shadeBlackHoleSphere3D(vec3 NB, vec3 rd, vec3 toPartnerDir){
+        float mu = clamp(dot(NB, -rd), 0.0, 1.0);
+        float b = sqrt(max(0.0, 1.0 - mu * mu));
 
-        float normR = clamp((r - innerR)/(outerR - innerR), 0.0, 1.0);
-        float rProfile = smoothstep(innerR*0.84, innerR*1.05, r) * pow(max(0.0, 1.0 - normR), 1.50);
+        // 100% Pure Abyssal Pitch-Black Event Horizon Void (vec3(0.0))
+        vec3 voidCol = vec3(0.0, 0.0, 0.0);
 
-        float angle = atan(wPos.z, wPos.x);
-        float kepler = 5.4 / (pow(r, 1.32) + 0.14);
-        float spiralAng = angle - uTime * kepler - 8.5 * log(max(r, 0.1));
+        // Pre-merger jagged fiery orange inside-out plasma teeth ONLY at the extreme grazing bridge limb (b > 0.91)
+        float limbEdgeMask = smoothstep(0.91, 0.99, b);
+        float activeSharing = clamp(1.0 - uPeace * 0.70 + uParticleShare * 0.35, 0.25, 1.15);
+        float bridgeMask = smoothstep(0.52, 0.94, dot(NB, toPartnerDir)) * limbEdgeMask * (1.0 - uRemnant) * activeSharing;
+        float jagIn = 0.5 + 0.5 * sin(NB.y * 46.0 + fbm(NB * 12.0 + uEvertPhase * 5.8) * 6.0);
+        float teethMask = smoothstep(0.56, 0.92, bridgeMask + (jagIn - 0.5) * 0.30 * limbEdgeMask * activeSharing);
+        voidCol = mix(voidCol, vec3(1.0, 0.52, 0.09) * 1.50, teethMask * (1.0 - uRemnant));
 
-        vec2 uvSpiral = vec2(cos(spiralAng), sin(spiralAng)) * r;
-        float n1 = fbm(vec3(uvSpiral * 1.70, r * 3.5 - uTime * 1.6));
-        float concentric = 0.5 + 0.5 * sin(r * 48.0 - uTime * 7.5 + n1 * 5.5);
-        float fineMicro = 0.5 + 0.5 * sin(r * 96.0 - spiralAng * 2.0 + n1 * 4.2);
-        float spiralStreaks = 0.5 + 0.5 * sin(spiralAng * 3.0 - r * 11.5 + n1 * 6.0);
-        float tex = (n1 * 0.46 + concentric * 0.34 + fineMicro * 0.20) * (0.52 + 0.48 * spiralStreaks);
+        // Razor-sharp Relativistic Photon Sphere Limb Rim strictly at b > 0.982 (outer 1.8% edge)
+        float qnmRipple = 1.0 + uRingdown * 0.35 * cos(atan(NB.y, NB.x) * 2.0 - uTime * 22.0);
+        float dopplerRim = (1.0 - 0.35 * NB.x * uRemnant) * qnmRipple;
+        float limbFire = exp(-pow((b - 0.988) / 0.014, 2.0)) * smoothstep(0.965, 0.992, b);
+        vec3 rimCol = mix(vec3(1.0, 0.58, 0.30), vec3(1.0, 0.94, 0.80), clamp(limbFire * dopplerRim, 0.0, 1.0));
+        voidCol += rimCol * limbFire * (1.38 + uRemnant * 0.55 + uBurst * 0.5) * dopplerRim;
+        float ring2 = exp(-pow((b - 0.958) / 0.006, 2.0)) * 0.32;
+        voidCol += vec3(1.0, 0.86, 0.62) * ring2 * dopplerRim;
+        // Planck-scale quantum foam shimmer on the horizon rim
+        float foam = 0.82 + 0.36 * noise3(NB * 38.0 + vec3(0.0, 0.0, uTime * 5.0));
+        voidCol *= mix(1.0, foam, smoothstep(0.90, 0.99, b));
+        // Hawking radiation: virtual particle pairs flicker at the horizon, one escapes
+        float hh = hash13(floor(NB * 70.0) + floor(uTime * 7.0));
+        float spark = step(0.992, hh) * smoothstep(0.93, 0.985, b) * (1.0 - uRemnant * 0.4);
+        voidCol += vec3(0.55, 0.80, 1.0) * spark * 1.6;
 
-        vec3 tangent = normalize(vec3(wPos.z, 0.0, -wPos.x));
-        vec3 worldVel = vec3(tangent.x, tangent.y*ct + tangent.z*st, -tangent.y*st + tangent.z*ct);
-        float beta = 0.52 * sqrt(innerR / max(r, innerR));
-        float cosTheta = dot(worldVel, -rd);
-        float doppler = 1.0 / (1.0 - beta * cosTheta);
-        float beaming = pow(clamp(doppler, 0.46, 1.85), 2.65);
-
-        vec3 colDiamond = vec3(1.0, 0.99, 0.98);
-        vec3 colCyan = vec3(0.58, 0.88, 1.0);
-        vec3 colPlatinum = vec3(0.92, 0.86, 0.78);
-        vec3 colDeepSapphire = vec3(0.04, 0.16, 0.34);
-
-        vec3 col = mix(colDiamond, colCyan, smoothstep(0.0, 0.34, normR));
-        col = mix(col, colPlatinum, smoothstep(0.34, 0.68, normR));
-        col = mix(col, colDeepSapphire, smoothstep(0.68, 0.96, normR));
-        col = mix(col, colDiamond, clamp((doppler - 1.12)*0.75, 0.0, 0.62));
-
-        float alpha = clamp(rProfile * tex * beaming * preMerger * (1.50 + uBurst*0.60), 0.0, 0.98);
-        return vec4(col * alpha * 1.32, alpha);
+        return voidCol;
       }
 
-      // 3. ANALYTIC ROCHE-LOBE TIDAL ACCRETION STREAM
-      vec4 shadeTidalBridge(vec3 hitWorld, float preMerger){
+      // 3. 3D EQUATORIAL RELATIVISTIC ACCRETION DISK, PARTICLE-SHARING BRIDGE & POST-MERGER NORMAL BIG BLACK HOLE DISK
+      vec4 shadeEquatorialBridgeAndDisk3D(vec3 hitWorld, vec3 rd, float rsWH, float rsBH, float preMerger){
+        vec3 mid = mix(0.5 * (uWHPos + uBHPos), uBHPos, uRemnant);
         vec3 ba = uBHPos - uWHPos;
-        float baLen = length(ba);
-        if(baLen < 0.25) return vec4(0.0);
-        vec3 baDir = ba / baLen;
-        vec3 ortho = normalize(vec3(-baDir.z, 0.0, baDir.x));
-        vec3 rel = hitWorld - uWHPos;
-        float hProj = dot(rel, baDir) / baLen;
-        if(hProj < -0.02 || hProj > 1.02) return vec4(0.0);
+        float sep = length(ba);
+        vec3 axisX = sep > 0.001 ? ba / sep : vec3(1.0, 0.0, 0.0);
+        vec3 axisZ = normalize(vec3(-axisX.z, 0.0, axisX.x));
 
-        float hClamp = clamp(hProj, 0.0, 1.0);
-        float sOffset = sin(hClamp * 3.14159265) * 0.28 * baLen * sin(hClamp * 3.14159265 - 0.35);
-        float latDist = dot(rel, ortho) - sOffset;
-        float streamWidth = mix(0.22, 0.38, sin(hClamp * 3.14159265));
-        if(abs(latDist) > streamWidth) return vec4(0.0);
+        vec3 relMid = hitWorld - mid;
+        float xCoord = dot(relMid, axisX);
+        float zCoord = dot(relMid, axisZ);
 
-        float normLat = latDist / streamWidth;
-        float profile = exp(-normLat * normLat * 4.2) * sin(hClamp * 3.14159265);
-        float f = fbm(vec3(hClamp * 6.5 - uTime * 3.5, normLat * 4.5, uTime * 0.5));
-        float streaks = 0.5 + 0.5 * sin(normLat * 32.0 + f * 5.0 - uTime * 4.0);
-        vec3 colW = vec3(0.75, 0.94, 1.0);
-        vec3 colMid = vec3(0.98, 0.93, 0.86);
-        vec3 colB = vec3(1.0, 0.38, 0.16);
-        vec3 col = mix(colW, colMid, smoothstep(0.0, 0.45, hClamp));
-        col = mix(col, colB, smoothstep(0.45, 0.95, hClamp));
-        float alpha = clamp(profile * (0.42 * f + 0.58 * streaks) * preMerger * 1.15, 0.0, 0.90);
-        return vec4(col * alpha * 1.30, alpha);
+        float distWH = length(hitWorld - uWHPos);
+        float distBH = length(hitWorld - uBHPos);
+
+        // Strictly carve out the Black Hole's pitch-black event horizon shadow
+        float bhHorizonShadow = smoothstep(rsBH * 0.98, rsBH * 1.12, distBH);
+        if(bhHorizonShadow < 0.005) return vec4(0.0);
+
+        float maxDiskRadius = mix(10.8, 11.6, uRemnant);
+        float rFromMid = length(vec2(xCoord * mix(0.50, 1.0, uRemnant), zCoord));
+        if(rFromMid > maxDiskRadius) return vec4(0.0);
+
+        // Differential Keplerian angular speed + Dual Inside-Out Poloidal Torus Eversion
+        float rBHPlane = length(hitWorld.xz - uBHPos.xz);
+        float rWHPlane = length(hitWorld.xz - uWHPos.xz);
+        float keplerOmega = 3.2 / (pow(max(rBHPlane, 0.75), 1.15) + 0.16);
+        float diskAngleBH = atan(hitWorld.z - uBHPos.z, hitWorld.x - uBHPos.x);
+        float diskAngleWH = atan(hitWorld.z - uWHPos.z, hitWorld.x - uWHPos.x);
+        float spiralPhase = diskAngleBH * 4.0 + rBHPlane * 3.8 - uTime * keplerOmega * uOrbVel;
+
+        // WHITE HOLE VS BLACK HOLE INSIDE-OUT TOROIDAL DUEL
+        float whOutwardRoll = sin(rWHPlane * 19.0 - uEvertPhase * 8.2 + sin(diskAngleWH * 3.0 - uEvertPhase * 2.5) * 1.9);
+        float bhInwardRoll  = sin(rBHPlane * 19.0 + uEvertPhase * 8.2 - sin(diskAngleBH * 3.0 + uEvertPhase * 2.5) * 1.9);
+        float vsBalance = smoothstep(-0.8, 0.8, xCoord);
+        float insideOutDuel = mix(whOutwardRoll, bhInwardRoll, vsBalance);
+        float insideOutBands = 0.5 + 0.5 * insideOutDuel;
+
+        // Turbulent magnetorotational instability (MRI) streamlines
+        float streakNoise = fbm(vec3(xCoord * 1.3 - uEvertPhase * 1.4, zCoord * 3.3, spiralPhase * 0.25));
+        float fineStreaks = 0.5 + 0.5 * sin(zCoord * 36.0 + streakNoise * 6.5 - uEvertPhase * 5.2);
+        float concentricRings = 0.5 + 0.5 * sin(rBHPlane * 24.0 - diskAngleBH * 2.0 + streakNoise * 4.8 - uEvertPhase * 6.8);
+
+        // Relativistic Doppler Beaming Factor
+        vec3 tangentDir = normalize(vec3(-(hitWorld.z - mid.z), 0.0, hitWorld.x - mid.x + 1e-4));
+        float beta = clamp(0.50 * sqrt(rsBH / max(rBHPlane, rsBH * 1.05)), 0.08, 0.62);
+        float cosView = dot(tangentDir, -rd);
+        float dopplerBoost = clamp(pow(1.0 + beta * cosView, 2.65), 0.42, 2.15);
+
+        // A. Equatorial Relativistic Core Beam — REMOVED by owner order 2026-10-27
+        // ("remove the line between the two holes, that's not needed"). This was
+        // the thin horizontal gold line spanning the gap in the hero: the only
+        // inter-hole element still live at peace in v6d (stream/ribbons/filaments
+        // were already gated to 0 in part 1). Zeroed everywhere, not just the
+        // hero: the blast keeps its separate god-ray jets (jetBeam, line ~1412),
+        // shock rings and flash. The closing-story ribbons/throat in part 2–3
+        // (shareStreamers/throatGlow) are untouched.
+        float coreBeam = 0.0;
+
+        // B. Central Roche-Lobe Overflow Bridge & Active Particle-Sharing Streamers (Pre-Merger)
+        float throatGlow = 0.0;
+        float whiteBridgeRatio = 0.0;
+        float shareStreamers = 0.0;
+        if(preMerger > 0.01 && sep > 0.08){
+          float uBridge = clamp((xCoord + sep * 0.5) / sep, 0.0, 1.0);
+          float inBridge = smoothstep(-0.14, 0.16, uBridge) * smoothstep(0.98, 0.72, uBridge);
+          float implosionPinch = 1.0 - uImplosion * 0.52 * exp(-pow((uBridge - 0.5) * 3.5, 2.0));
+          float throatPinch = mix(0.22, 0.62, pow(abs(uBridge - 0.5) * 2.0, 1.35)) * implosionPinch;
+
+          // At top (uPeace = 1), bridge is a calm, gentle golden horizon glow; on scroll, inside-out braid & particle sharing ignite!
+          float helixBraid = sin(uBridge * 22.0 - uEvertPhase * 9.5) * 0.11 * (1.0 - uPeace * 0.85) * (1.0 - abs(uBridge - 0.5) * 1.5);
+          float jagWave = sin(zCoord * 28.0 + streakNoise * 7.5 - uEvertPhase * 7.8) * 0.17 * (1.0 - uPeace * 0.7);
+          float bridgeProfile = exp(-pow((zCoord - helixBraid) / max(0.08, throatPinch), 2.0));
+          // At top (uPeace = 1), singularities are widely separated so central bridge is minimal; builds up as user scrolls and they zoom in closer!
+          float sepConnect = smoothstep(6.9, 3.8, sep);
+          float bridgeStrength = (mix(0.18, 1.88, 1.0 - uPeace * 0.88) * sepConnect) + uImplosion * 1.15 + uBurst * 0.95;
+          throatGlow = inBridge * bridgeProfile * (0.58 + 0.42 * fineStreaks) * (0.68 + 0.32 * insideOutBands) * preMerger * bridgeStrength * bhHorizonShadow;
+          whiteBridgeRatio = smoothstep(0.65 + jagWave, 0.18 + jagWave, uBridge) * preMerger;
+
+          // Discrete Volumetric Particle-Sharing Ribbons streaming from WH (uBridge=0) to BH (uBridge=1)
+          if(uParticleShare > 0.01){
+            float sCurve1 = sin(uBridge * 6.28318 - uEvertPhase * 4.5) * 0.28 * sin(uBridge * 3.14159);
+            float sCurve2 = -sin(uBridge * 6.28318 - uEvertPhase * 4.5 + 1.57) * 0.34 * sin(uBridge * 3.14159);
+            float packetPulse1 = 0.5 + 0.5 * sin(uBridge * 38.0 - uEvertPhase * 14.0 + streakNoise * 3.0);
+            float packetPulse2 = 0.5 + 0.5 * sin(uBridge * 44.0 + uEvertPhase * 12.0 - streakNoise * 3.0);
+            float ribbon1 = exp(-pow((zCoord - sCurve1) / 0.085, 2.0)) * pow(packetPulse1, 2.4);
+            float ribbon2 = exp(-pow((zCoord - sCurve2) / 0.095, 2.0)) * pow(packetPulse2, 2.6);
+            shareStreamers = inBridge * (ribbon1 + ribbon2) * uParticleShare * preMerger * 1.65 * bhHorizonShadow;
+          }
+        }
+
+        // C. Circular Relativistic Accretion Disks around WH, BH, and the Colossal Post-Merger Gargantua Black Hole
+        float ringWH = exp(-pow((distWH - rsWH * 1.22) / 0.42, 2.0)) * (0.65 + 0.35 * (0.5 + 0.5 * whOutwardRoll)) * preMerger;
+        float ringBH = exp(-pow((distBH - rsBH * 1.24) / 0.42, 2.0)) * (0.65 + 0.35 * (0.5 + 0.5 * bhInwardRoll)) * (1.0 - uRemnant * 0.5) * bhHorizonShadow;
+
+        // Post-Merger Giant Black Hole Multi-Band Relativistic Accretion Disk (Calm, Normal & Majestic after White Screen!)
+        float giantDisk = 0.0;
+        if(uRemnant > 0.01){
+          float innerISCO = smoothstep(rsBH * 1.05, rsBH * 1.28, distBH);
+          float outerFalloff = exp(-max(0.0, distBH - rsBH * 1.20) * 0.46);
+          float iscoBright = exp(-pow((distBH - rsBH * 1.32) / 0.35, 2.0)) * (1.32 + uRingdown * 0.45);
+          giantDisk = innerISCO * (outerFalloff * (0.52 + 0.48 * concentricRings) * (0.68 + 0.32 * insideOutBands) + iscoBright) * uRemnant * 1.48;
+        }
+
+        // D. 3D Expanding Supernova / Kilonova Equatorial Blast Wave ("THE BOOM" at End of Part 3)
+        float boomBlastWave = 0.0;
+        if(uBoomWave > 0.01 && uBoomWave < 14.5){
+          float blastR = uBoomWave * 1.15;
+          float rtFingers = fbm(vec3( hitWorld.xz * 1.8, uTime * 1.5 )) * 0.55;
+          float shockShell = exp(-pow((rFromMid + rtFingers - blastR) / (0.28 + uBoomWave * 0.08), 2.0));
+          float shockFade = smoothstep(14.0, 1.2, uBoomWave) * smoothstep(0.0, 0.35, uBoomWave);
+          boomBlastWave = shockShell * shockFade * 2.65 * bhHorizonShadow;
+        }
+
+        // E. 3D Spider-Web Magnetic Reconnection Filaments & Inside-Out Spiral Shock Arms
+        float angMid = atan(zCoord, xCoord);
+        float implosionTwist = uImplosion * 2.4 / (rFromMid + 0.35);
+        float webA = pow(abs(sin(angMid * 10.0 + rFromMid * 5.2 - streakNoise * 4.2 - uEvertPhase * 3.4 + implosionTwist)), 11.0);
+        float webB = pow(abs(sin(angMid * 16.0 - rFromMid * 6.8 + streakNoise * 5.0 + uEvertPhase * 4.1 - implosionTwist)), 13.0);
+        float spiderFilaments = (webA + webB) * exp(-rFromMid * 0.33) * uSpider * (1.15 + uImplosion * 0.85 + uBurst * 0.65) * bhHorizonShadow;
+
+        float rawIntensity = coreBeam * (0.70 + 0.30 * fineStreaks) + throatGlow + shareStreamers + (ringWH + ringBH) * 0.72 + giantDisk + boomBlastWave + spiderFilaments;
+        float totalIntensity = clamp(rawIntensity * mix(1.0, dopplerBoost, 0.55 + 0.35 * uRemnant), 0.0, 2.35);
+        if(totalIntensity < 0.005) return vec4(0.0);
+
+        vec3 colWhiteHot = vec3(1.0, 0.99, 0.96);
+        vec3 colGold = vec3(1.0, 0.75, 0.28);
+        vec3 colFieryOrange = vec3(1.0, 0.38, 0.05);
+        vec3 colDeepCrimson = vec3(0.46, 0.06, 0.008);
+
+        vec3 plasmaCol = mix(colDeepCrimson, colFieryOrange, smoothstep(0.04, 0.35, totalIntensity));
+        plasmaCol = mix(plasmaCol, colGold, smoothstep(0.35, 0.76, totalIntensity));
+        plasmaCol = mix(plasmaCol, colWhiteHot, smoothstep(0.72, 1.28, totalIntensity + whiteBridgeRatio * 0.52 + shareStreamers * 0.45 + boomBlastWave * 0.45));
+        vec3 iridCol = mix(vec3(0.30, 0.20, 0.80), vec3(0.12, 0.62, 0.78), smoothstep(0.3, 0.7, streakNoise));
+        plasmaCol = mix(plasmaCol, iridCol * (0.7 + 0.5 * totalIntensity), smoothstep(0.30, 0.04, totalIntensity) * 0.45 * (1.0 - uRemnant * 0.3));
+
+        float alpha = clamp(totalIntensity * (0.84 + uBurst * 0.28), 0.0, 0.98);
+        return vec4(plasmaCol * alpha * 1.48, alpha);
       }
 
       void main(){
@@ -949,67 +1178,104 @@ try{
         vec3 rd = normalize(uCamForward + (uv.x * uCamRight + uv.y * uCamUp) * uFovScale);
         vec3 ro = uCamPos;
 
-        float rsBH = mix(0.52, 0.78, uRemnant);
-        float preMerger = 1.0 - smoothstep(0.45, 0.86, uRemnant);
-        float rsWH = 0.49 * preMerger;
+        float preMerger = 1.0 - smoothstep(0.42, 0.80, uRemnant);
+        float rsWH = 0.96 * preMerger * (1.0 - uImplosion * 0.14) * (1.0 - 0.985 * smoothstep(0.0, 1.0, uEat));
+        // Colossal Post-Merger Gargantua Black Hole (exact same big size rsBH = 2.22 as right now!)
+        float qnmRadiusOsc = 1.0 + uRingdown * 0.045 * sin(uTime * 28.0);
+        float rsBH = mix(0.96 * (1.0 + 0.14 * smoothstep(0.0, 1.0, uEat)), 2.22, smoothstep(0.0, 1.0, uRemnant)) * qnmRadiusOsc;
 
-        // O(1) FAR-FIELD IMPACT-PARAMETER RAY CULLING:
-        // Compute analytic closest approach of ray (ro, rd) to Black Hole and White Hole.
-        // Pixels in outer space (minImpact > 4.55) skip the 64-step raymarching loop entirely!
-        vec3 toBH0 = uBHPos - ro;
-        float projBH = max(0.0, dot(toBH0, rd));
-        vec3 perpBH = toBH0 - rd * projBH;
-        float bBH = length(perpBH);
+        vec3 baDir = normalize(uBHPos - uWHPos + vec3(1e-5, 0.0, 0.0));
+        vec3 collisionCenter = mix(0.5 * (uWHPos + uBHPos), uBHPos, uRemnant);
+
+        vec3 toCenter = collisionCenter - ro;
+        float centerDist = max(0.1, dot(toCenter, uCamForward));
+        vec2 centerUV = vec2(
+          dot(toCenter, uCamRight) / (centerDist * uFovScale),
+          dot(toCenter, uCamUp) / (centerDist * uFovScale)
+        );
+        vec2 relUV = uv - centerUV;
+        float rFromCollisionUV = length(relUV);
+        float angFromCollisionUV = atan(relUV.y, relUV.x);
+
+        // Relativistic Gravitational-Wave Spacetime Refraction Ripple during THE BOOM!
+        if(uBoomWave > 0.01 && uBoomWave < 12.0){
+          float waveScreenR = uBoomWave * 0.24;
+          float gwStrain = exp(-pow((rFromCollisionUV - waveScreenR) / 0.14, 2.0)) * smoothstep(11.0, 0.5, uBoomWave);
+          float quadMode = cos(angFromCollisionUV * 2.0 - uTime * 14.0);
+          vec2 warpDir = normalize(relUV + 1e-5) * (0.045 * gwStrain * (0.65 + 0.35 * quadMode));
+          rd = normalize(rd + (warpDir.x * uCamRight + warpDir.y * uCamUp));
+        }
+
+        // Inspiral gravitational waves: two-armed (quadrupole) spiral of spacetime ripples rotating with the orbit
+        if(abs(uGW) > 0.002){
+          float spiralW = sin(2.0 * (angFromCollisionUV - uOrb) - rFromCollisionUV * 13.0);
+          float envW = uGW * exp(-rFromCollisionUV * 0.85) * smoothstep(0.18, 0.55, rFromCollisionUV);
+          vec2 wd = normalize(relUV + 1e-5) * 0.032 * spiralW * envW;
+          rd = normalize(rd + wd.x * uCamRight + wd.y * uCamUp);
+        }
 
         vec3 toWH0 = uWHPos - ro;
         float projWH = max(0.0, dot(toWH0, rd));
-        vec3 perpWH = toWH0 - rd * projWH;
-        float bWH = length(perpWH);
+        float bWH0 = length(toWH0 - rd * projWH);
 
-        float minImpact = min(bBH, mix(bWH, 100.0, uRemnant));
+        vec3 toBH0 = uBHPos - ro;
+        float projBH = max(0.0, dot(toBH0, rd));
+        float bBH0 = length(toBH0 - rd * projBH);
+
+        float minImpact = min(bBH0, mix(bWH0, 100.0, uRemnant));
 
         vec3 col = vec3(0.0);
         float trans = 1.0;
-        bool hitBHHov = false;
-        bool hitWHCore = false;
-        vec3 whHitNormal = vec3(0.0, 0.0, 1.0);
-        vec3 whHitDir = vec3(0.0, 0.0, -1.0);
-        float closestBH = bBH;
-        float closestWH = bWH;
+        bool hitWH = false;
+        bool hitBH = false;
+        vec3 whNormal = vec3(0.0, 0.0, 1.0);
+        vec3 bhNormal = vec3(0.0, 0.0, 1.0);
+        vec3 hitRd = rd;
 
-        if(minImpact > 4.55){
-          // Analytic far-field Einstein deflection for background stars (0 loop iterations!)
-          vec3 deflect = normalize(perpBH + 1e-5) * (2.2 * rsBH * rsBH / (bBH * bBH + 0.5));
+        float closestWH = bWH0;
+        float closestBH = bBH0;
+        float maxRochePot = 0.0;
+
+        float diskTilt = mix(0.14, 0.17, uRemnant);
+        float ctD = cos(diskTilt), stD = sin(diskTilt);
+
+        // Calm spherical symmetry when separate at top (uPeace = 1); strong tidal stretching during scroll/collision!
+        float tidalActive = 1.0 - uPeace * 0.82;
+
+        if(minImpact > 10.5){
+          vec3 defl = normalize((toBH0 - rd * projBH) + 1e-5) * (1.85 * rsBH * rsBH / (bBH0 * bBH0 + 0.6));
           if(preMerger > 0.01){
-            deflect += normalize(perpWH + 1e-5) * (2.0 * rsWH * rsWH * preMerger / (bWH * bWH + 0.5));
+            defl += normalize((toWH0 - rd * projWH) + 1e-5) * (1.85 * rsWH * rsWH / (bWH0 * bWH0 + 0.6));
           }
-          rd = normalize(rd + deflect);
+          rd = normalize(rd + defl);
         } else {
-          float tiltBH = 0.22 - uRemnant * 0.04;
-          float ctB = cos(tiltBH), stB = sin(tiltBH);
-          float tiltWH = 0.20;
-          float ctW = cos(tiltWH), stW = sin(tiltWH);
-
           vec3 p = ro;
-          float startJump = max(0.0, min(projBH, mix(projWH, 100.0, uRemnant)) - 4.75);
+          float startJump = max(0.0, min(projBH, mix(projWH, 100.0, uRemnant)) - 9.2);
           p += rd * startJump;
 
-          for(int i=0; i<64; i++){
-            vec3 toBH = uBHPos - p;
-            float rBH = length(toBH);
-            closestBH = min(closestBH, rBH);
-
+          for(int i=0; i<64; i++){ // v6d perf: 64 steps (was 72)
             vec3 toWH = uWHPos - p;
             float rWH = length(toWH);
-            closestWH = min(closestWH, rWH);
+            float tidalStretchW = 1.0 + (0.18 * tidalActive + uImplosion * 0.18) * preMerger * max(0.0, dot(-normalize(toWH + 1e-5), baDir));
+            float effRWH = rWH / tidalStretchW;
+            closestWH = min(closestWH, effRWH);
 
-            float minR = min(rBH, mix(rWH, 10.0, uRemnant));
-            float dt = clamp(minR * 0.15, 0.035, 0.35);
+            vec3 toBH = uBHPos - p;
+            float rBH = length(toBH);
+            float tidalStretchB = 1.0 + (0.13 * tidalActive + uImplosion * 0.15) * preMerger * max(0.0, dot(-normalize(toBH + 1e-5), -baDir));
+            float effRBH = rBH / tidalStretchB;
 
-            float bendBH = (1.58 * rsBH * rsBH) / pow(rBH*rBH + 0.045, 1.65);
+            float pot = (rsBH / max(effRBH, 0.15)) + preMerger * (rsWH / max(effRWH, 0.15));
+            maxRochePot = max(maxRochePot, pot);
+
+            float minR = min(effRBH, mix(effRWH, 12.0, uRemnant));
+            float dt = clamp(minR * 0.13, 0.032, 0.32);
+
+            // General-Relativistic 3D Geodesic Light Bending
+            float bendBH = (1.50 * rsBH * rsBH) / pow(rBH * rBH + 0.06, 1.65);
             vec3 accel = normalize(toBH) * bendBH;
             if(preMerger > 0.01){
-              float bendWH = (1.55 * rsWH * rsWH * preMerger) / pow(rWH*rWH + 0.045, 1.65);
+              float bendWH = (1.50 * rsWH * rsWH * preMerger) / pow(rWH * rWH + 0.06, 1.65);
               accel += normalize(toWH) * bendWH;
             }
 
@@ -1018,180 +1284,190 @@ try{
 
             vec3 seg = nextP - p;
             float segLen2 = dot(seg, seg) + 1e-8;
-            float tSegBH = clamp(dot(uBHPos - p, seg) / segLen2, 0.0, 1.0);
-            float segDistBH = length((p + seg * tSegBH) - uBHPos);
-            closestBH = min(closestBH, segDistBH);
 
             float tSegWH = clamp(dot(uWHPos - p, seg) / segLen2, 0.0, 1.0);
-            vec3 closestPtWH = p + seg * tSegWH;
-            float segDistWH = length(closestPtWH - uWHPos);
+            vec3 ptWH = p + seg * tSegWH;
+            float segDistWH = length(ptWH - uWHPos) / tidalStretchW;
             closestWH = min(closestWH, segDistWH);
 
-            // 1. Analytic Plane Crossing for Black Hole Accretion Disk & Tidal Bridge
-            vec3 relB0 = p - uBHPos;
-            vec3 relB1 = nextP - uBHPos;
-            float yB0 = relB0.y * ctB - relB0.z * stB;
-            float yB1 = relB1.y * ctB - relB1.z * stB;
-            if(yB0 * yB1 <= 0.0){
-              float fracB = clamp(-yB0 / (yB1 - yB0 + 1e-6), 0.0, 1.0);
-              if(fracB <= tSegBH || segDistBH >= rsBH){
-                vec3 hitRelB = mix(relB0, relB1, fracB);
-                vec3 dPos = vec3(hitRelB.x, 0.0, hitRelB.y * stB + hitRelB.z * ctB);
-                vec4 dSample = shadeBlackHoleDisk(dPos, nextRd, ctB, stB);
-                if(dSample.a > 0.001){
-                  col += trans * dSample.rgb;
-                  trans *= (1.0 - dSample.a * 0.90);
-                }
-                if(preMerger > 0.01){
-                  vec3 hitWorld = uBHPos + hitRelB;
-                  vec4 bSample = shadeTidalBridge(hitWorld, preMerger);
-                  if(bSample.a > 0.001){
-                    col += trans * bSample.rgb;
-                    trans *= (1.0 - bSample.a * 0.85);
-                  }
-                }
-              }
-            }
+            float tSegBH = clamp(dot(uBHPos - p, seg) / segLen2, 0.0, 1.0);
+            vec3 ptBH = p + seg * tSegBH;
+            float segDistBH = length(ptBH - uBHPos) / tidalStretchB;
+            closestBH = min(closestBH, segDistBH);
 
-            // 2. Analytic Plane Crossing for White Hole Relativistic Ejection Disk
-            if(preMerger > 0.01){
-              vec3 relW0 = p - uWHPos;
-              vec3 relW1 = nextP - uWHPos;
-              float yW0 = relW0.y * ctW - relW0.z * stW;
-              float yW1 = relW1.y * ctW - relW1.z * stW;
-              if(yW0 * yW1 <= 0.0){
-                float fracW = clamp(-yW0 / (yW1 - yW0 + 1e-6), 0.0, 1.0);
-                if(fracW <= tSegWH || segDistWH >= rsWH){
-                  vec3 hitRelW = mix(relW0, relW1, fracW);
-                  vec3 wPos = vec3(hitRelW.x, 0.0, hitRelW.y * stW + hitRelW.z * ctW);
-                  vec4 wSample = shadeWhiteHoleDisk(wPos, nextRd, ctW, stW, preMerger);
-                  if(wSample.a > 0.001){
-                    col += trans * wSample.rgb;
-                    trans *= (1.0 - wSample.a * 0.90);
-                  }
-                }
-              }
-            }
-
-            // 3. Black Hole Event Horizon Capture
-            if(segDistBH < rsBH){
-              hitBHHov = true;
-              break;
-            }
-
-            // 4. White Hole Cauchy Horizon Sphere Capture
+            // 1. Left White Hole 3D Horizon Sphere Intersection
             if(preMerger > 0.01 && segDistWH < rsWH){
-              hitWHCore = true;
-              whHitNormal = normalize(closestPtWH - uWHPos);
-              whHitDir = nextRd;
+              hitWH = true;
+              whNormal = normalize(ptWH - uWHPos);
+              hitRd = nextRd;
               break;
             }
 
-            // 5. Relativistic Polar Jets
-            if(uBurst > 0.01 || uRemnant > 0.05 || preMerger > 0.01){
-              float jetCylB = length(vec2(relB1.x, relB1.z * ctB - relB1.y * stB));
-              float jetHB = abs(relB1.y * ctB + relB1.z * stB);
-              float jetPowB = clamp(0.35 + uBurst * 0.95 + uRemnant * 1.15, 0.0, 1.4);
-              if(jetCylB < 0.38 && jetHB > rsBH * 1.15 && jetHB < 4.5){
-                float jW = 0.04 + jetHB * 0.048;
-                float jFade = exp(-pow(jetCylB / jW, 2.0)) * exp(-jetHB * 0.48) * smoothstep(rsBH*1.15, rsBH*1.5, jetHB);
-                vec3 jCol = mix(vec3(1.0, 0.88, 0.78), vec3(1.0, 0.38, 0.16), clamp(jetHB * 0.3, 0.0, 1.0));
-                col += trans * jCol * jFade * jetPowB * dt * 0.95;
-              }
-              if(preMerger > 0.01){
-                vec3 relW1 = nextP - uWHPos;
-                float jetCylW = length(vec2(relW1.x, relW1.z * ctW - relW1.y * stW));
-                float jetHW = abs(relW1.y * ctW + relW1.z * stW);
-                if(jetCylW < 0.34 && jetHW > rsWH * 1.15 && jetHW < 4.0){
-                  float jWW = 0.038 + jetHW * 0.045;
-                  float jFadeW = exp(-pow(jetCylW / jWW, 2.0)) * exp(-jetHW * 0.50) * smoothstep(rsWH*1.15, rsWH*1.5, jetHW);
-                  vec3 jColW = mix(vec3(1.0, 0.99, 0.98), vec3(0.68, 0.93, 1.0), clamp(jetHW * 0.35, 0.0, 1.0));
-                  col += trans * jColW * jFadeW * preMerger * dt * 0.85;
+            // 2. Right / Merged Colossal Black Hole 3D Event Horizon Intersection
+            if(segDistBH < rsBH){
+              hitBH = true;
+              bhNormal = normalize(ptBH - uBHPos);
+              hitRd = nextRd;
+              break;
+            }
+
+            // 3. Analytic 3D Equatorial Plane Crossing
+            float y0 = (p.y + 0.06) * ctD - p.z * stD;
+            float y1 = (nextP.y + 0.06) * ctD - nextP.z * stD;
+            if(y0 * y1 <= 0.0){
+              float frac = clamp(-y0 / (y1 - y0 + 1e-6), 0.0, 1.0);
+              vec3 hitWorld = mix(p, nextP, frac);
+              float bBHFront = bBH0 / max(0.001, rsBH);
+              float keepBlackBallPure = mix(smoothstep(0.96, 1.08, bBHFront), 1.0, uRemnant * 0.25);
+              if(keepBlackBallPure > 0.01){
+                vec4 diskSample = shadeEquatorialBridgeAndDisk3D(hitWorld, nextRd, rsWH, rsBH, preMerger);
+                diskSample *= keepBlackBallPure;
+                if(diskSample.a > 0.001){
+                  col += trans * diskSample.rgb;
+                  trans *= (1.0 - diskSample.a * 0.88);
                 }
               }
             }
 
             p = nextP;
             rd = nextRd;
-            if(trans < 0.02 || length(p - ro) > 16.5) break;
+            if(trans < 0.02 || length(p - ro) > 34.0) break;
           }
         }
 
-        // SHADE WHITE HOLE CAUCHY SINGULARITY SPHERE
-        if(hitWHCore){
-          float mu = clamp(dot(whHitNormal, -whHitDir), 0.0, 1.0);
-          float b = sqrt(max(0.0, 1.0 - mu * mu));
-
-          float coreStar = exp(-b * b * 24.0) * 3.4 + exp(-b * 6.0) * 0.45;
-          float crossX = exp(-abs(whHitNormal.y) * 28.0) * exp(-b * 2.2) * 1.35;
-          float crossY = exp(-abs(whHitNormal.x) * 28.0) * exp(-b * 2.6) * 0.95;
-          float limbRing = exp(-pow((b - 0.97) / 0.024, 2.0)) * 1.65;
-
-          vec3 colAbyss = vec3(0.006, 0.012, 0.024);
-          vec3 colCyan = vec3(0.62, 0.91, 1.0);
-          vec3 colDiamond = vec3(1.0, 0.99, 0.98);
-
-          vec3 eyeCol = colAbyss + colCyan * (crossX + crossY) + colDiamond * coreStar + mix(colCyan, colDiamond, 0.72) * limbRing;
-          col += trans * eyeCol * preMerger;
+        // SHADE 3D WHITE HOLE SPHERE (LEFT)
+        if(hitWH){
+          vec3 whCol = shadeWhiteHoleSphere3D(whNormal, hitRd, baDir, preMerger);
+          col += trans * whCol;
+          trans = 0.0;
+        }
+        // SHADE 3D BLACK HOLE EVENT HORIZON (RIGHT / COLOSSAL POST-MERGER BLACK HOLE)
+        else if(hitBH){
+          vec3 bhCol = shadeBlackHoleSphere3D(bhNormal, hitRd, -baDir);
+          float muB = clamp(dot(bhNormal, -hitRd), 0.0, 1.0);
+          float bB = sqrt(max(0.0, 1.0 - muB * muB));
+          float pureBlackCore = 1.0 - smoothstep(0.94, 0.99, bB);
+          col = mix(col + trans * bhCol, vec3(0.0), pureBlackCore * (1.0 - uRemnant * 0.12));
           trans = 0.0;
         }
 
-        // EINSTEIN PHOTON RINGS & LENSED STARFIELD
-        if(!hitBHHov && !hitWHCore){
-          float deltaBH = max(0.0, closestBH - rsBH);
-          float pRingBH = exp(-deltaBH / 0.024) * 1.65;
-          vec3 pColBH = mix(vec3(1.0, 0.44, 0.18), vec3(1.0, 0.96, 0.90), 0.68 + 0.32*uRemnant);
-          col += trans * pRingBH * pColBH * (1.0 + uBurst*0.75);
-
+        // SHADE MULTI-LAYERED INSIDE-OUT EINSTEIN PHOTON RINGS, GRAVITATIONAL RINGDOWN & VOLUMETRIC NEBULA
+        if(!hitWH && !hitBH){
           if(preMerger > 0.01){
-            float deltaWH = max(0.0, closestWH - rsWH);
-            float pRingWH = exp(-deltaWH / 0.022) * 1.65 * preMerger;
-            vec3 pColWH = mix(vec3(0.64, 0.91, 1.0), vec3(1.0, 0.99, 0.97), 0.72);
-            col += trans * pRingWH * pColWH * (1.0 + uBurst*0.75);
+            float dW = max(0.0, closestWH - rsWH);
+            float rW1 = exp(-dW / 0.020) * 1.95;
+            float rW2 = exp(-pow((dW - 0.052) / 0.016, 2.0)) * 1.35;
+            float rW3 = exp(-pow((dW - 0.105) / 0.022, 2.0)) * 0.88;
+            float ripplesW = (0.5 + 0.5 * sin(dW * 135.0 - uEvertPhase * 9.5)) * exp(-dW * 2.8) * (0.45 + 0.55 * clamp(uInsideOut, 0.0, 1.2));
+
+            vec3 pColW = mix(vec3(1.0, 0.55, 0.32), vec3(1.0, 0.98, 0.90), clamp(rW1 * 0.55 + rW2 * 0.4, 0.0, 1.0));
+            col += trans * (rW1 + rW2 + rW3 + ripplesW) * pColW * preMerger * (0.88 + uImplosion * 0.55 + uBurst * 0.75);
           }
 
-          if(uRemnant > 0.05 || uBurst > 0.05){
-            float cauchyRing = exp(-deltaBH / 0.012) * (uRemnant * 1.55 + uBurst * 0.95);
-            col += trans * cauchyRing * vec3(0.84, 0.96, 1.0);
-          }
+          float dB = max(0.0, closestBH - rsBH);
+          float ringScale = mix(1.0, 1.58, uRemnant);
+          float rB1 = exp(-dB / (0.020 * ringScale)) * 2.12;
+          float rB2 = exp(-pow((dB - 0.052 * ringScale) / (0.016 * ringScale), 2.0)) * 1.46;
+          float rB3 = exp(-pow((dB - 0.108 * ringScale) / (0.024 * ringScale), 2.0)) * 0.92;
+          float ripplesB = (0.5 + 0.5 * sin(dB * (128.0 / ringScale) + uEvertPhase * 8.8)) * exp(-dB * (2.6 / ringScale)) * (0.45 + 0.55 * clamp(uInsideOut, 0.0, 1.2));
+          float qnmShells = uRingdown * (0.5 + 0.5 * sin(dB * 48.0 - uTime * 24.0)) * exp(-dB * 1.4) * 1.35;
 
-          float gwStrain = (0.12 + uBurst*0.65 + uRemnant*0.18) * sin(closestBH*5.5 - uTime*5.0) * exp(-closestBH*0.35);
-          col += trans * sampleCosmos(rd, gwStrain);
+          vec3 pColB = mix(vec3(1.0, 0.55, 0.32), vec3(1.0, 0.96, 0.86), clamp(rB1 * 0.55 + rB2 * 0.4, 0.0, 1.0));
+          col += trans * (rB1 + rB2 + rB3 + ripplesB + qnmShells) * pColB * (0.90 + uBurst * 0.8 + uRemnant * 0.35);
+
+          // Binary Figure-8 Roche Equipotential Inside-Out Clash Halo
+          float fig8Outward = sin(maxRochePot * 46.0 - uEvertPhase * 7.2);
+          float fig8Inward  = sin(maxRochePot * 46.0 + uEvertPhase * 7.2);
+          float fig8Bands = (0.5 + 0.5 * mix(fig8Outward, fig8Inward, smoothstep(-0.6, 0.6, uv.x))) * smoothstep(0.60, 1.55, maxRochePot) * exp(-max(0.0, maxRochePot - 1.55) * 1.60);
+          vec3 fig8Col = mix(vec3(0.70, 0.16, 0.02), vec3(1.0, 0.62, 0.16), fig8Bands);
+          col += trans * fig8Col * fig8Bands * (0.55 + (1.0 - uPeace) * 0.45 + uSpider * 0.52 + uImplosion * 0.45);
+
+          // Lensed Background Cosmos & Warm Crimson Dust
+          float lensShear = (0.14 + uBurst * 0.75 + uRemnant * 0.22 + uRingdown * 0.35) * sin(maxRochePot * 9.5 - uEvertPhase * 5.2);
+          col += trans * sampleCosmos(rd, lensShear);
         }
 
-        // Filmic ACES Tonemapping & Vignette
+        // =========================================================================
+        // COLLISION & SUPERNOVA "BOOM" VOLUMETRIC LIGHT EFFECTS AT END OF PART 3
+        // (Strictly occluded over the Black Hole's pitch-black core!)
+        // =========================================================================
+        float bhGlareMask = hitBH ? 0.0 : smoothstep(rsBH * 0.96, rsBH * 1.24, bBH0);
+
+        // A. Pre-Collision Implosion Convergence Rays + Collision Volumetric God-Rays
+        float lightRayIntensity = uImplosion * 0.65 + uGodRays * 1.35 + uBurst * 0.55;
+        if(lightRayIntensity > 0.01 && bhGlareMask > 0.005){
+          float raySpokes1 = 0.5 + 0.5 * sin(angFromCollisionUV * 18.0 + uEvertPhase * 3.2 + sin(angFromCollisionUV * 5.0 - uTime * 2.5) * 1.8);
+          float raySpokes2 = 0.5 + 0.5 * sin(angFromCollisionUV * 31.0 - uEvertPhase * 4.6 + cos(rFromCollisionUV * 8.0 - uTime * 6.0) * 1.2);
+          float radialStream = 0.5 + 0.5 * sin(rFromCollisionUV * (22.0 - uImplosion * 10.0) - (uGodRays > uImplosion ? uTime * 14.0 : -uTime * 10.0));
+          float rays = pow(raySpokes1 * 0.55 + raySpokes2 * 0.45, 3.2) * (0.65 + 0.35 * radialStream);
+          float radialFalloff = exp(-rFromCollisionUV * mix(1.45, 0.72, clamp(uGodRays, 0.0, 1.0)));
+          vec3 rayCol = mix(vec3(1.0, 0.54, 0.12), vec3(1.0, 0.97, 0.88), clamp(rays * 1.2 + uGodRays * 0.4, 0.0, 1.0));
+          col += rayCol * rays * radialFalloff * lightRayIntensity * bhGlareMask * 0.92;
+        }
+
+        // B. Twin Relativistic Polar Astrophysical Jets (at Horizon Merger)
+        if(uGodRays > 0.02 && bhGlareMask > 0.005){
+          vec2 jetAxis = normalize(vec2(-0.18, 0.98));
+          float alongJet = abs(dot(relUV, jetAxis));
+          float perpJet  = abs( dot(relUV, vec2(jetAxis.y, -jetAxis.x)) );
+          float jetConeWidth = 0.028 + alongJet * 0.14;
+          float jetBeam = exp(-pow(perpJet / jetConeWidth, 2.0)) * exp(-alongJet * 0.85) * smoothstep(0.02, 0.22, alongJet);
+          float jetKnots = 0.6 + 0.4 * sin(alongJet * 32.0 - uTime * 22.0);
+          vec3 jetCol = mix(vec3(1.0, 0.68, 0.25), vec3(0.92, 0.97, 1.0), exp(-perpJet / (jetConeWidth * 0.45)));
+          col += jetCol * jetBeam * jetKnots * uGodRays * bhGlareMask * 1.45;
+        }
+
+        // C. 3D Spherical Supernova Detonation Shockwave Ring ("THE BOOM")
+        if(uBoomWave > 0.01 && uBoomWave < 12.0 && bhGlareMask > 0.005){
+          float waveScreenR = uBoomWave * 0.24;
+          float shockNoise = sin(angFromCollisionUV * 14.0 + uTime * 6.0) * 0.025 * uBoomWave;
+          float primaryRing = exp(-pow((rFromCollisionUV + shockNoise - waveScreenR) / (0.045 + uBoomWave * 0.018), 2.0));
+          float secondaryEcho = exp(-pow((rFromCollisionUV - waveScreenR * 0.68) / (0.035 + uBoomWave * 0.012), 2.0)) * 0.55;
+          float boomFade = smoothstep(10.5, 0.4, uBoomWave) * smoothstep(0.0, 0.18, uBoomWave);
+          vec3 shockCol = mix(vec3(1.0, 0.10, 0.18), vec3(1.0, 0.98, 0.92), primaryRing);
+          col += shockCol * (primaryRing + secondaryEcho) * boomFade * bhGlareMask * 1.65;
+        }
+
+        // D. Screen-space Equatorial Anamorphic Glare (gentle & calm at rest and post-merger; intense during collision)
+        float anamorphicY = exp(-abs(uv.y + 0.03) / (0.075 - uImplosion * 0.022 + uGodRays * 0.03)) * exp(-abs(uv.x) * (0.28 - uGodRays * 0.10)) * bhGlareMask;
+        float glareLevel = mix(0.26, 0.16, uPeace) + uBurst * 0.72 + uGodRays * 0.55 + uRemnant * 0.12;
+        col += mix(vec3(1.0, 0.56, 0.15), vec3(1.0, 0.94, 0.82), clamp(uGodRays * 0.65, 0.0, 1.0)) * anamorphicY * glareLevel;
+
+        // Filmic ACES Tonemapping
         col = (col * (2.51 * col + 0.03)) / (col * (2.43 * col + 0.59) + 0.14);
-        col = pow(clamp(col, 0.0, 1.0), vec3(0.96));
-        float vig = smoothstep(1.65, 0.35, length(vUv - 0.5)*1.35);
-        col = mix(vec3(0.0196, 0.0196, 0.0196), col, 0.58 + 0.42*vig);
+        col = pow(clamp(col, 0.0, 1.0), vec3(0.94));
 
-        // MASSIVE WHITE COLLISION SUPERNOVA DETONATION
-        if(uWhiteFlash > 0.001){
-          vec3 midWorld = mix(uBHPos, uWHPos, 0.5);
-          float projZ = max(0.1, dot(midWorld - ro, uCamForward));
-          vec2 centerUV = vec2(dot(midWorld - ro, uCamRight), dot(midWorld - ro, uCamUp)) / (projZ * uFovScale);
-          vec2 dUV = uv - centerUV;
-          float rScreen = length(dUV);
-          float angScreen = atan(dUV.y, dUV.x);
-
-          float shockRadius = (1.0 - uWhiteFlash * 0.35) * 0.95;
-          float shockRing = exp(-pow((rScreen - shockRadius) / 0.14, 2.0));
-          float anamorphic = exp(-abs(dUV.y) / (0.025 + 0.04*uWhiteFlash)) * exp(-abs(dUV.x) / 1.6);
-          float rays = (0.5 + 0.5*sin(angScreen * 8.0 + uTime*3.0)) * (0.5 + 0.5*cos(angScreen * 14.0 - uTime*2.0));
-          float starburst = exp(-rScreen * 0.85) * pow(rays, 2.0);
-
-          vec3 supernovaField = mix(vec3(0.93, 0.95, 0.98), vec3(1.0, 0.99, 0.97), clamp(starburst + anamorphic, 0.0, 1.0));
-          supernovaField -= vec3(0.12, 0.05, 0.0) * shockRing * (1.0 - uWhiteFlash * 0.4);
-          float flashBlend = smoothstep(0.0, 0.72, uWhiteFlash);
-          col = mix(col, supernovaField, flashBlend);
+        // PRECURSOR: small round quantum light bursts, one by one, building to the big flash
+        if(uPulse.x > 0.001){
+          float pd = length(relUV - uPulsePos);
+          float pr = uPulse.y;
+          float pcore = exp(-pd * pd / (pr * pr));
+          float phalo = exp(-pd / (pr * 4.0)) * 0.18;
+          float pring = exp(-pow((pd - pr * 2.4) / (pr * 0.5), 2.0)) * 0.45;
+          vec3 pcol = mix(vec3(0.65, 0.82, 1.0), vec3(1.0, 0.86, 0.62), uPulse.z);
+          col += pcol * (pcore * 1.6 + phalo + pring) * uPulse.x;
         }
 
-        // Sub-LSB dither: dissolves gradient banding in the tonemapped sky and
-        // disk falloff, so dark gradients read as continuous tone.
-        float dith = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
-        col += (dith - 0.5) * (1.6 / 255.0);
+        // SUPERNOVA WHITEOUT FLASH WHEN COLLISION HAPPENS -> THEN FADES BACK TO NORMAL ONE COMBINED BIG BLACK HOLE
+        if(uWhiteFlash > 0.001){
+          float rScreen = length(relUV);
+          float shockRing = exp(-pow((rScreen - (1.0 - uWhiteFlash * 0.35) * 1.05) / 0.16, 2.0));
+          float flashCore = exp(-rScreen * 0.45 * (1.0 - uWhiteFlash));
+          vec3 whiteoutCol = mix(vec3(1.0, 0.97, 0.92), vec3(1.0, 1.0, 1.0), clamp(flashCore + uWhiteFlash, 0.0, 1.0));
+          // Red-and-white blast (owner order 2026-10-24): mix TOWARD red at
+          // the shock ring (adding red to an already-white base would clamp
+          // back to white, so the ring is carved by pulling green/blue down).
+          // White core stays white; the ring reads red even at peak flash.
+          whiteoutCol = mix(whiteoutCol, vec3(1.0, 0.10, 0.18), shockRing * 0.55);
+          col = mix(col, clamp(whiteoutCol, 0.0, 1.0), smoothstep(0.0, 0.76, uWhiteFlash));
+        }
 
-        gl_FragColor = vec4(col, 1.0);
+        if(!hitBH || uWhiteFlash > 0.05){
+          float dith = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
+          col += (dith - 0.5) * (1.5 / 255.0);
+        }
+
+        gl_FragColor = vec4(max(col, vec3(0.0)), 1.0);
       }
     `
   });
@@ -1200,9 +1476,14 @@ try{
   S.add(lensQuad);
 
   /* -------------------------------------------------------------------------
-     PASS 2: 3D GPU RELATIVISTIC EJECTA, ROCHE STREAM & POST-MERGER HALO PARTICLES
+     PASS 2: 3D GPU PARTICLE-SHARING STREAMS, INSIDE-OUT TORUS & SUPERNOVA EJECTA
+     - At rest (uPeace = 1): calm, gentle cosmic fireflies around the two separate spheres
+     - On scroll (uParticleShare > 0): vivid bi-directional 3D particle-sharing streams
+       exchanging matter between the rotating White Hole & Black Hole!
+     - At Part 3 end: explosive supernova blast -> settles into calm orbital dust around the
+       single combined big Black Hole!
      ------------------------------------------------------------------------- */
-  const pCount=touch?2600:5500;
+  const pCount=touch?2400:4800; // v6d perf: fewer GPU points (was 3200/6400)
   const pGeo=new THREE.BufferGeometry();
   const aSeed=new Float32Array(pCount*4);
   for(let i=0;i<pCount;i++){
@@ -1218,10 +1499,18 @@ try{
   const pMat=new THREE.ShaderMaterial({
     uniforms:{
       uTime:uShared.uTime,
-      uBHPos:uShared.uBHPos,
+      uEvertPhase:uShared.uEvertPhase,
+      uPeace:uShared.uPeace,
+      uInsideOut:uShared.uInsideOut,
+      uParticleShare:uShared.uParticleShare,
       uWHPos:uShared.uWHPos,
+      uBHPos:uShared.uBHPos,
+      uImplosion:uShared.uImplosion,
       uBurst:uShared.uBurst,
+      uBoomWave:uShared.uBoomWave,
+      uGodRays:uShared.uGodRays,
       uRemnant:uShared.uRemnant,
+      uSpider:uShared.uSpider,
       uPixelRatio:{value:currentDPR}
     },
     transparent:true,
@@ -1230,10 +1519,18 @@ try{
     vertexShader:`
       attribute vec4 aSeed;
       uniform float uTime;
-      uniform vec3 uBHPos;
+      uniform float uEvertPhase;
+      uniform float uPeace;
+      uniform float uInsideOut;
+      uniform float uParticleShare;
       uniform vec3 uWHPos;
+      uniform vec3 uBHPos;
+      uniform float uImplosion;
       uniform float uBurst;
+      uniform float uBoomWave;
+      uniform float uGodRays;
       uniform float uRemnant;
+      uniform float uSpider;
       uniform float uPixelRatio;
       varying vec3 vCol;
       varying float vAlpha;
@@ -1242,61 +1539,97 @@ try{
         vec3 pos=vec3(0.0);
         vec3 col=vec3(1.0);
         float alpha=0.0;
-        float ptSize=1.7;
+        float ptSize=1.6;
+        float rsBH = mix(0.96, 2.22, smoothstep(0.0, 1.0, uRemnant));
+        vec3 mid = mix(0.5 * (uWHPos + uBHPos), uBHPos, uRemnant);
 
-        if(kind < 0.45){
-          float life = 1.0 - fract(s1 + uTime*(0.14 + s2*0.12));
-          float minR = mix(0.75, 0.96, uRemnant);
-          float maxR = mix(2.75, 4.4, uRemnant);
-          float r = mix(minR, maxR, life*life);
-          float w = ang + uTime*(3.8 / (pow(r, 1.25) + 0.15)) + 5.5*log(r);
-          float h = (s2 - 0.5) * (0.12 + uBurst*0.75 + uRemnant*0.18) * (r * 0.42);
-          vec3 local = vec3(cos(w)*r, h, sin(w)*r);
-          float tilt = 0.22 - uRemnant*0.04;
-          float ct=cos(tilt), st=sin(tilt);
-          local.yz = mat2(ct, -st, st, ct) * local.yz;
-          pos = uBHPos + local;
-          col = mix(vec3(1.0, 0.95, 0.88), vec3(1.0, 0.36, 0.16), smoothstep(minR, maxR*0.75, r));
-          if(uRemnant > 0.1 && s2 > 0.65){
-            col = mix(col, vec3(0.74, 0.93, 1.0), uRemnant*0.75);
-          }
-          alpha = smoothstep(0.0, 0.15, life) * smoothstep(1.0, 0.7, life) * 0.62;
-          ptSize = mix(2.3, 1.0, life);
-        }
-        else if(kind < 0.78){
-          float t = fract(s1 + uTime*(0.24 + s2*0.15));
+        if(kind < 0.58){
+          // 1. BI-DIRECTIONAL 3D PARTICLE-SHARING STREAMS & INSIDE-OUT TORUS EXCHANGE
+          // Stream A (s2 < 0.58): White Hole -> Black Hole Roche-lobe overflow & inside-out unspooling
+          // Stream B (s2 >= 0.58): Black Hole slingshot -> White Hole figure-8 return exchange
+          float dirSign = (s2 < 0.58) ? 1.0 : -1.0;
+          float streamSpeed = 0.16 + s2 * 0.14;
+          float t = fract(s1 + dirSign * uEvertPhase * streamSpeed);
+
+          float poloidalAng = t * 6.2831853 - dirSign * uEvertPhase * (2.4 + uInsideOut * 1.4) + ang;
+          float toroidalAng = ang + uEvertPhase * (1.5 + s2 * 1.2);
+
           vec3 ba = uBHPos - uWHPos;
-          vec3 ortho = normalize(vec3(-ba.z, 0.22*sin(ang), ba.x + 0.001));
-          vec3 bridgePos = mix(uWHPos, uBHPos, t) + ortho * sin(t*3.14159)*0.30*length(ba);
-          bridgePos += vec3(cos(ang+t*10.0), sin(ang-t*8.0), sin(ang+t*6.0))*0.16*sin(t*3.14159);
+          float sepLen = length(ba);
+          vec3 axisX = sepLen > 0.001 ? ba / sepLen : vec3(1.0, 0.0, 0.0);
+          vec3 orthoZ = normalize(vec3(-axisX.z, 0.0, axisX.x));
 
-          float shellR = 1.15 + pow(t, 0.75)*(3.8 + s2*1.6);
-          float phi = (s2 - 0.5)*2.6;
-          float theta = ang - uTime*0.25 + 1.5*shellR;
-          vec3 kilonovaPos = uBHPos + vec3(shellR*cos(phi)*cos(theta), shellR*sin(phi)*0.72, shellR*cos(phi)*sin(theta));
+          // At top (uPeace = 1), particles orbit calmly around their own host sphere;
+          // As user scrolls (uParticleShare > 0), they stream across the space between WH and BH!
+          vec3 hostCenter = (s2 < 0.5) ? uWHPos : uBHPos;
+          float calmOrbitR = 1.25 + s1 * 1.85;
+          float calmAng = ang + uTime * (0.35 + s2 * 0.25) * dirSign;
+          vec3 calmPos = hostCenter + vec3(cos(calmAng)*calmOrbitR, sin(ang*2.0 + uTime*0.5)*0.28, sin(calmAng)*calmOrbitR);
 
-          pos = mix(bridgePos, kilonovaPos, smoothstep(0.25, 0.85, uRemnant + uBurst*0.5));
-          col = mix(vec3(0.82, 0.95, 1.0), vec3(1.0, 0.38, 0.16), t);
-          alpha = sin(t*3.14159) * (0.55 + uBurst*0.35);
-          ptSize = 1.3 + 1.2*sin(t*3.14159);
+          // Active 3D S-Curve & Helical Inside-Out Particle-Sharing Stream between WH and BH
+          float minorR = (0.22 + 0.48 * sin(t * 3.14159)) * (0.55 + 0.45 * clamp(uInsideOut, 0.2, 1.4)) * (1.0 - uImplosion * 0.45);
+          vec3 evertOffset = orthoZ * (cos(toroidalAng) * sin(poloidalAng) * minorR)
+                           + vec3(0.0, cos(poloidalAng) * minorR * 0.85, 0.0)
+                           + axisX * (sin(toroidalAng) * sin(poloidalAng) * minorR * 0.45);
+          float sCurveArch = sin(t * 6.2831853) * 0.36 * sepLen * dirSign;
+          vec3 shareBridgePos = mix(uWHPos, uBHPos, t) + orthoZ * sCurveArch + evertOffset;
+
+          vec3 preMergerPos = mix(calmPos, shareBridgePos, smoothstep(0.0, 0.85, uParticleShare));
+
+          // Post-merger Colossal Gargantua Calm Orbiting Accretion Disk
+          float rMajor = mix(2.55, 7.6, s1*s1);
+          float rMinor = 0.20 + 0.36 * s2;
+          float w = ang + uEvertPhase*(2.4 / (pow(rMajor, 1.15) + 0.2));
+          float pRoll = s1 * 6.2831853 - uEvertPhase * 2.6;
+          float rEff = rMajor + cos(pRoll) * rMinor;
+          vec3 diskPos = uBHPos + vec3(cos(w)*rEff, sin(pRoll)*rMinor*0.55, sin(w)*rEff);
+
+          pos = mix(preMergerPos, diskPos, smoothstep(0.20, 0.82, uRemnant));
+          col = mix(vec3(0.92, 0.95, 1.0), vec3(1.0, 0.46, 0.10), mix(t, s1, uRemnant));
+          float shareBoost = mix(0.32, 0.88, clamp(uParticleShare, 0.0, 1.2));
+          alpha = (0.25 + 0.75 * sin(t*3.14159)) * mix(shareBoost, 0.48, uRemnant) * (1.0 + uBurst*0.45);
+          ptSize = 1.4 + 1.65*sin(t*3.14159) * (0.7 + 0.4 * uParticleShare);
+        } else if(kind < 0.82){
+          // 2. Counter-Rotating Figure-8 Inside-Out Photon Shells (WH Outward vs BH Inward)
+          bool isWH = s2 < 0.5 && uRemnant < 0.65;
+          float dirSign = isWH ? 1.0 : -1.0;
+          float life = fract(s1 + dirSign * uEvertPhase*(0.14 + s2*0.10));
+          float minR = isWH ? 1.02 : mix(1.08, 2.38, uRemnant);
+          float maxR = mix(4.6, 8.4, uRemnant) * (1.0 - uImplosion * 0.35);
+          float r = mix(minR, maxR, life*life);
+          float pol = life * 6.2831853 - dirSign * uEvertPhase * (2.6 + uInsideOut);
+          float w = ang + uEvertPhase*(2.6 / (r + 0.2));
+          vec3 center = isWH ? uWHPos : uBHPos;
+          pos = center + vec3(cos(w)*(r + 0.26*cos(pol)), sin(pol)*0.34*(1.0+uBurst*0.5), sin(w)*(r + 0.26*cos(pol)));
+          col = isWH ? vec3(0.90, 0.94, 1.0) : vec3(1.0, 0.50, 0.12);
+          alpha = smoothstep(0.0, 0.15, life) * smoothstep(1.0, 0.62, life) * mix(0.30, 0.62, clamp(uParticleShare + uRemnant*0.4, 0.0, 1.0));
+          ptSize = mix(2.2, 0.9, life);
+        } else {
+          // 3. 3D Supernova Detonation Blast Ejecta & Twin Polar Relativistic Jet Sparks ("THE BOOM")
+          float theta = acos(1.0 - 2.0 * s1);
+          float phi = ang + uTime * (0.8 + s2);
+          vec3 dir3D = vec3(sin(theta)*cos(phi), cos(theta), sin(theta)*sin(phi));
+          if(s2 > 0.62){
+            dir3D = normalize(vec3(cos(phi)*0.22, (s1 > 0.5 ? 1.0 : -1.0), sin(phi)*0.22));
+          }
+          float blastRadius = (0.4 + s2 * 0.85) * (uBoomWave * 1.05 + fract(uTime * 0.55 + s1) * 3.5 * (uBurst + uGodRays));
+          float implosionPull = mix(blastRadius, 0.25 + s1 * 1.4, uImplosion * 0.8);
+          pos = mid + dir3D * implosionPull;
+          col = mix(vec3(1.0, 0.99, 0.92), vec3(1.0, 0.42, 0.06), s2);
+          float activeBoom = clamp(uImplosion * 0.8 + uGodRays * 1.2 + smoothstep(11.0, 0.5, uBoomWave) * smoothstep(0.0, 0.2, uBoomWave), 0.0, 1.3);
+          alpha = activeBoom * (0.45 + 0.45 * sin(s1 * 12.0 + uTime * 8.0));
+          ptSize = 1.6 + 2.2 * (1.0 - s2) * activeBoom;
         }
-        else {
-          float life = fract(s1*2.3 + uTime*(0.35 + s2*0.4));
-          float jetSign = s2 > 0.5 ? 1.0 : -1.0;
-          float h = jetSign * (0.85 + life * (3.2 + uRemnant*1.4));
-          float spread = (0.05 + life*0.28) * (1.0 + uBurst*1.4);
-          float spin = ang + uTime*7.0 - life*12.0;
-          vec3 anchor = mix(mix(uWHPos, uBHPos, step(0.5, s1)), uBHPos, uRemnant);
-          pos = anchor + vec3(cos(spin)*spread, h, sin(spin)*spread);
-          col = mix(vec3(0.95, 0.92, 0.88), vec3(1.0, 0.42, 0.18), life);
-          alpha = pow(sin(life*3.14159), 2.0) * (0.40 + uBurst*0.45 + uRemnant*0.25);
-          ptSize = 1.4 + (1.0-life)*1.3;
-        }
+
+        // Strictly occlude any particle overlapping the Black Hole sphere so the Black Ball stays 100% pitch black!
+        float dToBH = length(pos.xy - uBHPos.xy);
+        float bhMask = smoothstep(rsBH * 1.02, rsBH * 1.18, dToBH);
+        alpha *= bhMask;
 
         vCol = col;
         vAlpha = alpha;
         vec4 mv = modelViewMatrix * vec4(pos, 1.0);
-        gl_PointSize = clamp(ptSize * uPixelRatio * (6.0 / max(-mv.z, 1.5)), 1.0, 8.0);
+        gl_PointSize = clamp(ptSize * uPixelRatio * (7.4 / max(-mv.z, 1.5)), 1.0, 8.5);
         gl_Position = projectionMatrix * mv;
       }
     `,
@@ -1304,21 +1637,21 @@ try{
       varying vec3 vCol;
       varying float vAlpha;
       void main(){
+        if(vAlpha < 0.005) discard;
         vec2 c = gl_PointCoord - vec2(0.5);
         float d = length(c);
         if(d > 0.5) discard;
         float g = exp(-d*d*11.0);
-        gl_FragColor = vec4(vCol*1.2, g*vAlpha);
+        gl_FragColor = vec4(vCol*1.32, g*vAlpha);
       }
     `
   });
   const particleSystem=new THREE.Points(pGeo,pMat);
   S.add(particleSystem);
 
-  // Pre-compile WebGL shaders immediately during loader so first frame has 0ms shader compile stutter!
   R.compile(S,C);
-
   gl={R,S,C,uShared,pMat};
+
   function rs(){
     R.setSize(innerWidth,innerHeight,false);
     C.aspect=innerWidth/innerHeight;
@@ -1326,7 +1659,7 @@ try{
     uShared.uResolution.value.set(innerWidth,innerHeight);
   }
   rs();addEventListener('resize',rs,{passive:true});
-}catch(e){console.warn('WebGL off',e)}
+}catch(e){console.warn('WebGL fallback',e)}
 }
 // Deferred out of the DOMContentLoaded handler: the loader counter and the
 // scroll engine start immediately at DOMContentLoaded; renderer setup and
@@ -1403,6 +1736,7 @@ let lastT=0;
 let lastInv=-1;
 let lastScrubP=-1;
 let slowFrames=0,fastFrames=0;
+let v6EvertAccum=0,v6OrbAccum=0,v6WasPre=true,v6BoomActive=false,v6BoomTimer=0;
 const rootStyle=document.documentElement.style;
 const tmpTarget=new THREE.Vector3();
 const tmpUp=new THREE.Vector3();
@@ -1434,8 +1768,8 @@ function tick(t){
   if(gl && rawDt > 0.001 && rampT0<0){
     if(rawDt > 0.021){
       slowFrames++;fastFrames=0;
-      if(slowFrames > 6 && currentDPR > minDPR){
-        currentDPR = Math.max(minDPR, currentDPR - 0.15);
+      if(slowFrames > 3 && currentDPR > minDPR){ // v6d perf: react faster on weak GPUs (was >6 frames, 0.15 steps)
+        currentDPR = Math.max(minDPR, currentDPR - 0.20);
         gl.R.setPixelRatio(currentDPR);
         gl.pMat.uniforms.uPixelRatio.value = currentDPR;
         slowFrames = 0;
@@ -1470,11 +1804,64 @@ function tick(t){
   const p=smoothScroll;
   const sec=t*0.001;
 
-  // Compute White Collision Flash intensity
-  const whiteFlashBell = Math.exp(-Math.pow((p - 0.685)/0.048, 2.0));
-  const whiteFlashVal = clamp(whiteFlashBell, 0.0, 1.0);
+  // V6 SCROLL DRIVER: the demo's 40 s loop timeline is driven by page scroll
+  // (Lt = p*40) instead of wall time, so the eat choreography keeps its order
+  // and proportions: eaten (Lt 27.4-29.7) -> remnant (Lt 30.3-33.6). Time-based
+  // breathing still uses sec, so the scene stays alive when the user is not
+  // scrolling. The demo's own frame loop, its whiteout/fade/caption overlays
+  // and its theme-inversion writes are NOT carried over; the portfolio's own
+  // flash-inversion block below stays.
+  // CHOREOGRAPHY (owner order, 2026-10-24; "rotate" = the two holes ORBITING
+  // each other): part 1 (Lt 0-18, p 0-0.45) = pure orbit, wide pair, NO
+  // inside-out; part 2 (Lt 18-24, p 0.45-0.60) = still orbiting, orbit
+  // tightens so the holes draw closer and closer; part 3 (Lt 24-27.4,
+  // p 0.60-0.685) = inside-out AND rotation together, speed increased;
+  // then eat/boom/remnant exactly as before.
+  const Lt=p*40;
+  const preWorkP=clamp((Lt-1.5)/16.5,0,1),workP=clamp((Lt-18)/13,0,1),inWork=Lt>=18;
+  const pMerger=clamp(Lt/30,0,1);
+  const scrollSpeed=clamp(Math.abs(vy)/50,0,1.0);
+  const peaceVal=1-smoothstep(0,.14,preWorkP);
+  const remnantState=smoothstep(30.3,33.6,Lt);
+  const eat=smoothstep(27.4,29.7,Lt);
+  if(workP<.82)v6WasPre=true;
+  else if(workP>=.895&&v6WasPre){v6WasPre=false;v6BoomActive=true;v6BoomTimer=.001}
+  if(v6BoomActive){v6BoomTimer+=dt;if(v6BoomTimer>4.4){v6BoomActive=false;v6BoomTimer=0}}
+  const part2P=smoothstep(18,24,Lt),part3P=smoothstep(24,27.4,Lt);
+  const sep=Lt<=18?6.7:Lt<24?lerp(6.7,1.2,part2P):Lt<27.4?lerp(1.2,0.6,part3P):lerp(0.6,0.0,smoothstep(27.4,29.9,Lt));
+  const eatPos=Math.pow(eat,1.6);
+  const eatBurst=.5*eat*eat;
+  const streamGate=smoothstep(18,22,Lt); // v6d: NO stream/filaments in part 1; fade in as the pair closes in part 2
+  const particleShareVal=smoothstep(.02,.24,preWorkP)*(1+smoothstep(0,.85,workP)*.35)*(1-remnantState)*streamGate;
+  const insideOutVal=lerp(lerp(0.0,1.6,part3P),.38,remnantState);
+  const orbBase=0.3*Math.pow(6.7/Math.max(sep,0.9),1.5);
+  const orbBoost=1.0+1.6*part3P;
+  const orbOmegaCurrent=Math.min(lerp(orbBase*orbBoost,.65,remnantState),8.0);
+  v6OrbAccum+=dt*orbOmegaCurrent;
+  const totalOrbitalAngle=v6OrbAccum;
+  const evertRate=lerp(0.0,9.15,part3P); // v6d: zero evert motion before part 3 (was 0.32/s + scroll term)
+  v6EvertAccum+=dt*(lerp(evertRate,1.15,remnantState)+scrollSpeed*.95*part3P);
+  const implosionVal=Math.exp(-Math.pow((workP-0.875)/0.042,2.0))*(1.0-remnantState*0.5);
+  const impulseGodRay=v6BoomActive?(smoothstep(0.0,0.16,v6BoomTimer)*Math.exp(-Math.pow(Math.max(0.0,v6BoomTimer-0.55)/0.85,1.75))*1.38):0.0;
+  const scrollCrossGodRay=Math.exp(-Math.pow((workP-0.922)/0.042,2.0))*clamp(scrollSpeed*1.6,0.22,1.05);
+  const godRaysVal=clamp(impulseGodRay+scrollCrossGodRay,0.0,1.50);
+  const boomWaveVal=v6BoomActive?clamp(v6BoomTimer*4.1,0.0,14.2):0.0;
+  let impulseWhiteFlash=0.0;
+  if(v6BoomActive){
+    const flashRise=smoothstep(0.0,0.18,v6BoomTimer);
+    const flashDecay=Math.exp(-Math.pow(Math.max(0.0,v6BoomTimer-1.08)/0.72,1.85));
+    impulseWhiteFlash=flashRise*flashDecay*1.15;
+  }
+  const scrollTransientFlash=Math.exp(-Math.pow((workP-0.922)/0.036,2.0))*clamp(scrollSpeed*1.5,0.18,0.98);
+  const whiteFlashVal=clamp(Math.max(impulseWhiteFlash,scrollTransientFlash),0.0,1.0);
+  const impulseRingdown=v6BoomActive&&v6BoomTimer>0.75?Math.exp(-(v6BoomTimer-0.75)*1.25)*Math.abs(Math.sin(v6BoomTimer*20.0)):0.0;
+  const ringdownVal=clamp(impulseRingdown,0.0,1.0);
+  const impulseBurst=v6BoomActive?Math.exp(-Math.max(0.0,v6BoomTimer-0.35)*1.05)*1.55:0.0;
+  const scrollBurst=Math.exp(-Math.pow((workP-0.92)/0.048,2.0))*clamp(scrollSpeed*1.25,0.15,0.95);
+  const burstVal=clamp(impulseBurst+scrollBurst+eatBurst,0.0,1.75);
 
-  // Dynamic Collision White-Screen Text Contrast Inversion
+  // Dynamic Collision White-Screen Text Contrast Inversion (portfolio's own;
+  // driven by the v6 flash value above, so text stays legible through the boom)
   const inv = smoothstep(0.14, 0.52, whiteFlashVal);
   if(Math.abs(inv - lastInv) > 0.004){
     lastInv = inv;
@@ -1496,74 +1883,82 @@ function tick(t){
   if(gl){
     const u=gl.uShared;
     u.uTime.value=sec;
-    u.uScroll.value=p;
-    const scrollSpeed=clamp(Math.abs(vy)/50,0,1.0);
-    u.uScrollVel.value=damp(u.uScrollVel.value,scrollSpeed,10.0,dt);
+    u.uEvertPhase.value=v6EvertAccum + part3P * 8.9;
+    u.uMerger.value=pMerger;
+    u.uPeace.value=peaceVal;
+    u.uInsideOut.value=insideOutVal;
+    u.uParticleShare.value=particleShareVal;
+    u.uSpider.value=lerp(0.32, 0.92, (1.0 - peaceVal) * (1.0 - remnantState * 0.65)) * streamGate;
+    u.uOrbVel.value=clamp(orbOmegaCurrent * 0.45, 0.35, 3.8);
+    u.uImplosion.value=implosionVal;
+    u.uGodRays.value=godRaysVal;
+    u.uBoomWave.value=boomWaveVal;
+    u.uRingdown.value=ringdownVal;
+    u.uBurst.value=burstVal;
+    u.uWhiteFlash.value=whiteFlashVal;
+    u.uRemnant.value=remnantState;
 
-    const inspiralProgress=smoothstep(0.0,0.67,p);
-    const sep = 3.75 * Math.pow(1.0 - inspiralProgress, 0.78);
-    u.uSep.value=sep;
+    // 3D binary positions (v6): wide calm pair -> inspiral -> WH eaten into BH
+    const halfSep = sep * 0.5 * (1.0 - remnantState);
+    const ox = Math.cos(totalOrbitalAngle) * halfSep;
+    const oz = Math.sin(totalOrbitalAngle) * halfSep * 0.88 * (1.0 - peaceVal * 0.85);
+    const oy = Math.sin(totalOrbitalAngle * 2.0 + v6EvertAccum * 0.65) * halfSep * 0.18 * (1.0 - peaceVal * 0.9);
+    u.uWHPos.value.set(lerp(-ox,ox,eatPos), lerp(oy,-oy,eatPos), lerp(oz,-oz,eatPos));
+    u.uBHPos.value.set(ox, -oy, -oz);
 
-    const burstBell = Math.exp(-Math.pow((p - 0.67)/0.07, 2.0));
-    u.uBurst.value = clamp(burstBell * 1.18 + scrollSpeed * 0.14 * (1.0 - Math.abs(p - 0.67)), 0.0, 1.30);
-    u.uWhiteFlash.value = whiteFlashVal;
-
-    const remnantState = smoothstep(0.65, 0.80, p);
-    u.uRemnant.value = remnantState;
-
-    const keplerRate = 0.22 + 0.90 * Math.pow(inspiralProgress, 1.6);
-    baseOrbitTime += dt * keplerRate;
-    const scrollChirpAngle = Math.pow(inspiralProgress, 1.75) * 12.56;
-    const totalOrbAngle = 0.16 + baseOrbitTime + scrollChirpAngle;
-    u.uOrbAngle.value = totalOrbAngle;
-
-    const isMobile = innerWidth < 700;
-    const heroOffsetX = isMobile ? 0.10 : 0.38;
-    const centerWeight = smoothstep(0.18, 0.55, p);
-    const baryX = lerp(heroOffsetX, 0.0, centerWeight) + Math.sin(p * 6.28318) * (1.0 - remnantState) * (isMobile ? 0.08 : 0.20);
-    const baryY = lerp(0.10, 0.04, smoothstep(0.0, 0.85, p));
-    const baryZ = 0.0;
-
-    const halfSep = sep * 0.5;
-    const orbInclination = 0.20 + 0.14 * Math.sin(p * 3.14159);
-    const ox = Math.cos(totalOrbAngle) * halfSep;
-    const oz = Math.sin(totalOrbAngle) * halfSep * Math.cos(orbInclination);
-    const oy = Math.sin(totalOrbAngle) * halfSep * Math.sin(orbInclination);
-
-    u.uBHPos.value.set(baryX - ox, baryY - oy, baryZ - oz);
-    u.uWHPos.value.set(baryX + ox, baryY + oy, baryZ + oz);
-
-    const flybyWave = Math.sin(smoothstep(0.12, 0.68, p) * 3.14159);
-    const camDist = lerp(8.3, 5.4, smoothstep(0.0, 0.66, p)) + lerp(0.0, 1.85, remnantState) + (isMobile ? 1.6 : 0.0);
-    const camElev = lerp(1.18, 0.36, flybyWave) + lerp(0.0, 0.32, remnantState) - smoothMy * 0.34;
-    const camAzim = Math.sin(p * 3.14159 * 1.15) * 0.38 * (1.0 - remnantState * 0.7) + smoothMx * 0.36;
-    const camRoll = (-0.07 + flybyWave * 0.18 + smoothMx * 0.04) * (1.0 - remnantState * 0.85);
-    const fovDeg = 42.0 + flybyWave * 6.0 - u.uBurst.value * 4.0;
+    // V6 camera: very zoomed out at top (18.2) -> zooms to 9.75 -> 8.15 at
+    // merger -> pulls back on the remnant. Pointer drift added to the demo's
+    // own breathing (autoMx/autoMy), it does not replace it.
+    const aspect = innerWidth / Math.max(1, innerHeight);
+    const aspectZoomOut = aspect < 1.0 ? (1.0 / Math.max(0.48, aspect)) * 2.35 : (aspect < 1.45 ? 1.25 : 0.0);
+    const startZoomInDolly = lerp(18.20, 9.75, smoothstep(0.0, 0.48, preWorkP));
+    const boomRecoilDolly = (v6BoomActive ? Math.sin(Math.min(1.0, v6BoomTimer * 1.1) * Math.PI) * 1.05 : 0.0) - implosionVal * 0.55;
+    const dollyTrack = lerp(startZoomInDolly, 8.15, smoothstep(0.0, 0.88, workP)) + lerp(0.0, 2.25, remnantState) + boomRecoilDolly;
+    const autoBreathDolly = Math.sin(sec * 0.35) * 0.32 + Math.cos(sec * 0.20) * 0.18;
+    const baseDist = dollyTrack + aspectZoomOut + autoBreathDolly + remnantState * 5.0;
+    const autoMx = Math.sin(sec * 0.2) * 0.35, autoMy = Math.cos(sec * 0.17) * 0.25;
+    const autoYaw = Math.sin(sec * 0.25) * 0.16 * (1.0 - peaceVal * 0.5);
+    const scrollYaw = Math.sin((preWorkP * 0.4 + workP * 0.9) * Math.PI) * 0.30 * (1.0 - remnantState * 0.55);
+    const yawRad = autoYaw + scrollYaw + autoMx * 0.24 + smoothMx * 0.12;
+    const cinemaWave = Math.sin(smoothstep(0.0, 0.92, workP) * Math.PI);
+    const autoPitch = Math.sin(sec * 0.30 + 0.8) * 0.08 + 0.06;
+    const scrollPitch = lerp(0.04, 0.22, cinemaWave) + remnantState * 0.07;
+    const pitchRad = clamp(autoPitch + scrollPitch - autoMy * 0.16 - smoothMy * 0.08, -0.48, 0.52);
+    const autoRoll = Math.sin(sec * 0.22) * 0.035 * (1.0 - peaceVal * 0.6);
+    const scrollRoll = (-0.02 + cinemaWave * 0.10 + autoMx * 0.03) * (1.0 - remnantState * 0.6);
+    const rollRad = autoRoll + scrollRoll;
+    const fovShock = -implosionVal * 3.2 + godRaysVal * 3.8;
+    const fovDeg = 44.0 + cinemaWave * 4.5 - burstVal * 2.4 + remnantState * 2.2 + fovShock;
     u.uFovScale.value = Math.tan(fovDeg * 0.5 * Math.PI / 180.0);
-
-    const tremor = whiteFlashVal * 0.045;
-    const camX = baryX + Math.sin(camAzim) * camDist + Math.sin(sec * 47.0) * tremor;
-    const camZ = baryZ + Math.cos(camAzim) * camDist;
-    const camY = baryY + camElev + Math.cos(sec * 53.0) * tremor;
-
+    const shockTremor = (whiteFlashVal * 0.055) + (v6BoomActive ? Math.exp(-v6BoomTimer * 2.4) * 0.065 : 0.0);
+    const camX = Math.sin(yawRad) * Math.cos(pitchRad) * baseDist + (Math.sin(sec * 47.0) * 0.65 + Math.cos(sec * 19.0) * 0.35) * shockTremor;
+    const camY = Math.sin(pitchRad) * baseDist + (Math.cos(sec * 53.0) * 0.65 + Math.sin(sec * 23.0) * 0.35) * shockTremor;
+    const camZ = Math.cos(yawRad) * Math.cos(pitchRad) * baseDist;
     u.uCamPos.value.set(camX, camY, camZ);
-    tmpTarget.set(baryX, baryY, baryZ);
-
+    tmpTarget.set(Math.sin(sec * 0.22) * 0.10 * (1.0 - remnantState), Math.cos(sec * 0.29) * 0.06, 0);
     tmpFwd.subVectors(tmpTarget, u.uCamPos.value).normalize();
-    tmpUp.set(Math.sin(camRoll), Math.cos(camRoll), 0.0).normalize();
+    tmpUp.set(Math.sin(rollRad), Math.cos(rollRad), 0.0).normalize();
     tmpRight.crossVectors(tmpFwd, tmpUp).normalize();
     tmpTrueUp.crossVectors(tmpRight, tmpFwd).normalize();
-
     u.uCamForward.value.copy(tmpFwd);
     u.uCamRight.value.copy(tmpRight);
     u.uCamUp.value.copy(tmpTrueUp);
-
     gl.C.fov = fovDeg;
     gl.C.updateProjectionMatrix();
     gl.C.position.copy(u.uCamPos.value);
     gl.C.up.copy(tmpTrueUp);
     gl.C.lookAt(tmpTarget);
     gl.R.render(gl.S,gl.C);
+    // Gravitational-wave chirp + precursor quantum bursts (v6, scroll-mapped)
+    const pre=clamp(1.6/(sep+1.2)-.2,0,1)*(1-remnantState);
+    const ring=v6BoomActive?Math.exp(-v6BoomTimer*.75)*Math.cos(v6BoomTimer*9):0;
+    u.uEat.value=eat;u.uGW.value=pre+ring*.9;u.uOrb.value=totalOrbitalAngle;
+    const PT=[23,25,26.6,27.8,28.6,29.1,29.4],PR=[.012,.015,.02,.026,.034,.044,.06];
+    const PD=[.62,.58,.54,.5,.46,.42,.38],PI=[.35,.45,.55,.65,.78,.9,1];
+    let I=0,rad=.02,k2=0;
+    for(let k=0;k<PT.length;k++){const x=(Lt-PT[k])/PD[k];if(x>=0&&x<=1){I=Math.pow(Math.sin(Math.PI*x),2)*PI[k];rad=PR[k];k2=k%7;}}
+    const ang2=k2*2.399963,dist=.12+.05*((k2*3)%4);
+    u.uPulse.value.set(I,rad,k2/6);u.uPulsePos.value.set(Math.cos(ang2)*dist,Math.sin(ang2)*dist);
   }
 
   /* =========================================================================
@@ -1574,7 +1969,7 @@ function tick(t){
 
   // Project live 3D Black Hole & White Hole positions into screen percentages for subtle UI rim reaction
   const remNow = gl ? gl.uShared.uRemnant.value : smoothstep(0.65, 0.80, p);
-  const orbNow = gl ? gl.uShared.uOrbAngle.value : (sec * 0.4 + p * 8.0);
+  const orbNow = gl ? gl.uShared.uOrb.value : (sec * 0.4 + p * 8.0);
   const cosO = Math.cos(orbNow), sinO = Math.sin(orbNow);
   const spread = (1.0 - remNow * 0.85) * 24;
   const bhScreenX = clamp(50 - cosO * spread + smoothMx * 6, 8, 92);
@@ -1668,14 +2063,14 @@ function tick(t){
   /* 4. SELECTED WORK (#work): Smooth 3D Carousel Ring with gentle binary tilt */
   if(smoothY + vh > GT.wT - 200 && smoothY < GT.wT + GT.wH + 200){
     wp=clamp((smoothY-GT.wT)/Math.max(1,GT.wH-vh));
-    // 576deg sweep over the section (2x the original 288deg): the ring turns
-    // twice as far per unit of scroll, with an exact front-facing landing
-    // every 1/8 of the section (one card step per waypoint).
-    ang=damp(ang,-wp*576,8.5,dt);
+    // 411.428571deg sweep over the section (8 waypoints x one 360/7 card step):
+    // the ring turns with an exact front-facing landing every 1/8 of the
+    // section (one card step per waypoint), for 7 cards.
+    ang=damp(ang,-wp*411.428571,8.5,dt);
     if(ring) ring.style.transform=`rotateY(${ang.toFixed(2)}deg) rotateZ(${clamp(vy*0.035,-3.5,3.5).toFixed(2)}deg)`;
     if(scene) scene.style.transform=`rotateX(${(-smoothMy*3.5+6+sinO*1.2).toFixed(2)}deg) rotateY(${(smoothMx*4.5+cosO*1.5).toFixed(2)}deg)`;
-    cards.forEach((c,j)=>{let d=((j*72+ang)%360+540)%360-180;c.style.opacity=(1-clamp(Math.abs(d)/110)*0.82).toFixed(2)});
-    const idx=((Math.round(-ang/72)%5)+5)%5;
+    cards.forEach((c,j)=>{let d=((j*(360/7)+ang)%360+540)%360-180;c.style.opacity=(1-clamp(Math.abs(d)/110)*0.82).toFixed(2)});
+    const idx=((Math.round(-ang/(360/7))%7)+7)%7;
     if(bn) bn.textContent='0'+(idx+1);
     if(bari) bari.style.width=(wp*100).toFixed(1)+'%';
   }
